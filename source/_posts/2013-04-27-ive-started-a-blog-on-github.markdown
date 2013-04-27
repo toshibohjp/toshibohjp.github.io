@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "I've got started a blog on Github."
+title: "I've started a blog on Github."
 date: 2013-04-27 16:42
 comments: true
 sharing: true
@@ -11,7 +11,7 @@ categories: [github, blog, octopress]
 
 唯一、手順と違うところは、自分の環境では rvm を使用しているので、`sudo` を `rvmsudo` にしただけです。
 
-Markdown の書き方もおぼつきませんが、なんとか勉強しながらやってみます。
+Markdown の書き方もおぼつきませんが、勉強しながらぼちぼち続けてみます。
 
 Icing on the cake
 -----------------
