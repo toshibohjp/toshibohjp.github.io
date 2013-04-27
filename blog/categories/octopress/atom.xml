@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-27T21:38:50+09:00</updated>
+  <updated>2013-04-27T21:41:03+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -22,7 +22,7 @@
 
 <p>唯一、手順と違うところは、自分の環境では rvm を使用しているので、<code>sudo</code> を <code>rvmsudo</code> にしただけです。</p>
 
-<p>Markdown の書き方もおぼつきませんが、なんとか勉強しながらやってみます。</p>
+<p>Markdown の書き方もおぼつきませんが、勉強しながらぼちぼち続けてみます。</p>
 
 <h2>Icing on the cake</h2>
 
