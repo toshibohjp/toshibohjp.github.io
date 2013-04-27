@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-27T21:21:46+09:00</updated>
+  <updated>2013-04-27T21:38:50+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[I've got started a blog on Github.]]></title>
-    <link href="http://toshibohjp.github.io/blog/2013/04/27/ive-got-started-a-blog-on-github/"/>
+    <title type="html"><![CDATA[I've started a blog on Github.]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/"/>
     <updated>2013-04-27T16:42:00+09:00</updated>
-    <id>http://toshibohjp.github.io/blog/2013/04/27/ive-got-started-a-blog-on-github</id>
+    <id>http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github</id>
     <content type="html"><![CDATA[<p><a href="http://www.hisasann.com/blog/2012/10/06/first-post/">githubを使って独自ブログをはじめる方法メモ</a> を参考に Github にブログを作ってみました。</p>
 
 <p>唯一、手順と違うところは、自分の環境では rvm を使用しているので、<code>sudo</code> を <code>rvmsudo</code> にしただけです。</p>
