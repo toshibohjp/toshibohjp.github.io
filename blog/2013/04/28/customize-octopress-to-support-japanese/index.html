@@ -54,6 +54,11 @@ $ cd octopress source/_includes/ &hellip;">
     <h2>toshibohjp</h2>
   
 </hgroup>
+<script langage="javaScript">
+  $(document).ready( function () {
+       $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+     })
+</script>
 
 </header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss email">
