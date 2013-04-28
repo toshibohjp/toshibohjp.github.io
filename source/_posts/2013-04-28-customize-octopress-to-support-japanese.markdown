@@ -10,8 +10,8 @@ categories: [octopress, localize]
 
 どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike>
 
-これはとんだ冤罪でした。ブラウザ等の環境に依存する問題のようです。
-
+これはとんだ冤罪でした。iPhone でアクセスすると、見事に日本語の表示ができます。
+私の環境のWindows Vista + Chrome に依存する問題のようです。
 <!-- more -->
 
 ```bash
