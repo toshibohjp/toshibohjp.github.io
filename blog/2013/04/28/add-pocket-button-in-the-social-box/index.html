@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Octopress のヘッダを日本語に対応させる - Tortoise-like pace</title>
+  <title>Octopress に「Pocket」に追加するボタンをつける - Tortoise-like pace</title>
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。 どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。 1
-$ cd octopress source/_includes/ &hellip;">
+  <meta name="description" content="私は Pocket をかなり使い倒してます。何か興味深いページがあれば、「Pocketに追加する」で Pcket に保存しておき、後で読み返しながら興味深ければ Twitter でツイートして、後で使いそうな知識であれば Evernote に保存しておきタグで整理しています。 さて、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ $ cd octopress source/_includes/ &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese">
+  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
@@ -83,7 +82,7 @@ $ cd octopress source/_includes/ &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Octopress のヘッダを日本語に対応させる</h1>
+      <h1 class="entry-title">Octopress に「Pocket」に追加するボタンをつける</h1>
     
     
       <p class="meta">
@@ -99,7 +98,7 @@ $ cd octopress source/_includes/ &hellip;">
   
 
 
-<time datetime="2013-04-28T09:56:00+09:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
+<time datetime="2013-04-28T12:15:00+09:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -108,60 +107,47 @@ $ cd octopress source/_includes/ &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
+<div class="entry-content"><p>私は <a href="http://getpocket.com/">Pocket</a> をかなり使い倒してます。何か興味深いページがあれば、「Pocketに追加する」で Pcket に保存しておき、後で読み返しながら興味深ければ Twitter でツイートして、後で使いそうな知識であれば Evernote に保存しておきタグで整理しています。</p>
 
-<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</p>
+<p>さて、役に立つかどうかはわかりませんが、私の Github pages にも「Pocket に追加する」ようなボタンを追加したいと思います。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
-</span></code></pre></td></tr></table></div></figure>
+<!-- more -->
 
 
+<h2>Pocket ボタンのコードを取得する</h2>
 
+<p><a href="http://getpocket.com/publisher/button">Pocket for Publishers: Pocket Button</a>にアクセスして、Pocket ボタンのコードを取得します。スタイルはお好みで選んでください。</p>
 
-<figure class='code'><figcaption><span>source/_includes/custom/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!--Fonts from Google&quot;s Web font directory at http://google.com/webfonts --&gt;</span>
-</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+<h2>_config.yml に設定を追加する</h2>
 
+<p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしましょう。</p>
 
-<p>これを非常に簡単な設定で上書きします。</p>
+<p>_config.yml に以下を追加します。</p>
 
-<h3>_fonts.scss に日本語フォントを設定する</h3>
-
-<p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
-
-<figure class='code'><figcaption><span>sass/custom/_fonts.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -5,6 +5,6 @@</span>
-</span><span class='line'> //$sans: &quot;Optima&quot;, sans-serif;
-</span><span class='line'> //$serif: &quot;Baskerville&quot;, serif;
-</span><span class='line'> //$mono: &quot;Courier&quot;, monospace;
-</span><span class='line'><span class="gd">-//$heading-font-family: &quot;Verdana&quot;, sans-serif;</span>
-</span><span class='line'><span class="gi">+$heading-font-family: &quot;ヒラギノ角ゴ&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, &quot;メイリオ&quot;, Meiryo, &quot;ＭＳ Ｐゴシック&quot;,&quot;MS PGothic&quot;, &quot;Verdana&quot;, sans-serif;</span>
-</span><span class='line'> //$header-title-font-family: &quot;Futura&quot;, sans-serif;
-</span><span class='line'> //$header-subtitle-font-family: &quot;Futura&quot;, sans-serif;```
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -93,3 +93,6 @@ </span>
+</span><span class='line'>
+</span><span class='line'> # Facebook Like
+</span><span class='line'> facebook_like: true
+</span><span class='line'><span class="gi">+</span>
+</span><span class='line'><span class="gi">+# Pocket</span>
+</span><span class='line'><span class="gi">+pocket_button: true</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>自分の環境は Windows Vista + Chrome なのですが、Mac や Windows XP の方々にも配慮して、&#8221;ヒラギノ角ゴシック&#8221;と&#8221;ＭＳ　Ｐゴシック&#8221;の設定を追加しています。</p>
+<h2>shareing.html を修正する</h2>
 
-<p>お好みで他のフォントに変更しても良いかもしれませんね。</p>
+<p>source/_includes/post/sharing.html に先ほどのコードを貼り付けます。Pocket はなるべく早く押せたほうがいいので、ソーシャルボタンの先頭になるようにします。貼り付けたままだとインデントが気になるので、私は <code>Vim</code> 上から <code>:setlocal expandtab ts=2 sts=2 sw=2</code> とコマンドを入力して、<code>g=G</code> でインデントを修正しました。</p>
 
-<h2>HTML の lang 属性を ja に設定する</h2>
+<p>横幅が長くなりますが <code>git diff</code> を取った結果は以下の通りになります。</p>
 
-<p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
-
-<figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>source/_includes/post/sharing.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -170,18 +156,23 @@ $ cd octopress source/_includes/ &hellip;">
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -1,7 +1,7 @@</span>
-</span><span class='line'> &lt;!DOCTYPE html&gt;
-</span><span class='line'> &lt;!--[if IEMobile 7 ]&gt;&lt;html class=&quot;no-js iem7&quot;&gt;&lt;![endif]--&gt;
-</span><span class='line'> &lt;!--[if lt IE 9]&gt;&lt;html class=&quot;no-js lte-ie8&quot;&gt;&lt;![endif]--&gt;
-</span><span class='line'><span class="gd">-&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;en&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
-</span><span class='line'><span class="gi">+&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;ja&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
-</span><span class='line'> &lt;head&gt;
-</span><span class='line'>   &lt;meta charset=&quot;utf-8&quot;&gt;
-</span><span class='line'>   &lt;title&gt;Octopress のヘッダを日本語に対応させる - Tortoise-like pace&lt;/title&gt;
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -1,4 +1,8 @@</span>
+</span><span class='line'> &lt;div class=&quot;sharing&quot;&gt;
+</span><span class='line'><span class="gi">+  {% if site.pocket_button %}</span>
+</span><span class='line'><span class="gi">+  &lt;a data-pocket-label=&quot;pocket&quot; data-pocket-count=&quot;vertical&quot; class=&quot;pocket-btn&quot; data-lang=&quot;en&quot;&gt;&lt;/a&gt;</span>
+</span><span class='line'><span class="gi">+  &lt;script type=&quot;text/javascript&quot;&gt;!function(d,i){if(!d.getElementById(i)){var j=d.createElement(&quot;script&quot;);j.id=i;j.src=&quot;https://widgets.getpocket.com/v1/j/btn.js?v=1&quot;;var w=d.getElementById(i);d.body.appendChild(j);}}(document,&quot;pocket-btn-js&quot;);&lt;/script&gt;</span>
+</span><span class='line'><span class="gi">+  {% endif %}</span>
+</span><span class='line'>   {% if site.twitter_tweet_button %}
+</span><span class='line'>   &lt;a href=&quot;http://twitter.com/share&quot; class=&quot;twitter-share-button&quot; data-url=&quot;{{ site.url }}{{ page.url }}&quot; data-via=&quot;{{ site.twitter_user }}&quot; data-counturl=&quot;{{ site.url }}{{ page.url }}&quot; &gt;Tweet&lt;/a&gt;
+</span><span class='line'>   {% endif %}
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h2>参考サイト</h2>
+
+<ul>
+<li><a href="http://morizyun.github.io/blog/octopress-hatena-disqus-new-tab/">5分でできる簡単 Octopress セッティング - 酒と泪とRubyとRails</a></li>
+</ul>
 
 </div>
 
@@ -205,12 +196,12 @@ $ cd octopress source/_includes/ &hellip;">
   
 
 
-<time datetime="2013-04-28T09:56:00+09:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
+<time datetime="2013-04-28T12:15:00+09:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/localize/'>localize</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>, <a class='category' href='/blog/categories/pocket/'>pocket</a>
   
 </span>
 
@@ -223,7 +214,7 @@ $ cd octopress source/_includes/ &hellip;">
   <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
   
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -236,10 +227,8 @@ $ cd octopress source/_includes/ &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/04/27/ive-started-a-blog-on-github/" title="Previous Post: I've started a blog on Github.">&laquo; I've started a blog on Github.</a>
+        <a class="basic-alignment left" href="/blog/2013/04/28/customize-octopress-to-support-japanese/" title="Previous Post: Octopress のヘッダを日本語に対応させる">&laquo; Octopress のヘッダを日本語に対応させる</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/04/28/add-pocket-button-in-the-social-box/" title="Next Post: Octopress に「Pocket」に追加するボタンをつける">Octopress に「Pocket」に追加するボタンをつける &raquo;</a>
       
     </p>
   </footer>
@@ -335,8 +324,8 @@ $ cd octopress source/_includes/ &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/';
-        var disqus_url = 'http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/';
+        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box/';
+        var disqus_url = 'http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box/';
         var disqus_script = 'embed.js';
       
     (function () {

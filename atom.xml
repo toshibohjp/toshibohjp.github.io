@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-28T11:57:34+09:00</updated>
+  <updated>2013-04-28T14:00:53+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress に「Pocket」に追加するボタンをつける]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box/"/>
+    <updated>2013-04-28T12:15:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box</id>
+    <content type="html"><![CDATA[<p>私は <a href="http://getpocket.com/">Pocket</a> をかなり使い倒してます。何か興味深いページがあれば、「Pocketに追加する」で Pcket に保存しておき、後で読み返しながら興味深ければ Twitter でツイートして、後で使いそうな知識であれば Evernote に保存しておきタグで整理しています。</p>
+
+<p>さて、役に立つかどうかはわかりませんが、私の Github pages にも「Pocket に追加する」ようなボタンを追加したいと思います。</p>
+
+<!-- more -->
+
+
+<h2>Pocket ボタンのコードを取得する</h2>
+
+<p><a href="http://getpocket.com/publisher/button">Pocket for Publishers: Pocket Button</a>にアクセスして、Pocket ボタンのコードを取得します。スタイルはお好みで選んでください。</p>
+
+<h2>_config.yml に設定を追加する</h2>
+
+<p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしましょう。</p>
+
+<p>_config.yml に以下を追加します。</p>
+
+<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -93,3 +93,6 @@ </span>
+</span><span class='line'>
+</span><span class='line'> # Facebook Like
+</span><span class='line'> facebook_like: true
+</span><span class='line'><span class="gi">+</span>
+</span><span class='line'><span class="gi">+# Pocket</span>
+</span><span class='line'><span class="gi">+pocket_button: true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>shareing.html を修正する</h2>
+
+<p>source/_includes/post/sharing.html に先ほどのコードを貼り付けます。Pocket はなるべく早く押せたほうがいいので、ソーシャルボタンの先頭になるようにします。貼り付けたままだとインデントが気になるので、私は <code>Vim</code> 上から <code>:setlocal expandtab ts=2 sts=2 sw=2</code> とコマンドを入力して、<code>g=G</code> でインデントを修正しました。</p>
+
+<p>横幅が長くなりますが <code>git diff</code> を取った結果は以下の通りになります。</p>
+
+<figure class='code'><figcaption><span>source/_includes/post/sharing.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -1,4 +1,8 @@</span>
+</span><span class='line'> &lt;div class=&quot;sharing&quot;&gt;
+</span><span class='line'><span class="gi">+  {% if site.pocket_button %}</span>
+</span><span class='line'><span class="gi">+  &lt;a data-pocket-label=&quot;pocket&quot; data-pocket-count=&quot;vertical&quot; class=&quot;pocket-btn&quot; data-lang=&quot;en&quot;&gt;&lt;/a&gt;</span>
+</span><span class='line'><span class="gi">+  &lt;script type=&quot;text/javascript&quot;&gt;!function(d,i){if(!d.getElementById(i)){var j=d.createElement(&quot;script&quot;);j.id=i;j.src=&quot;https://widgets.getpocket.com/v1/j/btn.js?v=1&quot;;var w=d.getElementById(i);d.body.appendChild(j);}}(document,&quot;pocket-btn-js&quot;);&lt;/script&gt;</span>
+</span><span class='line'><span class="gi">+  {% endif %}</span>
+</span><span class='line'>   {% if site.twitter_tweet_button %}
+</span><span class='line'>   &lt;a href=&quot;http://twitter.com/share&quot; class=&quot;twitter-share-button&quot; data-url=&quot;{{ site.url }}{{ page.url }}&quot; data-via=&quot;{{ site.twitter_user }}&quot; data-counturl=&quot;{{ site.url }}{{ page.url }}&quot; &gt;Tweet&lt;/a&gt;
+</span><span class='line'>   {% endif %}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<ul>
+<li><a href="http://morizyun.github.io/blog/octopress-hatena-disqus-new-tab/">5分でできる簡単 Octopress セッティング - 酒と泪とRubyとRails</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress のヘッダを日本語に対応させる]]></title>
