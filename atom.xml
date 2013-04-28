@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-27T21:41:03+09:00</updated>
+  <updated>2013-04-28T11:57:34+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress のヘッダを日本語に対応させる]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/"/>
+    <updated>2013-04-28T09:56:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese</id>
+    <content type="html"><![CDATA[<p>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
+
+<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>source/_includes/custom/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!--Fonts from Google&quot;s Web font directory at http://google.com/webfonts --&gt;</span>
+</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これを非常に簡単な設定で上書きします。</p>
+
+<h3>_fonts.scss に日本語フォントを設定する</h3>
+
+<p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
+
+<figure class='code'><figcaption><span>sass/custom/_fonts.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -5,6 +5,6 @@</span>
+</span><span class='line'> //$sans: &quot;Optima&quot;, sans-serif;
+</span><span class='line'> //$serif: &quot;Baskerville&quot;, serif;
+</span><span class='line'> //$mono: &quot;Courier&quot;, monospace;
+</span><span class='line'><span class="gd">-//$heading-font-family: &quot;Verdana&quot;, sans-serif;</span>
+</span><span class='line'><span class="gi">+$heading-font-family: &quot;ヒラギノ角ゴ&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, &quot;メイリオ&quot;, Meiryo, &quot;ＭＳ Ｐゴシック&quot;,&quot;MS PGothic&quot;, &quot;Verdana&quot;, sans-serif;</span>
+</span><span class='line'> //$header-title-font-family: &quot;Futura&quot;, sans-serif;
+</span><span class='line'> //$header-subtitle-font-family: &quot;Futura&quot;, sans-serif;```
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>自分の環境は Windows Vista + Chrome なのですが、Mac や Windows XP の方々にも配慮して、&#8221;ヒラギノ角ゴシック&#8221;と&#8221;ＭＳ　Ｐゴシック&#8221;の設定を追加しています。</p>
+
+<p>お好みで他のフォントに変更しても良いかもしれませんね。</p>
+
+<h2>HTML の lang 属性を ja に設定する</h2>
+
+<p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
+
+<figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -1,7 +1,7 @@</span>
+</span><span class='line'> &lt;!DOCTYPE html&gt;
+</span><span class='line'> &lt;!--[if IEMobile 7 ]&gt;&lt;html class=&quot;no-js iem7&quot;&gt;&lt;![endif]--&gt;
+</span><span class='line'> &lt;!--[if lt IE 9]&gt;&lt;html class=&quot;no-js lte-ie8&quot;&gt;&lt;![endif]--&gt;
+</span><span class='line'><span class="gd">-&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;en&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
+</span><span class='line'><span class="gi">+&lt;!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]&gt;&lt;!--&gt;&lt;html class=&quot;no-js&quot; lang=&quot;ja&quot;&gt;&lt;!--&lt;![endif]--&gt;</span>
+</span><span class='line'> &lt;head&gt;
+</span><span class='line'>   &lt;meta charset=&quot;utf-8&quot;&gt;
+</span><span class='line'>   &lt;title&gt;Octopress のヘッダを日本語に対応させる - Tortoise-like pace&lt;/title&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[I've started a blog on Github.]]></title>
