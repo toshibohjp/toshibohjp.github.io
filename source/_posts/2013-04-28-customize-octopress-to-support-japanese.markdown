@@ -6,9 +6,13 @@ comments: true
 sharing: true
 categories: [octopress, localize] 
 ---
-Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。
+<strike>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。
 
-どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。
+どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike>
+
+これはとんだ冤罪でした。ブラウザ等の環境に依存する問題のようです。
+
+<!-- more -->
 
 ```bash
 $ cd octopress
