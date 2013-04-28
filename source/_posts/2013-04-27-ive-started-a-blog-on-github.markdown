@@ -4,7 +4,7 @@ title: "I've started a blog on Github."
 date: 2013-04-27 16:42
 comments: true
 sharing: true
-categories: [github, blog, octopress]
+categories: [octopress]
 ---
 
 [githubを使って独自ブログをはじめる方法メモ](http://www.hisasann.com/blog/2012/10/06/first-post/) を参考に Github にブログを作ってみました。

@@ -93,3 +93,6 @@ google_analytics_tracking_id: UA-40465573-1
 
 # Facebook Like
 facebook_like: true
+
+# Pocket
+pocket_button: true

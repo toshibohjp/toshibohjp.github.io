@@ -4,7 +4,7 @@ title: "Octopress のヘッダを日本語に対応させる"
 date: 2013-04-28 09:56
 comments: true
 sharing: true
-categories: [github, blog, octopress, localize] 
+categories: [octopress, localize] 
 ---
 Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。
 
