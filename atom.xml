@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-28T14:00:53+09:00</updated>
+  <updated>2013-04-28T14:08:22+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -31,9 +31,9 @@
 
 <h2>_config.yml に設定を追加する</h2>
 
-<p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしましょう。</p>
+<p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしてみます。</p>
 
-<p>_config.yml に以下を追加します。</p>
+<p>_config.yml の末尾に <code>pocket_putton</code> という属性を追加します。<code>git diff</code> を取ったものが以下のコードです。</p>
 
 <figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
