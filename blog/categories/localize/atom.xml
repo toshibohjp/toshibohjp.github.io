@@ -4,7 +4,7 @@
   <title><![CDATA[Category: localize | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/localize/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-28T15:17:50+09:00</updated>
+  <updated>2013-04-28T16:04:18+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -18,9 +18,15 @@
     <link href="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/"/>
     <updated>2013-04-28T09:56:00+09:00</updated>
     <id>http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese</id>
-    <content type="html"><![CDATA[<p>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
+    <content type="html"><![CDATA[<p><strike>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
 
-<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</p>
+<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike></p>
+
+<p>これはとんだ冤罪でした。iPhone でアクセスすると、見事に日本語の表示ができます。
+私の環境のWindows Vista + Chrome に依存する問題のようです。</p>
+
+<!-- more -->
+
 
 <p><code>bash
 $ cd octopress

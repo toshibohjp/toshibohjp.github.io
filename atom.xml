@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-28T15:17:50+09:00</updated>
+  <updated>2013-04-28T16:04:18+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -93,9 +93,17 @@
     <link href="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/"/>
     <updated>2013-04-28T09:56:00+09:00</updated>
     <id>http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese</id>
-    <content type="html"><![CDATA[<p>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
+    <content type="html"><![CDATA[<p><strike>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
 
-<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</p>
+<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike></p>
+
+<p>これはとんだ冤罪でした。iPhone でアクセスすると、見事に日本語の表示ができます。
+私の環境のWindows Vista + Chrome に依存する問題のようです。</p>
+
+<!-- more -->
+
+
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
@@ -178,14 +186,21 @@
     <id>http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github</id>
     <content type="html"><![CDATA[<p><a href="http://www.hisasann.com/blog/2012/10/06/first-post/">githubを使って独自ブログをはじめる方法メモ</a> を参考に Github にブログを作ってみました。</p>
 
+<!-- more -->
+
+
 <p>唯一、手順と違うところは、自分の環境では rvm を使用しているので、<code>sudo</code> を <code>rvmsudo</code> にしただけです。</p>
 
 <p>Markdown の書き方もおぼつきませんが、勉強しながらぼちぼち続けてみます。</p>
 
-<h2>Icing on the cake</h2>
+<h2>蛇足</h2>
 
 <p>Octopress がデフォルトのままだと、見出しに日本語を使っても正常に表示されませんでした。
 <a href="http://qiita.com">Qiita</a> は日本のサイトだけあって、しっかり表示できてますね。</p>
+
+<h2>追記 (2013/04/28)</h2>
+
+<p>見出しで使用するフォントを変更することで対応しましたが、変更しなくても iPhone では見事に日本語フォントをできるので、使用しているブラウザ(Chrome)やら環境の問題のようです。</p>
 ]]></content>
   </entry>
   
