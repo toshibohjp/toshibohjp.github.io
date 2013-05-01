@@ -4,7 +4,7 @@
   <title><![CDATA[Category: github | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T06:28:28+09:00</updated>
+  <updated>2013-05-02T06:57:25+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -220,6 +220,7 @@ git clone git://github.com/octocat/Spoon-Knife.git
 <ul>
 <li><a href="http://d.hatena.ne.jp/takuya_1st/20110813/1313223707">HTTPプロキシ経由でのSSH（その２）connectを使う</a></li>
 <li><a href="http://nobeans.hatenablog.com/entry/20090520/1242835619">プロキシ経由でgithubにpull&amp;pushする</a></li>
+<li><a href="http://morizyun.github.io/blog/octopress-table-tag-css/">Octopressでテーブルをmarkdownで編集できるようにする - 酒と泪とRubyとRails</a></li>
 </ul>
 
 ]]></content>
