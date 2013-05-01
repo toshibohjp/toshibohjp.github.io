@@ -96,3 +96,8 @@ facebook_like: true
 
 # Pocket
 pocket_button: true
+
+# RDcount:
+rdiscount:
+  extensions: ['generate_toc']
+  toc_token: "{:TOC}"
