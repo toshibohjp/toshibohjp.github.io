@@ -145,3 +145,4 @@ git clone git://github.com/octocat/Spoon-Knife.git
 ----
 - [HTTPプロキシ経由でのSSH（その２）connectを使う](http://d.hatena.ne.jp/takuya_1st/20110813/1313223707)
 - [プロキシ経由でgithubにpull&pushする](http://nobeans.hatenablog.com/entry/20090520/1242835619)
+- [Octopressでテーブルをmarkdownで編集できるようにする - 酒と泪とRubyとRails](http://morizyun.github.io/blog/octopress-table-tag-css/)
