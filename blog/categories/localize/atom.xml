@@ -4,7 +4,7 @@
   <title><![CDATA[Category: localize | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/localize/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-29T11:22:47+09:00</updated>
+  <updated>2013-05-02T06:28:28+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -42,7 +42,7 @@ $ cd octopress
 ```
 これを非常に簡単な設定で上書きします。</p>
 
-<h3>_fonts.scss に日本語フォントを設定する</h3>
+<h3 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h3>
 
 <p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
 
@@ -61,7 +61,7 @@ $ cd octopress
 
 <p>お好みで他のフォントに変更しても良いかもしれませんね。</p>
 
-<h2>HTML の lang 属性を ja に設定する</h2>
+<h2 id="HTML+の+lang+属性を+ja+に設定する">HTML の lang 属性を ja に設定する</h2>
 
 <p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
 

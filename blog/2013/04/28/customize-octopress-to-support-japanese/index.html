@@ -21,6 +21,7 @@
   <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -142,7 +143,7 @@
 
 <p>これを非常に簡単な設定で上書きします。</p>
 
-<h3>_fonts.scss に日本語フォントを設定する</h3>
+<h3 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h3>
 
 <p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
 
@@ -169,7 +170,7 @@
 
 <p>お好みで他のフォントに変更しても良いかもしれませんね。</p>
 
-<h2>HTML の lang 属性を ja に設定する</h2>
+<h2 id="HTML+の+lang+属性を+ja+に設定する">HTML の lang 属性を ja に設定する</h2>
 
 <p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
 
@@ -308,6 +309,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/28/add-pocket-button-in-the-social-box/">Octopress に「Pocket」に追加するボタンをつける</a>

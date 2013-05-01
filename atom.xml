@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-29T11:22:47+09:00</updated>
+  <updated>2013-05-02T06:28:28+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,245 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linxu 上の HTTPS ポートで SSH を使う]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/"/>
+    <updated>2013-05-02T05:28:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux</id>
+    <content type="html"><![CDATA[<p>私の仕事場では、社内にプロキシサーバが設置されており、通常の SSH ポート(22番)が外部サーバに対して使用できません。git みたいなオシャレなプロトコルには対応していないのです。しかしそれでも、GitHub に接続する必要にかられることがあります。</p>
+
+<p>ここでは、HTTP ポート(80番) と HTTPS ポート(443番) はどのプロキシでも接続できるので、443番ポートを使用して SSH で GitHub に接続する方法をご紹介します。</p>
+
+<!-- more -->
+
+
+<p>
+  <ul>
+
+  <ul>
+  <li><a href="#環境変数を設定する">環境変数を設定する</a>  </li>
+  <li><a href="#connet+のインストール">connet のインストール</a>  </li>
+  <li><a href="#.ssh/config+を設定する">.ssh/config を設定する</a>  </li>
+  <li><a href="#接続を確認する">接続を確認する</a>  </li>
+  <li><a href="#git://+プロトコルにも対応する">git:// プロトコルにも対応する</a>  </li>
+  <li><a href="#参考">参考</a>  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h2 id="環境変数を設定する">環境変数を設定する</h2>
+
+<p>まずは必要な環境変数を設定します。
+以下のような情報でプロキシに接続するとします。</p>
+
+<table>
+<thead>
+<tr>
+<th> 項目                   </th>
+<th> 値                                </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ユーザ名               </td>
+<td> user                               </td>
+</tr>
+<tr>
+<td> パスワード             </td>
+<td> passwd                            </td>
+</tr>
+<tr>
+<td> プロキシサーバ         </td>
+<td> your.proxy-server.com             </td>
+</tr>
+<tr>
+<td> ポート番号             </td>
+<td> 8080                              </td>
+</tr>
+<tr>
+<td> プロキシから除外       </td>
+<td> localhost,127.0.0.1,192.168.0.0/24</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>以下のスクリプトを .bashrc に記述します。また私は CentOS を使用しているので、yum のための環境変数もここで設定しています。さらに私は個人用途のサーバで別のユーザを作成したりする開発環境なので、 /etc/profile.d/proxy.sh というファイルを作って、そこに突っ込んでいますが、オススメはしません。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span>http://user:passwd@your.proxy-server.com:8080
+</span><span class='line'><span class="nb">export </span><span class="nv">https_proxy</span><span class="o">=</span><span class="nv">$http_proxy</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">http_proxy_user</span><span class="o">=</span>user
+</span><span class='line'><span class="nb">export </span><span class="nv">http_proxy_pass</span><span class="o">=</span>pass
+</span><span class='line'><span class="nb">export </span><span class="nv">https_proxy_user</span><span class="o">=</span><span class="nv">$http_proxy_user</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">https_proxy_pass</span><span class="o">=</span><span class="nv">$http_proxy_pass</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&quot;localhost,127.0.0.1,192.168.0.0/24&quot;</span>
+</span><span class='line'><span class="c"># yum</span>
+</span><span class='line'><span class="nv">proxy</span><span class="o">=</span>http://your-server.com:8080
+</span><span class='line'><span class="nv">proxy_username</span><span class="o">=</span><span class="nv">$http_proxy_user</span>
+</span><span class='line'><span class="nv">proxy_password</span><span class="o">=</span><span class="nv">$http_proxy_pass</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2 id="connet+のインストール">connet のインストール</h2>
+
+<p>プロキシを中継するように connect をインストールします。</p>
+
+<figure class='code'><figcaption><span>connectのインストール</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># apt の場合</span>
+</span><span class='line'><span class="nv">$ </span>aptitude install connect-proxy
+</span><span class='line'><span class="c"># yum の場合</span>
+</span><span class='line'><span class="nv">$ </span>yum install connect
+</span><span class='line'><span class="c"># cygwin の場合</span>
+</span><span class='line'><span class="nv">$ </span>apt-cyg install connect-proxy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>パッケージ管理ツールが使えない場合は、以下のコマンドで自力でビルドします。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://www.meadowy.org/~gotoh/ssh/connect.c
+</span><span class='line'><span class="nv">$ </span>gcc -O2 -o connect connect.c
+</span><span class='line'><span class="nv">$ </span>mv connect /usr/local/bin/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2 id=".ssh/config+を設定する">.ssh/config を設定する</h2>
+
+<p>.ssh/config に以下の設定を追加します。<code>IdentityFile</code> には GitHub で使用する秘密鍵を <code>~/.ssh/id_rsa</code>  のように、<code>プロキシサーバ名：ポート番号</code> にはプロキシサーバ名とポート番号を、<code>proxy.your-domain.com:8080</code> のように編集します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Host github.com
+</span><span class='line'>  User git
+</span><span class='line'>  Port 443
+</span><span class='line'>  Hostname ssh.github.com
+</span><span class='line'>  IdentityFile 秘密鍵のファイル名
+</span><span class='line'>  TCPKeepAlive yes
+</span><span class='line'>  IdentitiesOnly yes
+</span><span class='line'>  ProxyCommand connect -H プロキシサーバ名:ポート番号 %h %p
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここでは、SSH を使用する際に443番ポートを使用し connect でプロキシを中継して GitHub と通信するようにしています。</p>
+
+<p>さらに、新規に .ssh/config を追加した場合は、アクセス権を以下のように設定しないと接続に失敗します。Unix に慣れている方には常識かも知れませんが、私は最初にアクセス権を設定をグループに読み書き権限が付与されており、接続エラーで結構ハマりました。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>chmod 600 ~/.ssh/config
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2 id="接続を確認する">接続を確認する</h2>
+
+<p>SSH で GitHub に接続できるか確認します。以下のようにコマンドを実行し、以下のような出力結果になれば接続は成功です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh git@github.com
+</span><span class='line'>Enter proxy authentication password <span class="k">for</span> ユーザ名@proxy.your-domain.com:
+</span><span class='line'>Enter passphrase <span class="k">for </span>key <span class="s1">&#39;/home/ユーザ名/.ssh/id_rsa&#39;</span>:
+</span><span class='line'>PTY allocation request failed on channel 0
+</span><span class='line'>Hi ユーザ名! You<span class="err">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
+</span><span class='line'>                Connection to ssh.github.com closed.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>毎回 ssh のパスフレーズを入力するのを省略したい場合は、以下のコマンドを実行すると、それ以降のパスフレーズの入力を省略することができます。 <code>~/.ssh/id_rsa</code> はご自分の秘密鍵のファイル名に読み替えて入力してください。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh-agent bash
+</span><span class='line'><span class="nv">$ </span>ssh-add ~/.ssh/id_rsa
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これで以下のコマンドを実行すれば、443番ポート経由で SSH のアクセスが可能になってる思います。</p>
+
+<p>試し octocat/Spoon-Knife リポジトリからクローンしてください。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git@github.com:octocat/Spoon-Knife.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2 id="git://+プロトコルにも対応する">git:// プロトコルにも対応する</h2>
+
+<p>冒頭でプロキシが git プロトコルに対応していないと書きましたが、調べているうちに、git プロトコルに対応できることがわかりました。</p>
+
+<p>まず、以下のようなスクリプトを、例えば $HOME ディレクトリに記述します。ファイル名は git-proxy.sh とします。</p>
+
+<figure class='code'><figcaption><span>~/git-proxy.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>connect -H proxy.your-server.com:8080 <span class="nv">$1</span> <span class="nv">$2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>記述したスクリプトのアクセス権を設定します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>chmod 755 ~/git-proxy.h
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>次に以下の設定を .bashrc に記述します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">GIT_PROXY_COMMAND</span><span class="o">=</span>~/git-proxy.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>source .bashrc</code> を忘れずに実行して、以下のようにコマンドを実行して接続を確認します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git://github.com/octocat/Spoon-Knife.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/takuya_1st/20110813/1313223707">HTTPプロキシ経由でのSSH（その２）connectを使う</a></li>
+<li><a href="http://nobeans.hatenablog.com/entry/20090520/1242835619">プロキシ経由でgithubにpull&amp;pushする</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress に「Pocket」に追加するボタンをつける]]></title>
@@ -25,11 +264,11 @@
 <!-- more -->
 
 
-<h2>Pocket ボタンのコードを取得する</h2>
+<h2 id="Pocket+ボタンのコードを取得する">Pocket ボタンのコードを取得する</h2>
 
 <p><a href="http://getpocket.com/publisher/button">Pocket for Publishers: Pocket Button</a>にアクセスして、Pocket ボタンのコードを取得します。スタイルはお好みで選んでください。</p>
 
-<h2>_config.yml に設定を追加する</h2>
+<h2 id="_config.yml+に設定を追加する">_config.yml に設定を追加する</h2>
 
 <p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしてみます。</p>
 
@@ -61,7 +300,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>shareing.html を修正する</h2>
+<h2 id="shareing.html+を修正する">shareing.html を修正する</h2>
 
 <p>source/<em>includes/post/sharing.html に先ほどのコードを貼り付けます。加えて、先ほど </em>config.yml に設定した属性でボタンの表示をするかどうかのテストを行うように &#8217;<code>...</code> で囲みます。</p>
 
@@ -103,7 +342,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>参考サイト</h2>
+<h2 id="参考サイト">参考サイト</h2>
 
 <ul>
 <li><a href="http://morizyun.github.io/blog/octopress-hatena-disqus-new-tab/">5分でできる簡単 Octopress セッティング - 酒と泪とRubyとRails</a></li>
@@ -147,7 +386,7 @@
 
 <p>これを非常に簡単な設定で上書きします。</p>
 
-<h3>_fonts.scss に日本語フォントを設定する</h3>
+<h3 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h3>
 
 <p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
 
@@ -174,7 +413,7 @@
 
 <p>お好みで他のフォントに変更しても良いかもしれませんね。</p>
 
-<h2>HTML の lang 属性を ja に設定する</h2>
+<h2 id="HTML+の+lang+属性を+ja+に設定する">HTML の lang 属性を ja に設定する</h2>
 
 <p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
 
@@ -217,12 +456,12 @@
 
 <p>Markdown の書き方もおぼつきませんが、勉強しながらぼちぼち続けてみます。</p>
 
-<h2>蛇足</h2>
+<h2 id="蛇足">蛇足</h2>
 
 <p>Octopress がデフォルトのままだと、見出しに日本語を使っても正常に表示されませんでした。
 <a href="http://qiita.com">Qiita</a> は日本のサイトだけあって、しっかり表示できてますね。</p>
 
-<h2>追記 (2013/04/28)</h2>
+<h2 id="追記+(2013/04/28)">追記 (2013/04/28)</h2>
 
 <p>見出しで使用するフォントを変更することで対応しましたが、変更しなくても iPhone では見事に日本語フォントをできるので、使用しているブラウザ(Chrome)やら環境の問題のようです。</p>
 ]]></content>

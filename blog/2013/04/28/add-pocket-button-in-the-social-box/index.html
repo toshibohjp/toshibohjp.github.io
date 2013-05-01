@@ -21,6 +21,7 @@
   <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -119,11 +120,11 @@
 <!-- more -->
 
 
-<h2>Pocket ボタンのコードを取得する</h2>
+<h2 id="Pocket+ボタンのコードを取得する">Pocket ボタンのコードを取得する</h2>
 
 <p><a href="http://getpocket.com/publisher/button">Pocket for Publishers: Pocket Button</a>にアクセスして、Pocket ボタンのコードを取得します。スタイルはお好みで選んでください。</p>
 
-<h2>_config.yml に設定を追加する</h2>
+<h2 id="_config.yml+に設定を追加する">_config.yml に設定を追加する</h2>
 
 <p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしてみます。</p>
 
@@ -155,7 +156,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>shareing.html を修正する</h2>
+<h2 id="shareing.html+を修正する">shareing.html を修正する</h2>
 
 <p>source/<em>includes/post/sharing.html に先ほどのコードを貼り付けます。加えて、先ほど </em>config.yml に設定した属性でボタンの表示をするかどうかのテストを行うように &#8217;<code>...</code> で囲みます。</p>
 
@@ -197,7 +198,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>参考サイト</h2>
+<h2 id="参考サイト">参考サイト</h2>
 
 <ul>
 <li><a href="http://morizyun.github.io/blog/octopress-hatena-disqus-new-tab/">5分でできる簡単 Octopress セッティング - 酒と泪とRubyとRails</a></li>
@@ -260,6 +261,8 @@
         <a class="basic-alignment left" href="/blog/2013/04/28/customize-octopress-to-support-japanese/" title="Previous Post: Octopress のヘッダを日本語に対応させる">&laquo; Octopress のヘッダを日本語に対応させる</a>
       
       
+        <a class="basic-alignment right" href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/" title="Next Post: Linxu 上の HTTPS ポートで SSH を使う">Linxu 上の HTTPS ポートで SSH を使う &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -314,6 +317,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/28/add-pocket-button-in-the-social-box/">Octopress に「Pocket」に追加するボタンをつける</a>

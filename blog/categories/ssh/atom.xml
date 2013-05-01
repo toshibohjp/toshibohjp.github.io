@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ssh | Tortoise-like pace]]></title>
+  <link href="http://toshibohjp.github.io/blog/categories/ssh/atom.xml" rel="self"/>
+  <link href="http://toshibohjp.github.io/"/>
+  <updated>2013-05-02T06:28:28+09:00</updated>
+  <id>http://toshibohjp.github.io/</id>
+  <author>
+    <name><![CDATA[toshibohjp]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linxu 上の HTTPS ポートで SSH を使う]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/"/>
+    <updated>2013-05-02T05:28:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux</id>
+    <content type="html"><![CDATA[<p>私の仕事場では、社内にプロキシサーバが設置されており、通常の SSH ポート(22番)が外部サーバに対して使用できません。git みたいなオシャレなプロトコルには対応していないのです。しかしそれでも、GitHub に接続する必要にかられることがあります。</p>
+
+<p>ここでは、HTTP ポート(80番) と HTTPS ポート(443番) はどのプロキシでも接続できるので、443番ポートを使用して SSH で GitHub に接続する方法をご紹介します。</p>
+
+<!-- more -->
+
+
+<p>
+  <ul>
+
+  <ul>
+  <li><a href="#環境変数を設定する">環境変数を設定する</a>  </li>
+ </ul>
+ <li><a href="#!/bin/bash">!/bin/bash</a> </li>
+ <li><a href="#yum">yum</a>
+  <ul>
+  <li><a href="#connet+のインストール">connet のインストール</a>  </li>
+ </ul>
+ <li><a href="#apt+の場合">apt の場合</a> </li>
+ <li><a href="#yum+の場合">yum の場合</a> </li>
+ <li><a href="#cygwin+の場合">cygwin の場合</a>
+  <ul>
+  <li><a href="#.ssh/config+を設定する">.ssh/config を設定する</a>  </li>
+  <li><a href="#接続を確認する">接続を確認する</a>  </li>
+  <li><a href="#git://+プロトコルにも対応する">git:// プロトコルにも対応する</a>  </li>
+ </ul>
+ <li><a href="#!/bin/sh">!/bin/sh</a>
+  <ul>
+  <li><a href="#参考">参考</a>  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h2 id="環境変数を設定する">環境変数を設定する</h2>
+
+<p>まずは必要な環境変数を設定します。
+以下のような情報でプロキシに接続するとします。</p>
+
+<table>
+<thead>
+<tr>
+<th> 項目                   </th>
+<th> 値                                </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ユーザ名               </td>
+<td> user                               </td>
+</tr>
+<tr>
+<td> パスワード             </td>
+<td> passwd                            </td>
+</tr>
+<tr>
+<td> プロキシサーバ         </td>
+<td> your.proxy-server.com             </td>
+</tr>
+<tr>
+<td> ポート番号             </td>
+<td> 8080                              </td>
+</tr>
+<tr>
+<td> プロキシから除外       </td>
+<td> localhost,127.0.0.1,192.168.0.0/24</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>以下のスクリプトを .bashrc に記述します。また私は CentOS を使用しているので、yum のための環境変数もここで設定しています。さらに私は個人用途のサーバで別のユーザを作成したりする開発環境なので、 /etc/profile.d/proxy.sh というファイルを作って、そこに突っ込んでいますが、オススメはしません。
+```bash</p>
+
+<h1 id="!/bin/bash">!/bin/bash</h1>
+
+<p>export http_proxy=http://user:passwd@your.proxy-server.com:8080
+export https_proxy=$http_proxy
+export http_proxy_user=user
+export http_proxy_pass=pass
+export https_proxy_user=$http_proxy_user
+export https_proxy_pass=$http_proxy_pass
+export no_proxy="localhost,127.0.0.1,192.168.0.0/24"</p>
+
+<h1 id="yum">yum</h1>
+
+<p>proxy=http://your-server.com:8080
+proxy_username=$http_proxy_user
+proxy_password=$http_proxy_pass
+```</p>
+
+<h2 id="connet+のインストール">connet のインストール</h2>
+
+<p>プロキシを中継するように connect をインストールします。</p>
+
+<p>```bash connectのインストール</p>
+
+<h1 id="apt+の場合">apt の場合</h1>
+
+<p>$ aptitude install connect-proxy</p>
+
+<h1 id="yum+の場合">yum の場合</h1>
+
+<p>$ yum install connect</p>
+
+<h1 id="cygwin+の場合">cygwin の場合</h1>
+
+<p>$ apt-cyg install connect-proxy
+```</p>
+
+<p>パッケージ管理ツールが使えない場合は、以下のコマンドで自力でビルドします。
+<code>bash
+$ wget http://www.meadowy.org/~gotoh/ssh/connect.c
+$ gcc -O2 -o connect connect.c
+$ mv connect /usr/local/bin/
+</code></p>
+
+<h2 id=".ssh/config+を設定する">.ssh/config を設定する</h2>
+
+<p>.ssh/config に以下の設定を追加します。<code>IdentityFile</code> には GitHub で使用する秘密鍵を <code>~/.ssh/id_rsa</code>  のように、<code>プロキシサーバ名：ポート番号</code> にはプロキシサーバ名とポート番号を、<code>proxy.your-domain.com:8080</code> のように編集します。</p>
+
+<p><code>
+Host github.com
+  User git
+  Port 443
+  Hostname ssh.github.com
+  IdentityFile 秘密鍵のファイル名
+  TCPKeepAlive yes
+  IdentitiesOnly yes
+  ProxyCommand connect -H プロキシサーバ名:ポート番号 %h %p
+</code></p>
+
+<p>ここでは、SSH を使用する際に443番ポートを使用し connect でプロキシを中継して GitHub と通信するようにしています。</p>
+
+<p>さらに、新規に .ssh/config を追加した場合は、アクセス権を以下のように設定しないと接続に失敗します。Unix に慣れている方には常識かも知れませんが、私は最初にアクセス権を設定をグループに読み書き権限が付与されており、接続エラーで結構ハマりました。</p>
+
+<p><code>bash
+$ chmod 600 ~/.ssh/config
+</code></p>
+
+<h2 id="接続を確認する">接続を確認する</h2>
+
+<p>SSH で GitHub に接続できるか確認します。以下のようにコマンドを実行し、以下のような出力結果になれば接続は成功です。</p>
+
+<p>```bash
+$ ssh git@github.com
+Enter proxy authentication password for ユーザ名@proxy.your-domain.com:
+Enter passphrase for key '/home/ユーザ名/.ssh/id_rsa':
+PTY allocation request failed on channel 0
+Hi ユーザ名! You've successfully authenticated, but GitHub does not provide shell access.</p>
+
+<pre><code>            Connection to ssh.github.com closed.
+</code></pre>
+
+<p>```</p>
+
+<p>毎回 ssh のパスフレーズを入力するのを省略したい場合は、以下のコマンドを実行すると、それ以降のパスフレーズの入力を省略することができます。 <code>~/.ssh/id_rsa</code> はご自分の秘密鍵のファイル名に読み替えて入力してください。
+<code>bash
+$ ssh-agent bash
+$ ssh-add ~/.ssh/id_rsa
+</code></p>
+
+<p>これで以下のコマンドを実行すれば、443番ポート経由で SSH のアクセスが可能になってる思います。</p>
+
+<p>試し octocat/Spoon-Knife リポジトリからクローンしてください。
+<code>bash
+$ git clone git@github.com:octocat/Spoon-Knife.git
+</code></p>
+
+<h2 id="git://+プロトコルにも対応する">git:// プロトコルにも対応する</h2>
+
+<p>冒頭でプロキシが git プロトコルに対応していないと書きましたが、調べているうちに、git プロトコルに対応できることがわかりました。</p>
+
+<p>まず、以下のようなスクリプトを、例えば $HOME ディレクトリに記述します。ファイル名は git-proxy.sh とします。
+```bash ~/git-proxy.sh</p>
+
+<h1 id="!/bin/sh">!/bin/sh</h1>
+
+<p>connect -H proxy.your-server.com:8080 $1 $2
+```</p>
+
+<p>記述したスクリプトのアクセス権を設定します。
+<code>bash
+$ chmod 755 ~/git-proxy.h
+</code></p>
+
+<p>次に以下の設定を .bashrc に記述します。
+<code>bash
+export GIT_PROXY_COMMAND=~/git-proxy.sh
+</code></p>
+
+<p><code>source .bashrc</code> を忘れずに実行して、以下のようにコマンドを実行して接続を確認します。
+<code>bash
+git clone git://github.com/octocat/Spoon-Knife.git
+</code></p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/takuya_1st/20110813/1313223707">HTTPプロキシ経由でのSSH（その２）connectを使う</a></li>
+<li><a href="http://nobeans.hatenablog.com/entry/20090520/1242835619">プロキシ経由でgithubにpull&amp;pushする</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

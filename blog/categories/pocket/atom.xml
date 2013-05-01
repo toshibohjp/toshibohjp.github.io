@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pocket | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/pocket/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-04-29T11:22:47+09:00</updated>
+  <updated>2013-05-02T06:28:28+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -25,11 +25,11 @@
 <!-- more -->
 
 
-<h2>Pocket ボタンのコードを取得する</h2>
+<h2 id="Pocket+ボタンのコードを取得する">Pocket ボタンのコードを取得する</h2>
 
 <p><a href="http://getpocket.com/publisher/button">Pocket for Publishers: Pocket Button</a>にアクセスして、Pocket ボタンのコードを取得します。スタイルはお好みで選んでください。</p>
 
-<h2>_config.yml に設定を追加する</h2>
+<h2 id="_config.yml+に設定を追加する">_config.yml に設定を追加する</h2>
 
 <p>せっかくなので、設定で Pocket ボタンをオン／オフできるようにしてみます。</p>
 
@@ -49,12 +49,12 @@
 
 <p>```yaml _config.yml</p>
 
-<h1>Pocket</h1>
+<h1 id="Pocket">Pocket</h1>
 
 <p>pocket_button: true
 ```</p>
 
-<h2>shareing.html を修正する</h2>
+<h2 id="shareing.html+を修正する">shareing.html を修正する</h2>
 
 <p>source/<em>includes/post/sharing.html に先ほどのコードを貼り付けます。加えて、先ほど </em>config.yml に設定した属性でボタンの表示をするかどうかのテストを行うように '<code>...</code> で囲みます。</p>
 
@@ -87,7 +87,7 @@
 </code>
 </p>
 
-<h2>参考サイト</h2>
+<h2 id="参考サイト">参考サイト</h2>
 
 <ul>
 <li><a href="http://morizyun.github.io/blog/octopress-hatena-disqus-new-tab/">5分でできる簡単 Octopress セッティング - 酒と泪とRubyとRails</a></li>

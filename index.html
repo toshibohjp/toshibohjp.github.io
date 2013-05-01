@@ -9,7 +9,7 @@
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="私は Pocket をかなり使い倒してます。何か興味深いページがあれば、「Pocketに追加する」で Pocket に保存しておき、後で読み返しながら興味深ければ Twitter でツイートして、後で使いそうな知識であれば Evernote に保存しておきタグで整理しています。 さて、 &hellip;">
+  <meta name="description" content="私の仕事場では、社内にプロキシサーバが設置されており、通常の SSH ポート(22番)が外部サーバに対して使用できません。git みたいなオシャレなプロトコルには対応していないのです。しかしそれでも、GitHub に接続する必要にかられることがあります。 ここでは、HTTP ポート(80番) と &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,6 +21,7 @@
   <link rel="canonical" href="http://toshibohjp.github.io">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -84,6 +85,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-02T05:28:00+09:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>私の仕事場では、社内にプロキシサーバが設置されており、通常の SSH ポート(22番)が外部サーバに対して使用できません。git みたいなオシャレなプロトコルには対応していないのです。しかしそれでも、GitHub に接続する必要にかられることがあります。</p>
+
+<p>ここでは、HTTP ポート(80番) と HTTPS ポート(443番) はどのプロキシでも接続できるので、443番ポートを使用して SSH で GitHub に接続する方法をご紹介します。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">続きを読む &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -269,6 +315,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/28/add-pocket-button-in-the-social-box/">Octopress に「Pocket」に追加するボタンをつける</a>
