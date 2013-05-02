@@ -9,7 +9,7 @@
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。 どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。 これはとんだ冤罪でした。iPhone でアクセスすると、 &hellip;">
+  <meta name="description" content="私の環境のWindows Vista + Chrome では、デフォルトのフォントだと見出しに上手く日本語が表示されません。 これを非常に簡単な設定で上書きします。 _fonts.scss に日本語フォントを設定する 以下のように $heading-font-family &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -114,37 +114,14 @@
   </header>
 
 
-<div class="entry-content"><p><strike>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
+<div class="entry-content"><p>私の環境のWindows Vista + Chrome では、デフォルトのフォントだと見出しに上手く日本語が表示されません。</p>
 
-<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike></p>
-
-<p>これはとんだ冤罪でした。iPhone でアクセスすると、見事に日本語の表示ができます。
-私の環境のWindows Vista + Chrome に依存する問題のようです。</p>
+<p>これを非常に簡単な設定で上書きします。</p>
 
 <!-- more -->
 
 
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>source/_includes/custom/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!--Fonts from Google&quot;s Web font directory at http://google.com/webfonts --&gt;</span>
-</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これを非常に簡単な設定で上書きします。</p>
-
-<h3 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h3>
+<h2 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h2>
 
 <p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
 
@@ -173,7 +150,7 @@
 
 <h2 id="HTML+の+lang+属性を+ja+に設定する">HTML の lang 属性を ja に設定する</h2>
 
-<p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
+<p>Octopress では、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
 
 <figure class='code'><figcaption><span>source/_includes/head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

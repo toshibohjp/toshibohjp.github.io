@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T20:47:52+09:00</updated>
+  <updated>2013-05-02T21:04:30+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -101,31 +101,14 @@
     <link href="http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/"/>
     <updated>2013-04-28T09:56:00+09:00</updated>
     <id>http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese</id>
-    <content type="html"><![CDATA[<p><strike>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。</p>
+    <content type="html"><![CDATA[<p>私の環境のWindows Vista + Chrome では、デフォルトのフォントだと見出しに上手く日本語が表示されません。</p>
 
-<p>どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike></p>
-
-<p>これはとんだ冤罪でした。iPhone でアクセスすると、見事に日本語の表示ができます。
-私の環境のWindows Vista + Chrome に依存する問題のようです。</p>
+<p>これを非常に簡単な設定で上書きします。</p>
 
 <!-- more -->
 
 
-<p><code>bash
-$ cd octopress
-</code></p>
-
-<p>```html source/_includes/custom/head.html</p>
-
-<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-
-
-<p><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-```
-これを非常に簡単な設定で上書きします。</p>
-
-<h3 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h3>
+<h2 id="_fonts.scss+に日本語フォントを設定する">_fonts.scss に日本語フォントを設定する</h2>
 
 <p>以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。</p>
 
@@ -146,7 +129,7 @@ $ cd octopress
 
 <h2 id="HTML+の+lang+属性を+ja+に設定する">HTML の lang 属性を ja に設定する</h2>
 
-<p>あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
+<p>Octopress では、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。</p>
 
 <p><code>diff source/_includes/head.html
 @@ -1,7 +1,7 @@
