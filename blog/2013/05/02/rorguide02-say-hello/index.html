@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>I've started a blog on Github. - Tortoise-like pace</title>
+  <title>[RailsGuides] #02 Rails で Hello を実行する - Tortoise-like pace</title>
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="githubを使って独自ブログをはじめる方法メモ を参考に Github にブログを作ってみました。 唯一、手順と違うところは、自分の環境では rvm を使用しているので、sudo を rvmsudo にしただけです。 Markdown の書き方もおぼつきませんが、勉強しながらぼちぼち続けてみます &hellip;">
+  <meta name="description" content="前回 に引き続いて RailsGuides の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。 {:TOC:} 4.2 Rails で &#8220;Hello&#8221; と言う Rails で &#8220;Hello&#8221; というために &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github">
+  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
@@ -89,7 +89,7 @@
   
   <header>
     
-      <h1 class="entry-title">I've Started a Blog on Github.</h1>
+      <h1 class="entry-title">[RailsGuides] #02 Rails で Hello を実行する</h1>
     
     
       <p class="meta">
@@ -105,7 +105,7 @@
   
 
 
-<time datetime="2013-04-27T16:42:00+09:00" pubdate data-updated="true">Apr 27<span>th</span>, 2013</time>
+<time datetime="2013-05-02T18:11:00+09:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -114,23 +114,102 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.hisasann.com/blog/2012/10/06/first-post/">githubを使って独自ブログをはじめる方法メモ</a> を参考に Github にブログを作ってみました。</p>
+<div class="entry-content"><p><a href="../rorguide01-creating-a-new-rails-project/">前回</a> に引き続いて <a href="http://guides.rubyonrails.org/getting_started.html">RailsGuides</a> の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。</p>
 
 <!-- more -->
 
 
-<p>唯一、手順と違うところは、自分の環境では rvm を使用しているので、<code>sudo</code> を <code>rvmsudo</code> にしただけです。</p>
+<p>{:TOC:}</p>
 
-<p>Markdown の書き方もおぼつきませんが、勉強しながらぼちぼち続けてみます。</p>
+<h3 id="4.2+Rails+で++Hello++と言う">4.2 Rails で &#8220;Hello&#8221; と言う</h3>
 
-<h2 id="蛇足">蛇足</h2>
+<p>Rails で &#8220;Hello&#8221; というために、最低限の Controller と View を作成します。以下のコマンドを実行します。</p>
 
-<p>Octopress がデフォルトのままだと、見出しに日本語を使っても正常に表示されませんでした。
-<a href="http://qiita.com">Qiita</a> は日本のサイトだけあって、しっかり表示できてますね。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails generate controller home index
+</span><span class='line'>      create  app/controllers/home_controller.rb
+</span><span class='line'>       route  get <span class="s2">&quot;home/index&quot;</span>
+</span><span class='line'>      invoke  erb
+</span><span class='line'>      create    app/views/home
+</span><span class='line'>      create    app/views/home/index.html.erb
+</span><span class='line'>      invoke  test_unit
+</span><span class='line'>      create    <span class="nb">test</span>/functional/home_controller_test.rb
+</span><span class='line'>      invoke  helper
+</span><span class='line'>      create    app/helpers/home_helper.rb
+</span><span class='line'>      invoke    test_unit
+</span><span class='line'>      create      <span class="nb">test</span>/unit/helpers/home_helper_test.rb
+</span><span class='line'>      invoke  assets
+</span><span class='line'>      invoke    coffee
+</span><span class='line'>      create      app/assets/javascripts/home.js.coffee
+</span><span class='line'>      invoke    scss
+</span><span class='line'>      create      app/assets/stylesheets/home.css.scss
+</span></code></pre></td></tr></table></div></figure>
 
-<h2 id="追記+(2013/04/28)">追記 (2013/04/28)</h2>
 
-<p>見出しで使用するフォントを変更することで対応しましたが、変更しなくても iPhone では見事に日本語フォントをできるので、使用しているブラウザ(Chrome)やら環境の問題のようです。</p>
+<p>次に好きなエディタで <code>app/views/home/index.html.erb</code> を編集します。私の場合は <code>vim app/views/home/index.html.erb</code>です。</p>
+
+<figure class='code'><figcaption><span>app/views/home/index.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">&lt;h1&gt;Hello, Rails&lt;/h1&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3 id="アプリケーションのホームページを設定する">アプリケーションのホームページを設定する</h3>
+
+<p>Controller と View を作成しましたが、&#8221;Hello Rails!&#8221; を表示させたい時に Rails に指示する必要があります。この場合では、&#8221;Welcom Aboard&#8221; スモークテスト の変わりに URL のルート(例えば、http://localhost:3000 のように)に表示させたいと思います。</p>
+
+<p>まず最初に、デフォルトページを削除します。私の場合は <code>git rm public/index.html</code> で Git から削除しましたが、Git を使わない場合は <code>rm public/index.html</code> です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git rm public/index.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>次に Rails に実際のホームページがどこかを指示する必要があります。 <code>config/routes.rb</code> をエディタで開いて編集します。以下に編集箇所を diff で示します。</p>
+
+<figure class='code'><figcaption><span>config/routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -48,7 +50,7 @@ Blog::Application.routes.draw do</span>
+</span><span class='line'>
+</span><span class='line'>   # You can have the root of your site routed with &quot;root&quot;
+</span><span class='line'>   # just remember to delete public/index.html.
+</span><span class='line'><span class="gd">-  # root :to =&gt; &#39;welcome#index&#39;</span>
+</span><span class='line'><span class="gi">+  root :to =&gt; &#39;home#index&#39;</span>
+</span><span class='line'>
+</span><span class='line'>   # See how all your routes lay out with &quot;rake routes&quot;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rails を起動してない場合は <code>rails server</code> で WEBrick を起動して、ブラウザでルート (http://localhost:3000/ など) で接続確認します。</p>
+
+<p><img src="/images/rails_guides/say-hello.jpg" title="Hello, Rails" alt="Hello, Rails"></p>
+
+<p><code>config/routes.rb</code> は特殊な DSL として、入ってきたリクエストを Controller や Action にどのように接続するかを指示するエントリをアプリケーションのルーティングファイルとして定義します。先ほど編集した `root :to => &#8220;home#index&#8221; は、ルートアクションを home コントローラーの index アクションへマップするように指示しています。</p>
+
+<p>ルーティングについてのより詳しい情報については <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside in</a> を参照してください。</p>
+
+<p>次回に続きます。</p>
 </div>
 
 
@@ -153,12 +232,12 @@
   
 
 
-<time datetime="2013-04-27T16:42:00+09:00" pubdate data-updated="true">Apr 27<span>th</span>, 2013</time>
+<time datetime="2013-05-02T18:11:00+09:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+    <a class='category' href='/blog/categories/ruby-on-rails/'>Ruby on Rails</a>, <a class='category' href='/blog/categories/tutorials/'>tutorials</a>
   
 </span>
 
@@ -171,7 +250,7 @@
   <script type="text/javascript" async="async">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
   
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -179,14 +258,14 @@
   
   <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
   
-  <a href="http://b.hatena.ne.jp/entry/http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="http://b.hatena.ne.jp/entry/http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
 
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/" title="Previous Post: [RailsGuides] #01 RailsGuides で Rails をはじめてみる">&laquo; [RailsGuides] #01 RailsGuides で Rails をはじめてみる</a>
       
-        <a class="basic-alignment right" href="/blog/2013/04/28/customize-octopress-to-support-japanese/" title="Next Post: Octopress のヘッダを日本語に対応させる">Octopress のヘッダを日本語に対応させる &raquo;</a>
       
     </p>
   </footer>
@@ -327,8 +406,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/';
-        var disqus_url = 'http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/';
+        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/';
+        var disqus_url = 'http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/';
         var disqus_script = 'embed.js';
       
     (function () {

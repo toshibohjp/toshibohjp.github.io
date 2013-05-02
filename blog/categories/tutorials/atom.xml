@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tutorials | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/tutorials/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T19:31:16+09:00</updated>
+  <updated>2013-05-02T19:46:29+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[RailsGuides] #02 Rails で Hello を実行する]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/"/>
+    <updated>2013-05-02T18:11:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello</id>
+    <content type="html"><![CDATA[<p><a href="../rorguide01-creating-a-new-rails-project/">前回</a> に引き続いて <a href="http://guides.rubyonrails.org/getting_started.html">RailsGuides</a> の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。</p>
+
+<!-- more -->
+
+
+<p>{:TOC:}</p>
+
+<h3 id="4.2+Rails+で++Hello++と言う">4.2 Rails で "Hello" と言う</h3>
+
+<p>Rails で "Hello" というために、最低限の Controller と View を作成します。以下のコマンドを実行します。</p>
+
+<p>```bash
+$ rails generate controller home index</p>
+
+<pre><code>  create  app/controllers/home_controller.rb
+   route  get "home/index"
+  invoke  erb
+  create    app/views/home
+  create    app/views/home/index.html.erb
+  invoke  test_unit
+  create    test/functional/home_controller_test.rb
+  invoke  helper
+  create    app/helpers/home_helper.rb
+  invoke    test_unit
+  create      test/unit/helpers/home_helper_test.rb
+  invoke  assets
+  invoke    coffee
+  create      app/assets/javascripts/home.js.coffee
+  invoke    scss
+  create      app/assets/stylesheets/home.css.scss
+</code></pre>
+
+<p>```</p>
+
+<p>次に好きなエディタで <code>app/views/home/index.html.erb</code> を編集します。私の場合は <code>vim app/views/home/index.html.erb</code>です。</p>
+
+<p>```erb app/views/home/index.html.erb</p>
+
+<h1>Hello, Rails</h1>
+
+
+<p>```</p>
+
+<h3 id="アプリケーションのホームページを設定する">アプリケーションのホームページを設定する</h3>
+
+<p>Controller と View を作成しましたが、"Hello Rails!" を表示させたい時に Rails に指示する必要があります。この場合では、"Welcom Aboard" スモークテスト の変わりに URL のルート(例えば、http://localhost:3000 のように)に表示させたいと思います。</p>
+
+<p>まず最初に、デフォルトページを削除します。私の場合は <code>git rm public/index.html</code> で Git から削除しましたが、Git を使わない場合は <code>rm public/index.html</code> です。
+<code>bash
+git rm public/index.html
+</code></p>
+
+<p>次に Rails に実際のホームページがどこかを指示する必要があります。 <code>config/routes.rb</code> をエディタで開いて編集します。以下に編集箇所を diff で示します。
+```diff config/routes.rb
+@@ -48,7 +50,7 @@ Blog::Application.routes.draw do</p>
+
+<p>   # You can have the root of your site routed with "root"
+   # just remember to delete public/index.html.
+-  # root :to => 'welcome#index'
++  root :to => 'home#index'</p>
+
+<p>   # See how all your routes lay out with "rake routes"</p>
+
+<p>```</p>
+
+<p>Rails を起動してない場合は <code>rails server</code> で WEBrick を起動して、ブラウザでルート (http://localhost:3000/ など) で接続確認します。</p>
+
+<p><img src="/images/rails_guides/say-hello.jpg" title="Hello, Rails" alt="Hello, Rails"></p>
+
+<p><code>config/routes.rb</code> は特殊な DSL として、入ってきたリクエストを Controller や Action にどのように接続するかを指示するエントリをアプリケーションのルーティングファイルとして定義します。先ほど編集した `root :to => "home#index" は、ルートアクションを home コントローラーの index アクションへマップするように指示しています。</p>
+
+<p>ルーティングについてのより詳しい情報については <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside in</a> を参照してください。</p>
+
+<p>次回に続きます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[RailsGuides] #01 RailsGuides で Rails をはじめてみる]]></title>
@@ -85,7 +167,7 @@ $ ohai platform platform_version
 
 <p>$ rvm --version</p>
 
-<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#58;&#119;&#97;&#x79;&#x6e;&#101;&#x65;&#115;&#x65;&#x67;&#x75;&#x69;&#x6e;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#x77;&#97;&#x79;&#x6e;&#101;&#101;&#115;&#x65;&#103;&#117;&#105;&#x6e;&#x40;&#103;&#109;&#97;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a>, Michal Papis <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#109;&#112;&#x61;&#112;&#105;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">&#109;&#x70;&#97;&#112;&#105;&#x73;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#x6d;</a> [https://rvm.io/]</p>
+<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#119;&#97;&#x79;&#x6e;&#x65;&#x65;&#115;&#101;&#103;&#117;&#105;&#x6e;&#x40;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#99;&#x6f;&#109;">&#x77;&#x61;&#121;&#110;&#x65;&#x65;&#115;&#x65;&#103;&#x75;&#x69;&#110;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;</a>, Michal Papis <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x6d;&#x70;&#97;&#112;&#105;&#x73;&#x40;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#x6d;&#x70;&#x61;&#x70;&#105;&#115;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a> [https://rvm.io/]</p>
 
 <p>$ ruby --version
 ruby 1.9.3p392 (2013-02-22 revision 39386) [i686-linux]</p>

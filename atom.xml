@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T19:31:16+09:00</updated>
+  <updated>2013-05-02T19:46:29+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[RailsGuides] #02 Rails で Hello を実行する]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/"/>
+    <updated>2013-05-02T18:11:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello</id>
+    <content type="html"><![CDATA[<p><a href="../rorguide01-creating-a-new-rails-project/">前回</a> に引き続いて <a href="http://guides.rubyonrails.org/getting_started.html">RailsGuides</a> の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。</p>
+
+<!-- more -->
+
+
+<p>{:TOC:}</p>
+
+<h3 id="4.2+Rails+で++Hello++と言う">4.2 Rails で &#8220;Hello&#8221; と言う</h3>
+
+<p>Rails で &#8220;Hello&#8221; というために、最低限の Controller と View を作成します。以下のコマンドを実行します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails generate controller home index
+</span><span class='line'>      create  app/controllers/home_controller.rb
+</span><span class='line'>       route  get <span class="s2">&quot;home/index&quot;</span>
+</span><span class='line'>      invoke  erb
+</span><span class='line'>      create    app/views/home
+</span><span class='line'>      create    app/views/home/index.html.erb
+</span><span class='line'>      invoke  test_unit
+</span><span class='line'>      create    <span class="nb">test</span>/functional/home_controller_test.rb
+</span><span class='line'>      invoke  helper
+</span><span class='line'>      create    app/helpers/home_helper.rb
+</span><span class='line'>      invoke    test_unit
+</span><span class='line'>      create      <span class="nb">test</span>/unit/helpers/home_helper_test.rb
+</span><span class='line'>      invoke  assets
+</span><span class='line'>      invoke    coffee
+</span><span class='line'>      create      app/assets/javascripts/home.js.coffee
+</span><span class='line'>      invoke    scss
+</span><span class='line'>      create      app/assets/stylesheets/home.css.scss
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>次に好きなエディタで <code>app/views/home/index.html.erb</code> を編集します。私の場合は <code>vim app/views/home/index.html.erb</code>です。</p>
+
+<figure class='code'><figcaption><span>app/views/home/index.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">&lt;h1&gt;Hello, Rails&lt;/h1&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3 id="アプリケーションのホームページを設定する">アプリケーションのホームページを設定する</h3>
+
+<p>Controller と View を作成しましたが、&#8221;Hello Rails!&#8221; を表示させたい時に Rails に指示する必要があります。この場合では、&#8221;Welcom Aboard&#8221; スモークテスト の変わりに URL のルート(例えば、http://localhost:3000 のように)に表示させたいと思います。</p>
+
+<p>まず最初に、デフォルトページを削除します。私の場合は <code>git rm public/index.html</code> で Git から削除しましたが、Git を使わない場合は <code>rm public/index.html</code> です。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git rm public/index.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>次に Rails に実際のホームページがどこかを指示する必要があります。 <code>config/routes.rb</code> をエディタで開いて編集します。以下に編集箇所を diff で示します。</p>
+
+<figure class='code'><figcaption><span>config/routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='diff'><span class='line'><span class="gu">@@ -48,7 +50,7 @@ Blog::Application.routes.draw do</span>
+</span><span class='line'>
+</span><span class='line'>   # You can have the root of your site routed with &quot;root&quot;
+</span><span class='line'>   # just remember to delete public/index.html.
+</span><span class='line'><span class="gd">-  # root :to =&gt; &#39;welcome#index&#39;</span>
+</span><span class='line'><span class="gi">+  root :to =&gt; &#39;home#index&#39;</span>
+</span><span class='line'>
+</span><span class='line'>   # See how all your routes lay out with &quot;rake routes&quot;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rails を起動してない場合は <code>rails server</code> で WEBrick を起動して、ブラウザでルート (http://localhost:3000/ など) で接続確認します。</p>
+
+<p><img src="http://toshibohjp.github.io/images/rails_guides/say-hello.jpg" title="Hello, Rails" alt="Hello, Rails"></p>
+
+<p><code>config/routes.rb</code> は特殊な DSL として、入ってきたリクエストを Controller や Action にどのように接続するかを指示するエントリをアプリケーションのルーティングファイルとして定義します。先ほど編集した `root :to => &#8220;home#index&#8221; は、ルートアクションを home コントローラーの index アクションへマップするように指示しています。</p>
+
+<p>ルーティングについてのより詳しい情報については <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside in</a> を参照してください。</p>
+
+<p>次回に続きます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[RailsGuides] #01 RailsGuides で Rails をはじめてみる]]></title>
