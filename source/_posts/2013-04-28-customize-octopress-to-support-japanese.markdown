@@ -6,26 +6,15 @@ comments: true
 sharing: true
 categories: [octopress, localize] 
 ---
-<strike>Octopress はデフォルトのままだと、タイトルやヘッダに日本語を使用しても正しく日本語が表示されません。
+私の環境のWindows Vista + Chrome では、デフォルトのフォントだと見出しに上手く日本語が表示されません。
 
-どうやら Octopress はデフォルトの設定で以下のように Web フォントを使用してことが原因のようです。</strike>
-
-これはとんだ冤罪でした。iPhone でアクセスすると、見事に日本語の表示ができます。
-私の環境のWindows Vista + Chrome に依存する問題のようです。
-<!-- more -->
-
-```bash
-$ cd octopress
-```
-
-```html source/_includes/custom/head.html
-<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-```
 これを非常に簡単な設定で上書きします。
 
-### _fonts.scss に日本語フォントを設定する
+<!-- more -->
+
+_fonts.scss に日本語フォントを設定する
+--------------------------------------
+
 以下のように $heading-font-family に日本語フォントを追加することで、ヘッダに日本語を表示することができます。
 
 ```diff sass/custom/_fonts.scss
@@ -45,7 +34,7 @@ $ cd octopress
 
 HTML の lang 属性を ja に設定する
 ---------------------------------
-あと、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。
+Octopress では、デフォルトの言語が英語になっており、Google翻訳などが起動したりと面倒なことになるので、HTML の言語を日本語に変更しました。
 
 ```diff source/_includes/head.html
 @@ -1,7 +1,7 @@

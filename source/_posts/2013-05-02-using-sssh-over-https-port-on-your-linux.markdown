@@ -111,7 +111,7 @@ $ ssh-add ~/.ssh/id_rsa
 
 これで以下のコマンドを実行すれば、443番ポート経由で SSH のアクセスが可能になってる思います。
 
-試し octocat/Spoon-Knife リポジトリからクローンしてください。
+試しに octocat/Spoon-Knife リポジトリからクローンしてみてください。
 ```bash
 $ git clone git@github.com:octocat/Spoon-Knife.git
 ```

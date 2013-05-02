@@ -48,7 +48,7 @@ Rails 3.2.12
 
 1 このガイドの前提
 ------------------
-対応する Ruby のバージョンと前提としている Rails のバージョンについて記述しています。Ruby 1.9.2 系 と Rails 3.2 系をインストールしていれば、ほぼ問題なく動作すると思います。それに加えて、まず Ruby を覚えてから Rails をやった方がいいよなどと書かれていますが、[はじめてのRuby](https://www.google.co.jp/search?q=%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AERuby&aq=f&oq=%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AERuby&aqs=chrome.0.57j0l3j62l2.11261j0&sourceid=chrome&ie=UTF-8)を読んでいれば理解できると思います。わからなければ、その都度検索エンジンのお世話になれば良いではないですか。
+対応する Ruby のバージョンと前提としている Rails のバージョンについて記述しています。Ruby 1.9.2 系 と Rails 3.2 系をインストールしていれば、ほぼ問題なく動作すると思います。それに加えて、まず Ruby を覚えてから Rails をやった方がいいよなどと書かれていますが、[初めてのRuby](http://www.google.co.jp/#hl=en&gs_rn=11&gs_ri=psy-ab&gs_is=1&cp=6&gs_id=18&xhr=t&q=%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AERuby&es_nrs=true&pf=p&safe=off&output=search&sclient=psy-ab&oq=%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AERu&gs_l=&pbx=1&bav=on.2,or.r_qf.&bvm=bv.45921128,d.dGI&fp=345ec6be39cf6daf&biw=1167&bih=552)を読んでいれば理解できると思います。わからなければ、その都度検索エンジンのお世話になれば良いではないですか。
 
 2 Rails とは何か？
 ------------------
