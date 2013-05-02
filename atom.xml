@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T19:46:29+09:00</updated>
+  <updated>2013-05-02T19:48:55+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -73,7 +73,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3 id="アプリケーションのホームページを設定する">アプリケーションのホームページを設定する</h3>
+<h3 id="4.3+アプリケーションのホームページを設定する">4.3 アプリケーションのホームページを設定する</h3>
 
 <p>Controller と View を作成しましたが、&#8221;Hello Rails!&#8221; を表示させたい時に Rails に指示する必要があります。この場合では、&#8221;Welcom Aboard&#8221; スモークテスト の変わりに URL のルート(例えば、http://localhost:3000 のように)に表示させたいと思います。</p>
 
