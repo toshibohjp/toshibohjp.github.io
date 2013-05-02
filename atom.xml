@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T19:54:52+09:00</updated>
+  <updated>2013-05-02T20:12:50+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -23,7 +23,21 @@
 <!-- more -->
 
 
-<p>{:TOC:}</p>
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#4.2+Rails+で++Hello++と言う">4.2 Rails で &ldquo;Hello&rdquo; と言う</a>   </li>
+   <li><a href="#4.3+アプリケーションのホームページを設定する">4.3 アプリケーションのホームページを設定する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
 
 <h3 id="4.2+Rails+で++Hello++と言う">4.2 Rails で &#8220;Hello&#8221; と言う</h3>
 
