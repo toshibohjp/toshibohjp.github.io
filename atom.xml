@@ -4,7 +4,7 @@
   <title><![CDATA[Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T19:07:35+09:00</updated>
+  <updated>2013-05-02T19:31:16+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -448,7 +448,7 @@
 
 <p>WEBrick という Web サーバーが3000番ポートで起動してしたので、ブラウザでアクセスしてみます。</p>
 
-<p><img src="http://toshibohjp.github.io/images/rails_guides/hello-rails.jpg" title="Hello, Rails!" alt="Hello, Rails!"></p>
+<p><img src="http://toshibohjp.github.io/images/rails_guides/hello-rails.jpg" title="Rails default page" alt="Rails default page"></p>
 
 <p>上手く表示されました。</p>
 
