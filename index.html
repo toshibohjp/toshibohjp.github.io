@@ -9,7 +9,7 @@
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="私の仕事場では、社内にプロキシサーバが設置されており、通常の SSH ポート(22番)が外部サーバに対して使用できません。git みたいなオシャレなプロトコルには対応していないのです。しかしそれでも、GitHub に接続する必要にかられることがあります。 ここでは、HTTP ポート(80番) と &hellip;">
+  <meta name="description" content="ちゃんと Ruby on Rails (以下、Railsと略します) を覚えていないので、 RailsGuides をはじめてみました。この記事自体は、誰にメリットがあるかわからない内容ですが、ここでは RailsGuide の日本語での抜粋と実際に手順にに沿ってやってみたことなどなどを、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,6 @@
   <link rel="canonical" href="http://toshibohjp.github.io">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -30,6 +29,13 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
+<script langage="javaScript">
+  $(document).ready( function () {
+    $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+  })
+</script>
+
 
   
   <script type="text/javascript">
@@ -54,11 +60,6 @@
     <h2>toshibohjp</h2>
   
 </hgroup>
-<script langage="javaScript">
-  $(document).ready( function () {
-       $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
-     })
-</script>
 
 </header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss email">
@@ -85,6 +86,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">[RailsGuides] #01 RailsGuides で Rails をはじめてみる</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-02T08:56:00+09:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ちゃんと <a href="http://rubyonrails.org/">Ruby on Rails</a> (以下、Railsと略します) を覚えていないので、 <a href="http://guides.rubyonrails.org/">RailsGuides</a> をはじめてみました。この記事自体は、誰にメリットがあるかわからない内容ですが、ここでは RailsGuide の日本語での抜粋と実際に手順にに沿ってやってみたことなどなどを、その都度だらだらと書いていきます。ちゃんとした和訳をお探しの方は、以下のサイトを参照すると良いと思います。</p>
+
+<ul>
+<li><a href="http://wiki.usagee.co.jp/ruby/rails/RailsGuides%E3%82%92%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E5%92%8C%E8%A8%B3%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%82%88/Getting%20Started%20with%20Rails">ruby/rails/RailsGuidesをゆっくり和訳してみたよ/Getting Started with Rails</a></li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">続きを読む &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -315,6 +364,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">[RailsGuides] #01 RailsGuides で Rails をはじめてみる</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>

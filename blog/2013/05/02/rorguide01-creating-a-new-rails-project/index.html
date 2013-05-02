@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[RailsGuides] #01 RailsGuides で Rails をはじめてみる - Tortoise-like pace</title>
+  <meta name="author" content="toshibohjp">
+
+  
+  <meta name="description" content="ちゃんと Ruby on Rails (以下、Railsと略します) を覚えていないので、 RailsGuides をはじめてみました。この記事自体は、誰にメリットがあるかわからない内容ですが、ここでは RailsGuide の日本語での抜粋と実際に手順にに沿ってやってみたことなどなどを、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
+<script langage="javaScript">
+  $(document).ready( function () {
+    $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+  })
+</script>
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-40465573-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Tortoise-like pace</a></h1>
+  
+    <h2>toshibohjp</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="toshiboh.jp@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:toshibohjp.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[RailsGuides] #01 RailsGuides で Rails をはじめてみる</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-02T08:56:00+09:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>ちゃんと <a href="http://rubyonrails.org/">Ruby on Rails</a> (以下、Railsと略します) を覚えていないので、 <a href="http://guides.rubyonrails.org/">RailsGuides</a> をはじめてみました。この記事自体は、誰にメリットがあるかわからない内容ですが、ここでは RailsGuide の日本語での抜粋と実際に手順にに沿ってやってみたことなどなどを、その都度だらだらと書いていきます。ちゃんとした和訳をお探しの方は、以下のサイトを参照すると良いと思います。</p>
+
+<ul>
+<li><a href="http://wiki.usagee.co.jp/ruby/rails/RailsGuides%E3%82%92%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E5%92%8C%E8%A8%B3%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%82%88/Getting%20Started%20with%20Rails">ruby/rails/RailsGuidesをゆっくり和訳してみたよ/Getting Started with Rails</a></li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>
+  <ul>
+
+  <ul>
+  <li><a href="#Rails+の環境">Rails の環境</a>  </li>
+  <li><a href="#1+このガイドの前提">1 このガイドの前提</a>  </li>
+  <li><a href="#2+Rails+とは何か？">2 Rails とは何か？</a>  </li>
+  <li><a href="#3+Rails+プロジェクトを新規作成する">3 Rails プロジェクトを新規作成する</a>
+   <ul>
+   <li><a href="#3.1+Rails+のインストール">3.1 Rails のインストール</a>   </li>
+   <li><a href="#3.2+blog+アプリケーションを作成する">3.2 blog アプリケーションを作成する</a>   </li>
+   <li><a href="#3.3+データベースを設定する">3.3 データベースを設定する</a>   </li>
+   <li><a href="#3.4+データベースを作成する">3.4 データベースを作成する</a>   </li>
+  </ul>
+  <li><a href="#4+Hello,+Rails!">4 Hello, Rails!</a>
+   <ul>
+   <li><a href="#4.1+Web+サーバーを起動する">4.1 Web サーバーを起動する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<p>幸いにも RailsGuides は mobi 形式でも配布されているので、Kindle for iPad を横に置きながらぼちぼちとやっていきます。</p>
+
+<p>ちなみに <a href="http://guides.rubyonrails.org/">原文</a> は <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0</a> の元で公開されています。</p>
+
+<h2 id="Rails+の環境">Rails の環境</h2>
+
+<p>いろいろなサイトがあるので、&#8221;rails 入門&#8221; や &#8220;rails インストール&#8221; などのキーワードで検索すれば、きっとインストールの仕方など、ご自分の環境にあった情報が得られるでしょう。</p>
+
+<p>私の環境は、以下の通りとなっております。</p>
+
+<figure class='code'><figcaption><span>Rails実行環境</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ohai platform platform_version
+</span><span class='line'><span class="o">[</span>
+</span><span class='line'>  <span class="s2">&quot;centos&quot;</span>
+</span><span class='line'><span class="o">]</span>
+</span><span class='line'><span class="o">[</span>
+</span><span class='line'>  <span class="s2">&quot;6.3&quot;</span>
+</span><span class='line'><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rvm --version
+</span><span class='line'>
+</span><span class='line'>rvm 1.18.21 <span class="o">(</span>master<span class="o">)</span> by Wayne E. Seguin &lt;wayneeseguin@gmail.com&gt;, Michal Papis &lt;mpapis@gmail.com&gt; <span class="o">[</span>https://rvm.io/<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>ruby --version
+</span><span class='line'>ruby 1.9.3p392 <span class="o">(</span>2013-02-22 revision 39386<span class="o">)</span> <span class="o">[</span>i686-linux<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rails --version
+</span><span class='line'>Rails 3.2.12
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下、見出しは基本的に RailsGuides の見出しに準じます。</p>
+
+<h2 id="1+このガイドの前提">1 このガイドの前提</h2>
+
+<p>対応する Ruby のバージョンと前提としている Rails のバージョンについて記述しています。Ruby 1.9.2 系 と Rails 3.2 系をインストールしていれば、ほぼ問題なく動作すると思います。それに加えて、まず Ruby を覚えてから Rails をやった方がいいよなどと書かれていますが、<a href="https://www.google.co.jp/search?q=%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AERuby&amp;aq=f&amp;oq=%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AERuby&amp;aqs=chrome.0.57j0l3j62l2.11261j0&amp;sourceid=chrome&amp;ie=UTF-8">はじめてのRuby</a>を読んでいれば理解できると思います。わからなければ、その都度検索エンジンのお世話になれば良いではないですか。</p>
+
+<h2 id="2+Rails+とは何か？">2 Rails とは何か？</h2>
+
+<p>Rails の特徴などが書かれています。省略します。</p>
+
+<p>Rails は「生産性が高い」、「すぐにアプリケーションを作成できる」などといわれていますが、Web アプリケーションフレームワークなので、個人的には比較的学習コストが高いと思います。よく Rails の特徴として <strong>「設定より規約を」</strong> と言われています。誤解を恐れずに言うならば、つまりは<strong>規約を覚えなければ話にならない</strong>わけです。</p>
+
+<p>以下については、このガイドに説明があるので、単語だけ覚えるだけにとどめて、ガイドを読み進めるうちに覚えるか、検索エンジンのお世話になるかすれば良いと思います。最初からわかっていれば入門ガイドのお世話になる必要もありませんしね。</p>
+
+<ul>
+<li>Action Pack
+
+<ul>
+<li>Action Controller</li>
+<li>Action Dispatch</li>
+<li>Action View</li>
+</ul>
+</li>
+<li>Action Mailer</li>
+<li>Action Model</li>
+<li>Action Record</li>
+<li>Action Resource</li>
+<li>Action Support</li>
+<li>Railties</li>
+</ul>
+
+
+<h2 id="3+Rails+プロジェクトを新規作成する">3 Rails プロジェクトを新規作成する</h2>
+
+<h3 id="3.1+Rails+のインストール">3.1 Rails のインストール</h3>
+
+<p>RubyGems からインストールするのが簡単です。</p>
+
+<figure class='code'><figcaption><span>Rails実行環境</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install rails
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Windows を使用している人は Ruby と Rails を <a href="http://railsinstaller.org/">Rails Installer</a> で簡単にインストールできます。</p>
+
+<h3 id="3.2+blog+アプリケーションを作成する">3.2 blog アプリケーションを作成する</h3>
+
+<p>私は GitHub 用にソースファイルをアップする予定なので、github というそのままの名前のディレクトリに <code>rails new</code> で作成する予定の blog というディレクトリを作成しました。Git の話を絡めるとややこしくなるので、リポジトリの作成と最初の push のコマンドまではここに記述しますが、これ以降は Git のコマンド等の話は省略します。蛇足になりますが、私は GitHub でリポジトリをあらかじめ作成しました。</p>
+
+<figure class='code'><figcaption><span>あらかじめblogディレクトリを作成して下準備をする</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/github
+</span><span class='line'><span class="nv">$ </span>mkdir blog
+</span><span class='line'><span class="nv">$ </span>git init blog
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>blog
+</span><span class='line'><span class="nv">$ </span>touch README.md
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s1">&#39;Initial commit.&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git remote add origin git@github.com:toshibohjp/blog.git
+</span><span class='line'><span class="nv">$ </span>git push -u origin master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下のように blog アプリケーションを作成します。</p>
+
+<figure class='code'><figcaption><span>blogアプリケーションを作成する</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/github
+</span><span class='line'><span class="nv">$ </span>rails new blog
+</span><span class='line'>       exist
+</span><span class='line'>      create  README.rdoc
+</span><span class='line'>      create  Rakefile
+</span><span class='line'>      create  config.ru
+</span><span class='line'>      create  .gitignore
+</span><span class='line'>      create  Gemfile
+</span><span class='line'>      create  app
+</span><span class='line'><span class="c"># （中略）</span>
+</span><span class='line'>         run  bundle install
+</span><span class='line'>Fetching gem metadata from https://rubygems.org/...........
+</span><span class='line'>Fetching gem metadata from https://rubygems.org/..
+</span><span class='line'>Resolving dependencies...
+</span><span class='line'>Using rake <span class="o">(</span>10.0.4<span class="o">)</span>
+</span><span class='line'><span class="c"># （中略）</span>
+</span><span class='line'>Installing sass-rails <span class="o">(</span>3.2.6<span class="o">)</span>
+</span><span class='line'>Installing sqlite3 <span class="o">(</span>1.3.7<span class="o">)</span>
+</span><span class='line'>Installing uglifier <span class="o">(</span>2.0.1<span class="o">)</span>
+</span><span class='line'>Your bundle is <span class="nb">complete</span>!
+</span><span class='line'>Use <span class="sb">`</span>bundle show <span class="o">[</span>gemname<span class="o">]</span><span class="sb">`</span> to see where a bundled gem is installed.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上記のような出力で Rails アプリケーションが作成されたので、ディレクトリの中身を覗いてみましょう。README.md 以外は <code>rails new blog</code> で作成されたファイルですが、たくさんありますね。何がなにやらよくわかりません。</p>
+
+<figure class='code'><figcaption><span>railsのフォルダ構成</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>blog
+</span><span class='line'><span class="nv">$ </span>tree -L 2 -F
+</span><span class='line'>.
+</span><span class='line'>├── Gemfile
+</span><span class='line'>├── Gemfile.lock
+</span><span class='line'>├── README.md
+</span><span class='line'>├── README.rdoc
+</span><span class='line'>├── Rakefile
+</span><span class='line'>├── app/
+</span><span class='line'>│   ├── assets/
+</span><span class='line'>│   ├── controllers/
+</span><span class='line'>│   ├── helpers/
+</span><span class='line'>│   ├── mailers/
+</span><span class='line'>│   ├── models/
+</span><span class='line'>│   └── views/
+</span><span class='line'>├── config/
+</span><span class='line'>│   ├── application.rb
+</span><span class='line'>│   ├── boot.rb
+</span><span class='line'>│   ├── database.yml
+</span><span class='line'>│   ├── environment.rb
+</span><span class='line'>│   ├── environments/
+</span><span class='line'>│   ├── initializers/
+</span><span class='line'>│   ├── locales/
+</span><span class='line'>│   └── routes.rb
+</span><span class='line'>├── config.ru
+</span><span class='line'>├── db/
+</span><span class='line'>│   └── seeds.rb
+</span><span class='line'>├── doc/
+</span><span class='line'>│   └── README_FOR_APP
+</span><span class='line'>├── lib/
+</span><span class='line'>│   ├── assets/
+</span><span class='line'>│   └── tasks/
+</span><span class='line'>├── log/
+</span><span class='line'>├── public/
+</span><span class='line'>│   ├── 404.html
+</span><span class='line'>│   ├── 422.html
+</span><span class='line'>│   ├── 500.html
+</span><span class='line'>│   ├── favicon.ico
+</span><span class='line'>│   ├── index.html
+</span><span class='line'>│   └── robots.txt
+</span><span class='line'>├── script/
+</span><span class='line'>│   └── rails*
+</span><span class='line'>├── <span class="nb">test</span>/
+</span><span class='line'>│   ├── fixtures/
+</span><span class='line'>│   ├── functional/
+</span><span class='line'>│   ├── integration/
+</span><span class='line'>│   ├── performance/
+</span><span class='line'>│   ├── test_helper.rb
+</span><span class='line'>│   └── unit/
+</span><span class='line'>├── tmp/
+</span><span class='line'>│   └── cache/
+</span><span class='line'>└── vendor/
+</span><span class='line'>    ├── assets/
+</span><span class='line'>    └── plugins/
+</span><span class='line'>
+</span><span class='line'>30 directories, 21 files
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>RailsGuides の説明によると、ファイルとフォルダ構成は以下のようになってます。</p>
+
+<table>
+  <tr><th>ファイル／フォルダ名</th><th>目的</th></tr>
+  <tr><td>app/</td><td>アプリケーションで使用する Controller, Model, View, Asset を含みます。このガイドの残りでは、このフォルダに焦点を当てます。
+  </td></tr>
+  <tr><td>config/</td><td>アプリケーションの実行時のルール、ルーティング、データベースなどを設定します。config/ に関しては Configureing Rails Applications で詳細を扱います。
+  </td></tr>
+  <tr><td>config.ru</td><td>Rack の設定です。Rack ベースのサーバーがアプリケーションを開始するのに使用します。
+  </td></tr>
+  <tr><td>db/</td><td>現在のデータベーススキーマとしてデータベースマイグレーションを含んでいます。
+  </td></tr>
+  <tr><td>doc/</td><td>アプリケーションの詳細なドキュメント</td></tr>
+  <tr><td>Gemfile<br />Gemfile.lock</td><td>アプリケーションに必要な gem の依存関係を指定する事ができます。
+  </td></tr>
+  <tr><td>lib/</td><td>アプリケーションの拡張モジュール
+  </td></tr>
+  <tr><td>log/</td><td>アプリケーションログ</td></tr>
+  <tr><td>public/</td><td>そのまま公開される唯一のフォルダです。静的なファイルと生成された Assets を含みます。</td>
+  </tr>
+  <tr><td>Rakefile</td><td>このファイルはコマンドラインから実行されるタスクを見つけて読み込みます。タスクの定義は Rails のコンポーネントを通して定義されます。Rakefile を変更するよりも、アプリケーションの lib/tasks ディレクトリにファイルを追加することで、タスクを追加するようにしてください。
+  </td></tr>
+  <tr><td>README.rdoc</td><td>アプリケーションの簡単な手順書です。アプリケーションが何をするかや、どのようにセットアップするかを、他の人に解るようにこのファイルを編集してください。
+  </td></tr>
+  <tr><td>script/</td><td>アプリケーションを起動する Rails のスクリプトを含みます。また、アプリケーションをデプロイ／実行するスクリプトを含めることもできます。
+  </td></tr>
+  <tr><td>test/</td><td>単体テスト、Fixture および 他のテストの仕組みです。これらについては Testing Rails Applications で扱います。
+  </td></tr>
+  <tr><td>tmp/</td><td>一時ファイル</td></tr>
+  <tr><td>vendor/</td><td>サードパーティのコードを置くためのディレクトリです。典型的な Rails アプリケーションでは、Ruby Gems、 Rails のソースコード(プロジェクトに任意でインストールした場合)や追加パッケージ機能を含むプラグインをインクルードしています。
+  </td></tr>
+</table>
+
+
+<h3 id="3.3+データベースを設定する">3.3 データベースを設定する</h3>
+
+<p>データベースの設定は <code>config/database.yml</code> にあります。なにも設定してなければデフォルトでは SQLite3 用にデータベースが設定されています。デフォルトで以下の3つの環境で Rails を実行する事ができます。</p>
+
+<ul>
+<li><code>development</code> : 手動でインタラクティブに実行するためのローカル開発用の環境</li>
+<li><code>test</code> : 自動テストを実行するための環境</li>
+<li><code>production</code> : アプリケーションをデプロイして公開するための環境</li>
+</ul>
+
+
+<p><code>rails new blog --database=mysql</code> でデータベースを指定することも可能ですし、手動で設定すべきではありません。</p>
+
+<p>SQLiter3、MySQL、PostgreSQL、SQLiter3 + JRuby、MySQL + JRuby、PostgreSQL + JRuby の設定が記述されていましたが、今はデフォルトの SQLite3 で充分なため割愛します。</p>
+
+<h3 id="3.4+データベースを作成する">3.4 データベースを作成する</h3>
+
+<p>以下のコマンドで空のデータベースを作成します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake db:create
+</span><span class='line'>Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs <span class="k">for </span>a list of available runtimes.
+</span><span class='line'>/usr/local/rvm/gems/ruby-1.9.3-p392/gems/execjs-1.4.0/lib/execjs/runtimes.rb:51:in <span class="sb">`</span>autodetect<span class="err">&#39;</span>
+</span><span class='line'><span class="c"># 以下スタックトレース</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>失敗しました。</p>
+
+<p>JavaScript の実行環境がないと言っています。私もインストールした覚えはありません。上記のサイトを見てみるといろいろ実行エンジンがありますが、ここでは一番上にある therubyracer を使うことにします。</p>
+
+<p>次のように Gemfile の末尾に以下を追加して、<code>bundle</code> を実行して therubyracer をダウンロードして、もう一度 <code>rake db::create</code> を実行します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;gem &#39;therubyracer&#39;&quot;</span> &gt;&gt; Gemfile
+</span><span class='line'><span class="nv">$ </span>bundle
+</span><span class='line'><span class="nv">$ </span>rake db:create
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>何も出力がありませんが、これでデータベースは作成されました。以下のファイルが追加されたはずです。</p>
+
+<ul>
+<li>db/development.sqlite3</li>
+<li>db/test.sqlite3</li>
+</ul>
+
+
+<h2 id="4+Hello,+Rails!">4 Hello, Rails!</h2>
+
+<h3 id="4.1+Web+サーバーを起動する">4.1 Web サーバーを起動する</h3>
+
+<p>これで Rails を実行できる環境が整ったので、Rails を実行してみます。以下のような出力結果が得られます。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails <span class="nv">server</span>
+</span><span class='line'><span class="o">=</span>&gt; Booting <span class="nv">WEBrick</span>
+</span><span class='line'><span class="o">=</span>&gt; Rails 3.2.12 application starting in development on http://0.0.0.0:3000
+</span><span class='line'><span class="o">=</span>&gt; Call with -d to <span class="nv">detach</span>
+</span><span class='line'><span class="o">=</span>&gt; Ctrl-C to shutdown server
+</span><span class='line'><span class="o">[</span>2013-05-02 15:26:50<span class="o">]</span> INFO  WEBrick 1.3.1
+</span><span class='line'><span class="o">[</span>2013-05-02 15:26:50<span class="o">]</span> INFO  ruby 1.9.3 <span class="o">(</span>2013-02-22<span class="o">)</span> <span class="o">[</span>i686-linux<span class="o">]</span>
+</span><span class='line'><span class="o">[</span>2013-05-02 15:26:50<span class="o">]</span> INFO  WEBrick::HTTPServer#start: <span class="nv">pid</span><span class="o">=</span>8821 <span class="nv">port</span><span class="o">=</span>3000
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>WEBrick という Web サーバーが3000番ポートで起動してしたので、ブラウザでアクセスしてみます。</p>
+
+<p><img src="/images/rails_guides/hello-rails.jpg" title="Hello, Rails!" alt="Hello, Rails!"></p>
+
+<p>上手く表示されました。</p>
+
+<p>Web サーバーを停止するには、起動したコンソールで<Control + C>を押します。また、development モードでは、サーバーがファイルの変更を自動的に検知するので、ファイルの変更の度に Rails を停止する必要はありません。</p>
+
+<p>ちなみにこのページはスモークテストです。スモークテストとは一通り開発を終えた段階で簡易に起動確認を行う予備的なテストのことです。</p>
+
+<p>切りがいいので、今回はこのあたりで次回へ続きます。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">toshibohjp</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-02T08:56:00+09:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby-on-rails/'>Ruby on Rails</a>, <a class='category' href='/blog/categories/tutorials/'>tutorials</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="ja"></a>
+  <script type="text/javascript" async="async">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+  
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+  <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+  <a href="http://b.hatena.ne.jp/entry/http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/" title="Previous Post: Linxu 上の HTTPS ポートで SSH を使う">&laquo; Linxu 上の HTTPS ポートで SSH を使う</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+<section>
+  <h1>About Me</h1>
+  <div id="twitter-profile" style="margin-top:0.5em;">
+    <p>
+      <strong>toshibohjp</strong> 
+      (<a href="http://twitter.com/toshibohjp">@toshibohjp</a>)
+    </p>
+    <p>I will continue writing daily entries littile by little.</p>
+  </div>
+  <script type="text/javascript">
+    $.domReady(function(){
+        var container = $('#twitter-profile'),
+            user = "toshibohjp";
+        
+        function parseTwLinks(s) {
+          var twUrl = "http://www.twitter.com/"
+          s = s.replace(/ (@([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+p2+"'>"+p1+"</a>"
+          }).replace(/ (#([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+"#!/search?q=%23"+p2+"'>"+p1+"</a>"
+          })
+          return s
+        }
+
+        $.ajax({
+            url: "http://api.twitter.com/1/users/show.json?include_entities=false&screen_name="+user+"&callback=?"
+          , type: 'jsonp'
+          , error: function (err) { $('#twitter-profile').addClass('error');  }
+          , success: function(data) {
+              container.html('<img class="left" src="http://api.twitter.com/1/users/profile_image/'+user+'.json?size=bigger" alt="@'+user+'"><p><strong>'+data.name+'</strong> (<a href="http://twitter.com/'+user+'">@'+user+'</a>)<br/>'+data.location+'</p><p>'+parseTwLinks(data.description)+'</p>');
+            }
+        })
+      });
+  </script>
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">[RailsGuides] #01 RailsGuides で Rails をはじめてみる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/28/add-pocket-button-in-the-social-box/">Octopress に「Pocket」に追加するボタンをつける</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/28/customize-octopress-to-support-japanese/">Octopress のヘッダを日本語に対応させる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/27/ive-started-a-blog-on-github/">I've started a blog on Github.</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/toshibohjp">@toshibohjp</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'toshibohjp',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/toshiboh.jp@gmail.com?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - toshibohjp -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tortoiselikepace';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/';
+        var disqus_url = 'http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

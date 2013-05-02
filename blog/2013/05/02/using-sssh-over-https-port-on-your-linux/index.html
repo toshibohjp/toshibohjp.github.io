@@ -21,7 +21,6 @@
   <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
   <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -30,6 +29,13 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
+<script langage="javaScript">
+  $(document).ready( function () {
+    $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+  })
+</script>
+
 
   
   <script type="text/javascript">
@@ -54,11 +60,6 @@
     <h2>toshibohjp</h2>
   
 </hgroup>
-<script langage="javaScript">
-  $(document).ready( function () {
-       $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
-     })
-</script>
 
 </header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss email">
@@ -402,6 +403,8 @@
         <a class="basic-alignment left" href="/blog/2013/04/28/add-pocket-button-in-the-social-box/" title="Previous Post: Octopress に「Pocket」に追加するボタンをつける">&laquo; Octopress に「Pocket」に追加するボタンをつける</a>
       
       
+        <a class="basic-alignment right" href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/" title="Next Post: [RailsGuides] #01 RailsGuides で Rails をはじめてみる">[RailsGuides] #01 RailsGuides で Rails をはじめてみる &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -456,6 +459,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">[RailsGuides] #01 RailsGuides で Rails をはじめてみる</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
