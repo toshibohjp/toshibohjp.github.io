@@ -11,7 +11,7 @@ categories: [Ruby on Rails, tutorials]
 
 <!-- more -->
 
-{:TOC:}
+{:TOC}
 
 ### 4.2 Rails で "Hello" と言う
 Rails で "Hello" というために、最低限の Controller と View を作成します。以下のコマンドを実行します。

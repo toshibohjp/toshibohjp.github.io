@@ -7,4 +7,4 @@ shareing: true
 published: false
 categories: [Ruby on Rails, tutorials]
 ---
-テスト
+[前回](../rorguide02-say-hello/)
