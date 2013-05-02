@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T21:04:30+09:00</updated>
+  <updated>2013-05-02T22:15:08+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -105,9 +105,9 @@ export no_proxy="localhost,127.0.0.1,192.168.0.0/24"</p>
 
 <h1 id="yum">yum</h1>
 
-<p>proxy=http://your-server.com:8080
-proxy_username=$http_proxy_user
-proxy_password=$http_proxy_pass
+<p>export proxy=http://your-server.com:8080
+export proxy_username=$http_proxy_user
+export proxy_password=$http_proxy_pass
 ```</p>
 
 <h2 id="connet+のインストール">connet のインストール</h2>
