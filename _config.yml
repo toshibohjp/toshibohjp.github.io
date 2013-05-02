@@ -97,7 +97,7 @@ facebook_like: true
 # Pocket
 pocket_button: true
 
-# RDcount:
+# RDiscount:
 rdiscount:
   extensions: ['generate_toc']
   toc_token: "{:TOC}"
