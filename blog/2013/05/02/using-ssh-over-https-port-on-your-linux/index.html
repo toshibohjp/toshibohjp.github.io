@@ -126,7 +126,7 @@
 
   <ul>
   <li><a href="#環境変数を設定する">環境変数を設定する</a>  </li>
-  <li><a href="#connet+のインストール">connet のインストール</a>  </li>
+  <li><a href="#connect+のインストール">connect のインストール</a>  </li>
   <li><a href="#.ssh/config+を設定する">.ssh/config を設定する</a>  </li>
   <li><a href="#接続を確認する">接続を確認する</a>  </li>
   <li><a href="#git://+プロトコルにも対応する">git:// プロトコルにも対応する</a>  </li>
@@ -199,13 +199,13 @@
 </span><span class='line'><span class="nb">export </span><span class="nv">https_proxy_pass</span><span class="o">=</span><span class="nv">$http_proxy_pass</span>
 </span><span class='line'><span class="nb">export </span><span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&quot;localhost,127.0.0.1,192.168.0.0/24&quot;</span>
 </span><span class='line'><span class="c"># yum</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">proxy</span><span class="o">=</span>http://your-server.com:8080
+</span><span class='line'><span class="nb">export </span><span class="nv">proxy</span><span class="o">=</span>http://your.proxy-server.com:8080
 </span><span class='line'><span class="nb">export </span><span class="nv">proxy_username</span><span class="o">=</span><span class="nv">$http_proxy_user</span>
 </span><span class='line'><span class="nb">export </span><span class="nv">proxy_password</span><span class="o">=</span><span class="nv">$http_proxy_pass</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2 id="connet+のインストール">connet のインストール</h2>
+<h2 id="connect+のインストール">connect のインストール</h2>
 
 <p>プロキシを中継するように connect をインストールします。</p>
 
@@ -224,20 +224,20 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>パッケージ管理ツールが使えない場合は、以下のコマンドで自力でビルドします。</p>
+<p>パッケージ管理ツールでインストールできない場合は、以下のコマンドで自力でビルドします。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://www.meadowy.org/~gotoh/ssh/connect.c
 </span><span class='line'><span class="nv">$ </span>gcc -O2 -o connect connect.c
-</span><span class='line'><span class="nv">$ </span>mv connect /usr/local/bin/
+</span><span class='line'><span class="nv">$ </span>sudo mv connect /usr/local/bin/
 </span></code></pre></td></tr></table></div></figure>
 
 
 <h2 id=".ssh/config+を設定する">.ssh/config を設定する</h2>
 
-<p>.ssh/config に以下の設定を追加します。<code>IdentityFile</code> には GitHub で使用する秘密鍵を <code>~/.ssh/id_rsa</code>  のように、<code>プロキシサーバ名：ポート番号</code> にはプロキシサーバ名とポート番号を、<code>proxy.your-domain.com:8080</code> のように編集します。</p>
+<p>.ssh/config に以下の設定を追加します。<code>IdentityFile</code> には GitHub で使用する秘密鍵を <code>~/.ssh/id_rsa</code>  のように、<code>your.proxy-server.com</code> にはプロキシサーバ名とポート番号を編集します。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -254,7 +254,7 @@
 </span><span class='line'>  IdentityFile 秘密鍵のファイル名
 </span><span class='line'>  TCPKeepAlive yes
 </span><span class='line'>  IdentitiesOnly yes
-</span><span class='line'>  ProxyCommand connect -H プロキシサーバ名:ポート番号 %h %p
+</span><span class='line'>  ProxyCommand connect -H your.proxy-server.com:8080 %h %p
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -278,10 +278,10 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ssh git@github.com
-</span><span class='line'>Enter proxy authentication password <span class="k">for</span> ユーザ名@proxy.your-domain.com:
+</span><span class='line'>Enter proxy authentication password <span class="k">for </span>user@your.proxy-server.com:
 </span><span class='line'>Enter passphrase <span class="k">for </span>key <span class="s1">&#39;/home/ユーザ名/.ssh/id_rsa&#39;</span>:
 </span><span class='line'>PTY allocation request failed on channel 0
-</span><span class='line'>Hi ユーザ名! You<span class="err">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
+</span><span class='line'>Hi user! You<span class="err">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
 </span><span class='line'>                Connection to ssh.github.com closed.
 </span></code></pre></td></tr></table></div></figure>
 
@@ -313,7 +313,7 @@
 <figure class='code'><figcaption><span>~/git-proxy.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'>connect -H proxy.your-server.com:8080 <span class="nv">$1</span> <span class="nv">$2</span>
+</span><span class='line'>connect -H your.proxy-server:8080 <span class="nv">$1</span> <span class="nv">$2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

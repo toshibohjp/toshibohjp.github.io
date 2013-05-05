@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-05T22:36:51+09:00</updated>
+  <updated>2013-05-05T23:26:11+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -34,7 +34,7 @@
  <li><a href="#!/bin/bash">!/bin/bash</a> </li>
  <li><a href="#yum">yum</a>
   <ul>
-  <li><a href="#connet+のインストール">connet のインストール</a>  </li>
+  <li><a href="#connect+のインストール">connect のインストール</a>  </li>
  </ul>
  <li><a href="#apt+の場合">apt の場合</a> </li>
  <li><a href="#yum+の場合">yum の場合</a> </li>
@@ -105,12 +105,12 @@ export no_proxy="localhost,127.0.0.1,192.168.0.0/24"</p>
 
 <h1 id="yum">yum</h1>
 
-<p>export proxy=http://your-server.com:8080
+<p>export proxy=http://your.proxy-server.com:8080
 export proxy_username=$http_proxy_user
 export proxy_password=$http_proxy_pass
 ```</p>
 
-<h2 id="connet+のインストール">connet のインストール</h2>
+<h2 id="connect+のインストール">connect のインストール</h2>
 
 <p>プロキシを中継するように connect をインストールします。</p>
 
@@ -129,16 +129,16 @@ export proxy_password=$http_proxy_pass
 <p>$ apt-cyg install connect-proxy
 ```</p>
 
-<p>パッケージ管理ツールが使えない場合は、以下のコマンドで自力でビルドします。
+<p>パッケージ管理ツールでインストールできない場合は、以下のコマンドで自力でビルドします。
 <code>bash
 $ wget http://www.meadowy.org/~gotoh/ssh/connect.c
 $ gcc -O2 -o connect connect.c
-$ mv connect /usr/local/bin/
+$ sudo mv connect /usr/local/bin/
 </code></p>
 
 <h2 id=".ssh/config+を設定する">.ssh/config を設定する</h2>
 
-<p>.ssh/config に以下の設定を追加します。<code>IdentityFile</code> には GitHub で使用する秘密鍵を <code>~/.ssh/id_rsa</code>  のように、<code>プロキシサーバ名：ポート番号</code> にはプロキシサーバ名とポート番号を、<code>proxy.your-domain.com:8080</code> のように編集します。</p>
+<p>.ssh/config に以下の設定を追加します。<code>IdentityFile</code> には GitHub で使用する秘密鍵を <code>~/.ssh/id_rsa</code>  のように、<code>your.proxy-server.com</code> にはプロキシサーバ名とポート番号を編集します。</p>
 
 <p><code>
 Host github.com
@@ -148,7 +148,7 @@ Host github.com
   IdentityFile 秘密鍵のファイル名
   TCPKeepAlive yes
   IdentitiesOnly yes
-  ProxyCommand connect -H プロキシサーバ名:ポート番号 %h %p
+  ProxyCommand connect -H your.proxy-server.com:8080 %h %p
 </code></p>
 
 <p>ここでは、SSH を使用する際に443番ポートを使用し connect でプロキシを中継して GitHub と通信するようにしています。</p>
@@ -165,10 +165,10 @@ $ chmod 600 ~/.ssh/config
 
 <p>```bash
 $ ssh git@github.com
-Enter proxy authentication password for ユーザ名@proxy.your-domain.com:
+Enter proxy authentication password for user@your.proxy-server.com:
 Enter passphrase for key '/home/ユーザ名/.ssh/id_rsa':
 PTY allocation request failed on channel 0
-Hi ユーザ名! You've successfully authenticated, but GitHub does not provide shell access.</p>
+Hi user! You've successfully authenticated, but GitHub does not provide shell access.</p>
 
 <pre><code>            Connection to ssh.github.com closed.
 </code></pre>
@@ -197,7 +197,7 @@ $ git clone git@github.com:octocat/Spoon-Knife.git
 
 <h1 id="!/bin/sh">!/bin/sh</h1>
 
-<p>connect -H proxy.your-server.com:8080 $1 $2
+<p>connect -H your.proxy-server:8080 $1 $2
 ```</p>
 
 <p>記述したスクリプトのアクセス権を設定します。
