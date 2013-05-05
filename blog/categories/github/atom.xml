@@ -4,7 +4,7 @@
   <title><![CDATA[Category: github | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-05T13:13:47+09:00</updated>
+  <updated>2013-05-05T22:36:51+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Linxu 上の HTTPS ポートで SSH を使う]]></title>
-    <link href="http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/"/>
+    <link href="http://toshibohjp.github.io/blog/2013/05/02/using-ssh-over-https-port-on-your-linux/"/>
     <updated>2013-05-02T05:28:00+09:00</updated>
-    <id>http://toshibohjp.github.io/blog/2013/05/02/using-sssh-over-https-port-on-your-linux</id>
+    <id>http://toshibohjp.github.io/blog/2013/05/02/using-ssh-over-https-port-on-your-linux</id>
     <content type="html"><![CDATA[<p>私の仕事場では、社内にプロキシサーバが設置されており、通常の SSH ポート(22番)が外部サーバに対して使用できません。git みたいなオシャレなプロトコルには対応していないのです。しかしそれでも、GitHub に接続する必要にかられることがあります。</p>
 
 <p>ここでは、HTTP ポート(80番) と HTTPS ポート(443番) はどのプロキシでも接続できるので、443番ポートを使用して SSH で GitHub に接続する方法をご紹介します。</p>

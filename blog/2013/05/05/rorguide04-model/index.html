@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[RailsGuides] #04 Model、バリデーションとコンソール - Tortoise-like pace</title>
+  <meta name="author" content="toshibohjp">
+
+  
+  <meta name="description" content="前回 は Scaffold を利用して Post の雛形を作成しました。今回は Model の中身を見て、バリデーションの基本を学び、コンソールで Model の動作を確認する方法についてみていきたいと思います。 6.4 Model 6.5 バリデーションを追加する 6.6 コンソールを使用する &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
+<script langage="javaScript">
+  $(document).ready( function () {
+    $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+  })
+</script>
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-40465573-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Tortoise-like pace</a></h1>
+  
+    <h2>toshibohjp</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="toshiboh.jp@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:toshibohjp.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[RailsGuides] #04 Model、バリデーションとコンソール</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-05T14:11:00+09:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/">前回</a> は Scaffold を利用して Post の雛形を作成しました。今回は Model の中身を見て、バリデーションの基本を学び、コンソールで Model の動作を確認する方法についてみていきたいと思います。</p>
+
+<!-- more -->
+
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#6.4+Model">6.4 Model</a>   </li>
+   <li><a href="#6.5+バリデーションを追加する">6.5 バリデーションを追加する</a>   </li>
+   <li><a href="#6.6+コンソールを使用する">6.6 コンソールを使用する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="6.4+Model">6.4 Model</h3>
+
+<p>Post の Model を見てみましょう。app/models/post.rb は実にシンプルな内容です。</p>
+
+<figure class='code'><figcaption><span>app/models/post.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:title</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>本文を読み進める前に、コードを見て気になった事があります。<code>ActiveRecord::Base</code> は置いておくとして、属性のアクセスを定義するクラスメソッドは <code>attr_accessor</code> ではなくて、<code>attr_accessible</code> となっていますね。<a href="http://yoshifumisato.jeez.jp/wordpress/post/rails/882">Railsのattr_accessible設定について - チュパカブラの勉強日記</a> によると <code>attr_accessible</code> は Rails 独自の設定で、属性をセキュアに更新する仕組みのようです。</p>
+
+<p><code>ActiveRecord::Base</code> を継承していることに注目してください。ActiveRecord は非常に多くの機能を、ユーザーが実装する Rails Model クラスに無料で提供しています。例えば、基本的なデータベースの CRUD(Create, Read, Update, Destroy)操作、データ妥当性チェック、同様に洗練された検索のサポートおよびお互いに複数のモデルを関連付けを可能にすることを含みます。このファイルで他に重要な部分は、<code>attr_accessible</code> です。これは(例えば、<code>update_attributes</code> 経由で)一括で更新する事が許可されている属性のホワイトリストを指定します。つまり、これは <code>attr_accessible</code> で指定した属性のみ Rails 上でアクセスできるということ意味しています。</p>
+
+<h3 id="6.5+バリデーションを追加する">6.5 バリデーションを追加する</h3>
+
+<p>Rails はモデルに送信されるデータの妥当性チェックを補助するメソッドを含みます。app/models/post.rb を開いて、以下のように編集します。</p>
+
+<figure class='code'><figcaption><span>app/models/post.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:title</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span>  <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>                    <span class="ss">:length</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:minimum</span> <span class="o">=&gt;</span> <span class="mi">5</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これらの変更はすべての Post が name と title を含み、かつ title が少なくとも5文字以上の長さである事を保障するでしょう。Rails はモデル内の様々な状態－存在、カラムの一意性、書式および関連オブジェクトの存在－をチェックすることができます。バリデーションについては <a href="http://guides.rubyonrails.org/active_record_validations_callbacks.html">Active Record Validations and Callbacks</a> で詳しい情報が記載されています。</p>
+
+<h3 id="6.6+コンソールを使用する">6.6 コンソールを使用する</h3>
+
+<p>実際にバリデーションの動作を見るために、コンソールを使用する事ができます。コンソールはコマンドラインツールでアプリケーションのコンテキストに沿った Ruby のコードを実行することができます。</p>
+
+<p>デフォルトのコンソールはデータベースを変更してしまうので、代わりに <code>rails console --sandbox</code> コマンドを使用して、どのような変更を加えてもロールバックできるようにします。</p>
+
+<p>コンソールが読み込まれた後に、Model で作業し使用する事ができます。 実際にコンソールを起動してみます。コンソールは入力と出力結果がわかりやすいように改行を加えてあります。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rails console --sandbox
+</span><span class='line'>Loading development environment in sandbox <span class="o">(</span>Rails 3.2.12<span class="o">)</span>
+</span><span class='line'>Any modifications you make will be rolled back on <span class="nb">exit</span>
+</span><span class='line'>
+</span><span class='line'>1.9.3-p392 :001 &gt; <span class="nv">p</span> <span class="o">=</span> Post.new<span class="o">(</span>content: <span class="s2">&quot;A new post&quot;</span><span class="o">)</span>
+</span><span class='line'> <span class="o">=</span>&gt; <span class="c">#&lt;Post id: nil, name: nil, title: nil, content: &quot;A new post&quot;, created_at: nil, updated_at: nil&gt;</span>
+</span><span class='line'>
+</span><span class='line'>1.9.3-p392 :002 &gt; p.save
+</span><span class='line'>   <span class="o">(</span>0.1ms<span class="o">)</span>  SAVEPOINT active_record_1
+</span><span class='line'>   <span class="o">(</span>0.1ms<span class="o">)</span>  ROLLBACK TO SAVEPOINT <span class="nv">active_record_1</span>
+</span><span class='line'> <span class="o">=</span>&gt; <span class="nb">false</span>
+</span><span class='line'>
+</span><span class='line'>1.9.3-p392 :003 &gt; p.errors.full_messages
+</span><span class='line'> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;Name can&#39;t be blank&quot;</span>, <span class="s2">&quot;Title can&#39;t be blank&quot;</span>, <span class="s2">&quot;Title is too short (minimum is 5 characters)&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>1.9.3-p392 :004 &gt; <span class="nb">exit</span>
+</span><span class='line'>   <span class="o">(</span>0.2ms<span class="o">)</span>  rollback transaction
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上記の実行結果が示すのは、新しい Post のインスタンスを作成し、それを保存しようと試みて、その戻り値として false が返り(保存が失敗したことを示しています)、そして、Post の errors の中身を検査しているということです。</p>
+
+<p>一通り操作が終われば、<code>exit</code> と入力してコンソールを終了します。</p>
+
+<p>development Web サーバーとは違い、コンソールはそれぞれの行毎に自動的にコードを新たに読み込みません。コンソールを開いている間に、(エディタで) Model を変更させたい場合には、<code>reload!</code> とコンソールのプロンプト上で入力すると、Model の変更が読み込まれます。</p>
+
+<p>今回のまとめは、以下の通りです。</p>
+
+<ul>
+<li>Model の中身を見て、`ActiveRecord::Base を継承していることを確認した</li>
+<li>Model の属性にアクセスするために <code>attr_accessible</code> を定義していることを確認した</li>
+<li>Model にバリデーションを追加した</li>
+<li><code>rails console --sandbox</code> でコンソールを実行し、ロールバックをして終了した</li>
+</ul>
+
+
+<p>切りがいいので、次回に続きます。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">toshibohjp</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-05T14:11:00+09:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby-on-rails/'>Ruby on Rails</a>, <a class='category' href='/blog/categories/tutorials/'>tutorials</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="ja"></a>
+  <script type="text/javascript" async="async">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+  
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+  <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+  <a href="http://b.hatena.ne.jp/entry/http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/" title="Previous Post: [RailsGuides] #03 Scaffold で素早く立ち上げる">&laquo; [RailsGuides] #03 Scaffold で素早く立ち上げる</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+<section>
+  <h1>About Me</h1>
+  <div id="twitter-profile" style="margin-top:0.5em;">
+    <p>
+      <strong>toshibohjp</strong> 
+      (<a href="http://twitter.com/toshibohjp">@toshibohjp</a>)
+    </p>
+    <p>ぼちぼちと日々の何かを書き連ねていきます。- I will continue writing daily entries littile by little.</p>
+  </div>
+  <script type="text/javascript">
+    $.domReady(function(){
+        var container = $('#twitter-profile'),
+            user = "toshibohjp";
+        
+        function parseTwLinks(s) {
+          var twUrl = "http://www.twitter.com/"
+          s = s.replace(/ (@([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+p2+"'>"+p1+"</a>"
+          }).replace(/ (#([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+"#!/search?q=%23"+p2+"'>"+p1+"</a>"
+          })
+          return s
+        }
+
+        $.ajax({
+            url: "http://api.twitter.com/1/users/show.json?include_entities=false&screen_name="+user+"&callback=?"
+          , type: 'jsonp'
+          , error: function (err) { $('#twitter-profile').addClass('error');  }
+          , success: function(data) {
+              container.html('<img class="left" src="http://api.twitter.com/1/users/profile_image/'+user+'.json?size=bigger" alt="@'+user+'"><p><strong>'+data.name+'</strong> (<a href="http://twitter.com/'+user+'">@'+user+'</a>)<br/>'+data.location+'</p><p>'+parseTwLinks(data.description)+'</p>');
+            }
+        })
+      });
+  </script>
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/05/rorguide04-model/">[RailsGuides] #04 Model、バリデーションとコンソール</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/">[RailsGuides] #03 Scaffold で素早く立ち上げる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide02-say-hello/">[RailsGuides] #02 Rails で Hello を実行する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">[RailsGuides] #01 RailsGuides で Rails をはじめてみる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/using-ssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/toshibohjp">@toshibohjp</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'toshibohjp',
+            count: 0,
+            skip_forks: false,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/toshiboh.jp@gmail.com?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - toshibohjp -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tortoiselikepace';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/';
+        var disqus_url = 'http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

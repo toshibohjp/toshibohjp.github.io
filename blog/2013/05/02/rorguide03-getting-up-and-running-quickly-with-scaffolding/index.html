@@ -324,7 +324,19 @@
 
 <p><img src="/images/rails_guides/listing-posts.jpg" title="Listing posts" alt="Listing posts"></p>
 
-<p>切りがいいので次回に続きます。</p>
+<p>これまでの一連の流れをまとめると、</p>
+
+<ul>
+<li><code>rails generate scaffold Post name:string title:string content:text</code> を実行して、Scaffolding で雛形を作成した</li>
+<li><code>rake db:migrate</code> で Posts テーブルを作成した</li>
+<li>app/view/home/index.html.erb を編集して、Posts へのリンクを作成した</li>
+<li>ブラウザを起動して動作確認を行った</li>
+</ul>
+
+
+<p>ということになります。</p>
+
+<p>切りがいいので <a href="/blog/2013/05/05/rorguide04-model/">次回</a> に続きます。</p>
 </div>
 
 
@@ -382,6 +394,8 @@
         <a class="basic-alignment left" href="/blog/2013/05/02/rorguide02-say-hello/" title="Previous Post: [RailsGuides] #02 Rails で Hello を実行する">&laquo; [RailsGuides] #02 Rails で Hello を実行する</a>
       
       
+        <a class="basic-alignment right" href="/blog/2013/05/05/rorguide04-model/" title="Next Post: [RailsGuides] #04 Model、バリデーションとコンソール">[RailsGuides] #04 Model、バリデーションとコンソール &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -404,7 +418,7 @@
       <strong>toshibohjp</strong> 
       (<a href="http://twitter.com/toshibohjp">@toshibohjp</a>)
     </p>
-    <p>I will continue writing daily entries littile by little.</p>
+    <p>ぼちぼちと日々の何かを書き連ねていきます。- I will continue writing daily entries littile by little.</p>
   </div>
   <script type="text/javascript">
     $.domReady(function(){
@@ -438,6 +452,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/05/rorguide04-model/">[RailsGuides] #04 Model、バリデーションとコンソール</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/">[RailsGuides] #03 Scaffold で素早く立ち上げる</a>
       </li>
     
@@ -450,11 +468,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/02/using-sssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/28/add-pocket-button-in-the-social-box/">Octopress に「Pocket」に追加するボタンをつける</a>
+        <a href="/blog/2013/05/02/using-ssh-over-https-port-on-your-linux/">Linxu 上の HTTPS ポートで SSH を使う</a>
       </li>
     
   </ul>

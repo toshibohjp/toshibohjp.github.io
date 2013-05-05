@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tutorials | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/tutorials/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-05T13:13:47+09:00</updated>
+  <updated>2013-05-05T22:36:51+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[RailsGuides] #04 Model、バリデーションとコンソール]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/"/>
+    <updated>2013-05-05T14:11:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/">前回</a> は Scaffold を利用して Post の雛形を作成しました。今回は Model の中身を見て、バリデーションの基本を学び、コンソールで Model の動作を確認する方法についてみていきたいと思います。</p>
+
+<!-- more -->
+
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#6.4+Model">6.4 Model</a>   </li>
+   <li><a href="#6.5+バリデーションを追加する">6.5 バリデーションを追加する</a>   </li>
+   <li><a href="#6.6+コンソールを使用する">6.6 コンソールを使用する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="6.4+Model">6.4 Model</h3>
+
+<p>Post の Model を見てみましょう。app/models/post.rb は実にシンプルな内容です。</p>
+
+<p><code>ruby app/models/post.rb
+class Post &lt; ActiveRecord::Base
+  attr_accessible :content, :name, :title
+end
+</code></p>
+
+<p>本文を読み進める前に、コードを見て気になった事があります。<code>ActiveRecord::Base</code> は置いておくとして、属性のアクセスを定義するクラスメソッドは <code>attr_accessor</code> ではなくて、<code>attr_accessible</code> となっていますね。<a href="http://yoshifumisato.jeez.jp/wordpress/post/rails/882">Railsのattr_accessible設定について - チュパカブラの勉強日記</a> によると <code>attr_accessible</code> は Rails 独自の設定で、属性をセキュアに更新する仕組みのようです。</p>
+
+<p><code>ActiveRecord::Base</code> を継承していることに注目してください。ActiveRecord は非常に多くの機能を、ユーザーが実装する Rails Model クラスに無料で提供しています。例えば、基本的なデータベースの CRUD(Create, Read, Update, Destroy)操作、データ妥当性チェック、同様に洗練された検索のサポートおよびお互いに複数のモデルを関連付けを可能にすることを含みます。このファイルで他に重要な部分は、<code>attr_accessible</code> です。これは(例えば、<code>update_attributes</code> 経由で)一括で更新する事が許可されている属性のホワイトリストを指定します。つまり、これは <code>attr_accessible</code> で指定した属性のみ Rails 上でアクセスできるということ意味しています。</p>
+
+<h3 id="6.5+バリデーションを追加する">6.5 バリデーションを追加する</h3>
+
+<p>Rails はモデルに送信されるデータの妥当性チェックを補助するメソッドを含みます。app/models/post.rb を開いて、以下のように編集します。</p>
+
+<p>```ruby app/models/post.rb
+class Post &lt; ActiveRecord::Base
+  attr_accessible :content, :name, :title</p>
+
+<p>  validates :name,  :presence => true
+  validates :title, :presence => true,</p>
+
+<pre><code>                :length =&gt; { :minimum =&gt; 5 }
+</code></pre>
+
+<p>end
+```</p>
+
+<p>これらの変更はすべての Post が name と title を含み、かつ title が少なくとも5文字以上の長さである事を保障するでしょう。Rails はモデル内の様々な状態－存在、カラムの一意性、書式および関連オブジェクトの存在－をチェックすることができます。バリデーションについては <a href="http://guides.rubyonrails.org/active_record_validations_callbacks.html">Active Record Validations and Callbacks</a> で詳しい情報が記載されています。</p>
+
+<h3 id="6.6+コンソールを使用する">6.6 コンソールを使用する</h3>
+
+<p>実際にバリデーションの動作を見るために、コンソールを使用する事ができます。コンソールはコマンドラインツールでアプリケーションのコンテキストに沿った Ruby のコードを実行することができます。</p>
+
+<p>デフォルトのコンソールはデータベースを変更してしまうので、代わりに <code>rails console --sandbox</code> コマンドを使用して、どのような変更を加えてもロールバックできるようにします。</p>
+
+<p>コンソールが読み込まれた後に、Model で作業し使用する事ができます。 実際にコンソールを起動してみます。コンソールは入力と出力結果がわかりやすいように改行を加えてあります。</p>
+
+<p>```bash
+$ rails console --sandbox
+Loading development environment in sandbox (Rails 3.2.12)
+Any modifications you make will be rolled back on exit</p>
+
+<p>1.9.3-p392 :001 > p = Post.new(content: "A new post")
+ => #<Post id: nil, name: nil, title: nil, content: "A new post", created_at: nil, updated_at: nil></p>
+
+<p>1.9.3-p392 :002 > p.save
+   (0.1ms)  SAVEPOINT active_record_1
+   (0.1ms)  ROLLBACK TO SAVEPOINT active_record_1
+ => false</p>
+
+<p>1.9.3-p392 :003 > p.errors.full_messages
+ => ["Name can't be blank", "Title can't be blank", "Title is too short (minimum is 5 characters)"]</p>
+
+<p>1.9.3-p392 :004 > exit
+   (0.2ms)  rollback transaction
+```</p>
+
+<p>上記の実行結果が示すのは、新しい Post のインスタンスを作成し、それを保存しようと試みて、その戻り値として false が返り(保存が失敗したことを示しています)、そして、Post の errors の中身を検査しているということです。</p>
+
+<p>一通り操作が終われば、<code>exit</code> と入力してコンソールを終了します。</p>
+
+<p>development Web サーバーとは違い、コンソールはそれぞれの行毎に自動的にコードを新たに読み込みません。コンソールを開いている間に、(エディタで) Model を変更させたい場合には、<code>reload!</code> とコンソールのプロンプト上で入力すると、Model の変更が読み込まれます。</p>
+
+<p>今回のまとめは、以下の通りです。</p>
+
+<ul>
+<li>Model の中身を見て、`ActiveRecord::Base を継承していることを確認した</li>
+<li>Model の属性にアクセスするために <code>attr_accessible</code> を定義していることを確認した</li>
+<li>Model にバリデーションを追加した</li>
+<li><code>rails console --sandbox</code> でコンソールを実行し、ロールバックをして終了した</li>
+</ul>
+
+
+<p>切りがいいので、次回に続きます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[RailsGuides] #03 Scaffold で素早く立ち上げる]]></title>
@@ -184,7 +292,19 @@ $ rake db:migrate
 
 <p><img src="/images/rails_guides/listing-posts.jpg" title="Listing posts" alt="Listing posts"></p>
 
-<p>切りがいいので次回に続きます。</p>
+<p>これまでの一連の流れをまとめると、</p>
+
+<ul>
+<li><code>rails generate scaffold Post name:string title:string content:text</code> を実行して、Scaffolding で雛形を作成した</li>
+<li><code>rake db:migrate</code> で Posts テーブルを作成した</li>
+<li>app/view/home/index.html.erb を編集して、Posts へのリンクを作成した</li>
+<li>ブラウザを起動して動作確認を行った</li>
+</ul>
+
+
+<p>ということになります。</p>
+
+<p>切りがいいので <a href="/blog/2013/05/05/rorguide04-model/">次回</a> に続きます。</p>
 ]]></content>
   </entry>
   
@@ -281,7 +401,7 @@ git rm public/index.html
 
 <p>ルーティングについてのより詳しい情報については <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside in</a> を参照してください。</p>
 
-<p>次回に続きます。</p>
+<p><a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding">次回</a> に続きます。</p>
 ]]></content>
   </entry>
   
@@ -357,7 +477,7 @@ $ ohai platform platform_version
 
 <p>$ rvm --version</p>
 
-<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x77;&#97;&#121;&#110;&#101;&#x65;&#115;&#101;&#x67;&#x75;&#105;&#x6e;&#64;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x77;&#97;&#121;&#x6e;&#101;&#x65;&#x73;&#101;&#103;&#117;&#x69;&#110;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a>, Michal Papis <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#109;&#x70;&#x61;&#x70;&#105;&#115;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#109;&#x70;&#97;&#x70;&#x69;&#115;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a> [https://rvm.io/]</p>
+<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x77;&#x61;&#121;&#110;&#101;&#101;&#x73;&#x65;&#103;&#x75;&#x69;&#x6e;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#119;&#97;&#121;&#x6e;&#x65;&#x65;&#x73;&#101;&#103;&#117;&#x69;&#x6e;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a>, Michal Papis <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#109;&#x70;&#x61;&#x70;&#x69;&#115;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#x6d;&#112;&#x61;&#112;&#x69;&#115;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a> [https://rvm.io/]</p>
 
 <p>$ ruby --version
 ruby 1.9.3p392 (2013-02-22 revision 39386) [i686-linux]</p>
@@ -623,7 +743,7 @@ $ rails server
 
 <p>上手く表示されました。</p>
 
-<p>Web サーバーを停止するには、起動したコンソールで<Control + C>を押します。また、development モードでは、サーバーがファイルの変更を自動的に検知するので、ファイルの変更の度に Rails を停止する必要はありません。</p>
+<p>Web サーバーを停止するには、起動したコンソールで &lt;Control + C&gt; を押します。また、development モードでは、サーバーがファイルの変更を自動的に検知するので、ファイルの変更の度に Rails を停止する必要はありません。</p>
 
 <p>ちなみにこのページはスモークテストです。スモークテストとは一通り開発を終えた段階で簡易に起動確認を行う予備的なテストのことです。</p>
 
