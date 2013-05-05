@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tutorials | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/tutorials/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-02T22:15:08+09:00</updated>
+  <updated>2013-05-05T13:13:47+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -14,11 +14,186 @@
 
   
   <entry>
+    <title type="html"><![CDATA[[RailsGuides] #03 Scaffold で素早く立ち上げる]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/"/>
+    <updated>2013-05-02T19:59:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/05/02/rorguide02-say-hello/">前回</a> では、"Hello, Rails" を表示するために、Controller と View を作成し、アプリケーションのルートにルーティングするようにしました。今回は Scaffold でアプリケーションの雛形を作成してみます。</p>
+
+<!-- more -->
+
+
+<p>
+  <ul>
+
+  <ul>
+  <li><a href="#5+Scaffolding+で立ち上げ素早く実行する">5 Scaffolding で立ち上げ素早く実行する</a>  </li>
+  <li><a href="#6+Resource+を作成する">6 Resource を作成する</a>
+   <ul>
+   <li><a href="#6.1+マイグレーションを実行する">6.1 マイグレーションを実行する</a>   </li>
+   <li><a href="#6.2+リンクを追加する">6.2 リンクを追加する</a>   </li>
+   <li><a href="#6.3+ブラウザでの+Posts+の動作">6.3 ブラウザでの Posts の動作</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h2 id="5+Scaffolding+で立ち上げ素早く実行する">5 Scaffolding で立ち上げ素早く実行する</h2>
+
+<p>Rails の Scaffolding アプリケーションの主要な部分を生成する手っ取り早い方法です。単一の操作だけの新しい Resource のための Model、View、Controller を作成したいと考えている場合は、Scaffolding は役に立つツールになります。</p>
+
+<p>ちなみに Scaffolding は「足場を組む」という意味だそうです。</p>
+
+<h2 id="6+Resource+を作成する">6 Resource を作成する</h2>
+
+<p>blog アプリケーションのケースでは、Post リソースのための Scaffold を生成するところから始める事ができます。（これは単一の blog への投稿を表現しています。）</p>
+
+<p>これを行うために、次のコマンドをターミナルで実行します。
+```bash Postのリソースを作成する
+$ rails generate scaffold Post name:string title:string content:text</p>
+
+<pre><code>  invoke  active_record
+  create    db/migrate/20130505013444_create_posts.rb
+  create    app/models/post.rb
+  invoke    test_unit
+  create      test/unit/post_test.rb
+  create      test/fixtures/posts.yml
+  invoke  resource_route
+   route    resources :posts
+  invoke  scaffold_controller
+  create    app/controllers/posts_controller.rb
+  invoke    erb
+  create      app/views/posts
+  create      app/views/posts/index.html.erb
+  create      app/views/posts/edit.html.erb
+  create      app/views/posts/show.html.erb
+  create      app/views/posts/new.html.erb
+  create      app/views/posts/_form.html.erb
+  invoke    test_unit
+  create      test/functional/posts_controller_test.rb
+  invoke    helper
+  create      app/helpers/posts_helper.rb
+  invoke      test_unit
+  create        test/unit/helpers/posts_helper_test.rb
+  invoke  assets
+  invoke    coffee
+  create      app/assets/javascripts/posts.js.coffee
+  invoke    scss
+  create      app/assets/stylesheets/posts.css.scss
+  invoke  scss
+  create    app/assets/stylesheets/scaffolds.css.scss
+</code></pre>
+
+<p>```</p>
+
+<p>Scaffold ジェネレータはいくつかのフォルダに沿って、アプリケーションの中に数個(上の実行結果では 16)のファイルを生成し、<code>config/routs.rb</code> を編集します。</p>
+
+<p>以下は Scaffold で何が生成されるかを早見表にまとめたものです。実行結果を見ると Rails ではオブジェクトをひとまとめにしたものを複数形として扱っている事に気づくでしょう。今回の場合では、Post が Post<strong>s</strong> になっています。</p>
+
+<table>
+  <tr><th>ファイル名</th><th>目的</th></tr>
+  <tr><td>db/migrate/20130505013444_create_posts.rb</td><td>データベースに Post を作成するためのマイグレーション(実行した環境でタイムスタンプが異なります)
+  </td></tr>
+  <tr><td>app/models/post.rb</td><td>Post の Model</td></tr>
+  <tr><td>test/unit/post_test.rb</td><td>Post の Model のための単体テストハーネス</td></tr>
+  <tr><td>test/fixtures/posts.yml</td><td>テストで使用するサンプルの Post</td></tr>
+  <tr><td>config/routs.rb</td><td>Post へのルーティング情報を含むように編集された</td></tr>
+  <tr><td>app/controllers/posts_controller.rb</td><td>Posts Controller</td></tr>
+  <tr><td>app/views/posts/index.html.erb</td><td>すべての Post の一覧を表示するための View</td></tr>
+  <tr><td>app/views/posts/edit.html.erb</td><td>すでにある Post を編集するための View</td></tr>
+  <tr><td>app/views/posts/show.html.erb</td><td>ひとつの Post を表示するための View</td></tr>
+  <tr><td>app/views/posts/new.html.erb</td><td>Post を新規作成するための View</td></tr>
+  <tr><td>app/views/posts/_form.html.erb</td><td>編集と新規作成で使用されるフォームのルック＆フィール全体を制御するための部品</td></tr>
+  <tr><td>test/functional/posts_controller_test.rb</td><td>Post Controller のための機能テストハーネス</td><tr>
+  <tr><td>app/helpers/posts_helper.rb</td><td>Post View で使用されるヘルパー機能を集めたもの</td></tr>
+  <tr><td>test/unit/helpers/posts_helper_test.rb</td><td>posts_helper のための単体テストハーネス</td></tr>
+  <tr><td>app/assets/javascripts/posts.js.coffee</td><td>Post Controller のための CoffeScript</td></tr>
+  <tr><td>app/assets/stylesheets/posts.css.scss</td><td>Post Controller で使用する CSS</td></tr>
+  <tr><td>app/assets/stylesheets/scaffolds.css.scss</td><td>Scaffold の View の見た目を浴するための CSS</td></tr>
+</table>
+
+
+<p>Scaffold はアプリケーションを素早く立ち上げ、実行することができますが、生成されたコードはご自分のアプリケーションには完全にはそぐわないでしょう。ほとんどは、生成されたコードをカスタマイズすることになります。</p>
+
+<p>多くの経験をつんだ Rails 開発者は完全に Scaffold を避けて、全部もしくは大部分のコードをスクラッチから書き上げます。しかしながら、Rails は生成された Model、Controller、View やその他のソースのテンプレートをシンプルにカスタマイズさせてくれます。</p>
+
+<p>より詳しい情報に関しては、<a href="http://guides.rubyonrails.org/generators.html">Creating and Customizing Rails Generators &amp; Templates</a> を参照すると良いでしょう。</p>
+
+<h3 id="6.1+マイグレーションを実行する">6.1 マイグレーションを実行する</h3>
+
+<p><code>rails generate scaffold</code> コマンドで生成されたもののひとつに、<em>データベース・マイグレーション</em> が含まれます。マイグレーションは Ruby のクラスで、データベーステーブルを作成したり変更するのをシンプルにするために設計されたものです。Rails はマイグレーションを実行するのに <code>rake</code> コマンドを使用し、データベースにマイグレーションを実行した後にも取り消せるようになっています。マイグレーションのファイル名はタイムスタンプが含まれ、生成された順番に実行することを保証します。</p>
+
+<p>先程生成された db/migrate/20130505013444_create_posts.rb を見てみましょう。
+```ruby db/migrate/20130505013444_create_posts.rb
+class CreatePosts &lt; ActiveRecord::Migration
+  def change</p>
+
+<pre><code>create_table :posts do |t|
+  t.string :name
+  t.string :title
+  t.text :content
+
+  t.timestamps
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>上記のマイグレーションは、change と名づけられたこのマイグレーションを実行する時に呼ばれるメソッドを定義しています。change メソッドは元に戻せる動作も定義しています。つまり、Rails は－後になって変更を元に戻したい場合に－このマイグレーションによってなされた変更を、逆の順番で実行する方法を把握していることを意味しています。</p>
+
+<p>Rails のマイグレーションについてのより詳しい情報は <a href="http://guides.rubyonrails.org/migrations.html">Migrations</a> を参照してください。</p>
+
+<p>現時点で、マイグレーションを実行するための <code>rake</code> コマンドを使用する事ができます。コマンドを実行してみましょう。
+<code>bash マイグレーションの実行
+$ rake db:migrate
+==  CreatePosts: migrating ====================================================
+-- create_table(:posts)
+   -&gt; 0.0020s
+==  CreatePosts: migrated (0.0021s) ===========================================
+</code></p>
+
+<p>Posts テーブルが作成されました。</p>
+
+<p>デフォルトでは、<code>development</code> 環境で作業しているので、先程のコマンドは <code>config/database.yml</code> の development section で定義されているデータベースに適用されます。他の環境でマイグレーションを実行したい場合には、例えば <code>production</code> 環境では <code>rake db:migrate RAILS_ENV=production</code> と明示的に環境を指定する必要があります。</p>
+
+<h3 id="6.2+リンクを追加する">6.2 リンクを追加する</h3>
+
+<p>既に作成したホームページに Posts を連携するために、ホームページにリンクを追加してみましょう。app/views/home/index.html.erb を開き、以下のように修正します。
+```erb app/views/home/index.html.erb</p>
+
+<h1>Hello, Rails!</h1>
+
+
+<p>&lt;%= link_to "My Blog", posts_path %>
+```</p>
+
+<p>蛇足ですが、前のサンプルでは Rails の後ろに "!" がついていなかったように記憶しているのですが、気のせいでしょうか。</p>
+
+<p>link_to メソッドは Rails の組み込み View ヘルパーの一つです、表示するためのテキストと行き先に基づいてハイパーリンクを生成－この場合は Posts へのパス－sします。</p>
+
+<h3 id="6.3+ブラウザでの+Posts+の動作">6.3 ブラウザでの Posts の動作</h3>
+
+<p>さて、Postsの動作確認ができる準備が整いました。ブラウザでアクセスして、"My Blog" へのリンクをクリックしてみましょう。WEBrick を起動してない場合は <code>rails server</code> で WEBrick を起動します。</p>
+
+<p><img src="/images/rails_guides/hello-rails-with-my-blog-link.jpg" title="Hello, Rails" alt="Hello, Rails"></p>
+
+<p><img src="/images/rails_guides/listing-posts.jpg" title="Listing posts" alt="Listing posts"></p>
+
+<p>切りがいいので次回に続きます。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[[RailsGuides] #02 Rails で Hello を実行する]]></title>
     <link href="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/"/>
     <updated>2013-05-02T18:11:00+09:00</updated>
     <id>http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello</id>
-    <content type="html"><![CDATA[<p><a href="../rorguide01-creating-a-new-rails-project/">前回</a> に引き続いて <a href="http://guides.rubyonrails.org/getting_started.html">RailsGuides</a> の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。</p>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">前回</a> に引き続いて <a href="http://guides.rubyonrails.org/getting_started.html">RailsGuides</a> の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。</p>
 
 <!-- more -->
 
@@ -182,7 +357,7 @@ $ ohai platform platform_version
 
 <p>$ rvm --version</p>
 
-<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x77;&#97;&#x79;&#x6e;&#x65;&#101;&#x73;&#x65;&#x67;&#x75;&#x69;&#110;&#64;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#109;">&#119;&#x61;&#121;&#x6e;&#x65;&#x65;&#115;&#x65;&#x67;&#117;&#x69;&#110;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#111;&#109;</a>, Michal Papis <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#109;&#112;&#x61;&#x70;&#105;&#115;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#x6d;">&#109;&#112;&#97;&#112;&#105;&#x73;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#x6d;</a> [https://rvm.io/]</p>
+<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x77;&#97;&#121;&#110;&#101;&#x65;&#115;&#101;&#x67;&#x75;&#105;&#x6e;&#64;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x77;&#97;&#121;&#x6e;&#101;&#x65;&#x73;&#101;&#103;&#117;&#x69;&#110;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a>, Michal Papis <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#109;&#x70;&#x61;&#x70;&#105;&#115;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#109;&#x70;&#97;&#x70;&#x69;&#115;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a> [https://rvm.io/]</p>
 
 <p>$ ruby --version
 ruby 1.9.3p392 (2013-02-22 revision 39386) [i686-linux]</p>
