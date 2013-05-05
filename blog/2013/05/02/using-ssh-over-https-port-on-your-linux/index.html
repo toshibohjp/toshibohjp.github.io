@@ -260,7 +260,7 @@
 
 <p>ここでは、SSH を使用する際に443番ポートを使用し connect でプロキシを中継して GitHub と通信するようにしています。</p>
 
-<p>さらに、新規に .ssh/config を追加した場合は、アクセス権を以下のように設定しないと接続に失敗します。Unix に慣れている方には常識かも知れませんが、私は最初にアクセス権を設定をグループに読み書き権限が付与されており、接続エラーで結構ハマりました。</p>
+<p>さらに、新規に .ssh/config を追加した場合は、アクセス権を以下のように設定しないと接続に失敗します。Unix に慣れている方には常識かも知れませんが、私は最初にアクセス権の設定に、グループへの読み書き権限が付与されており、接続エラーで結構ハマりました。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>chmod 600 ~/.ssh/config

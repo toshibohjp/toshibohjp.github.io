@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-05T23:32:57+09:00</updated>
+  <updated>2013-05-05T23:49:29+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -153,7 +153,7 @@ Host github.com
 
 <p>ここでは、SSH を使用する際に443番ポートを使用し connect でプロキシを中継して GitHub と通信するようにしています。</p>
 
-<p>さらに、新規に .ssh/config を追加した場合は、アクセス権を以下のように設定しないと接続に失敗します。Unix に慣れている方には常識かも知れませんが、私は最初にアクセス権を設定をグループに読み書き権限が付与されており、接続エラーで結構ハマりました。</p>
+<p>さらに、新規に .ssh/config を追加した場合は、アクセス権を以下のように設定しないと接続に失敗します。Unix に慣れている方には常識かも知れませんが、私は最初にアクセス権の設定に、グループへの読み書き権限が付与されており、接続エラーで結構ハマりました。</p>
 
 <p><code>bash
 $ chmod 600 ~/.ssh/config
