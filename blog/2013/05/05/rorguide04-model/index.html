@@ -155,7 +155,7 @@
 
 <h3 id="6.5+バリデーションを追加する">6.5 バリデーションを追加する</h3>
 
-<p>Rails はモデルに送信されるデータの妥当性チェックを補助するメソッドを含みます。app/models/post.rb を開いて、以下のように編集します。</p>
+<p>Rails はモデルに送信されるデータの妥当性チェックを補助するメソッドを含みます。Post クラスにバリデーションを追加してみましょう。app/models/post.rb を開いて、以下のように編集します。</p>
 
 <figure class='code'><figcaption><span>app/models/post.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -174,7 +174,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>これらの変更はすべての Post が name と title を含み、かつ title が少なくとも5文字以上の長さである事を保障するでしょう。Rails はモデル内の様々な状態－存在、カラムの一意性、書式および関連オブジェクトの存在－をチェックすることができます。バリデーションについては <a href="http://guides.rubyonrails.org/active_record_validations_callbacks.html">Active Record Validations and Callbacks</a> で詳しい情報が記載されています。</p>
+<p>これらの変更はすべての Post が name と title を値を含み(空ではない)、かつ title が少なくとも5文字以上の長さである事を保障するでしょう。Rails はモデル内の様々な状態－存在、カラムの一意性、書式および関連オブジェクトの存在－をチェックすることができます。バリデーションについては <a href="http://guides.rubyonrails.org/active_record_validations_callbacks.html">Active Record Validations and Callbacks</a> で詳しい情報が記載されています。</p>
 
 <h3 id="6.6+コンソールを使用する">6.6 コンソールを使用する</h3>
 
@@ -230,10 +230,10 @@
 <p>今回のまとめは、以下の通りです。</p>
 
 <ul>
-<li>Model の中身を見て、`ActiveRecord::Base を継承していることを確認した</li>
+<li>Model の中身を見て、<code>ActiveRecord::Base</code> を継承していることを確認した</li>
 <li>Model の属性にアクセスするために <code>attr_accessible</code> を定義していることを確認した</li>
 <li>Model にバリデーションを追加した</li>
-<li><code>rails console --sandbox</code> でコンソールを実行し、ロールバックをして終了した</li>
+<li><code>rails console --sandbox</code> でコンソールを実行し、<code>exit</code> でロールバックを行い終了した</li>
 </ul>
 
 
