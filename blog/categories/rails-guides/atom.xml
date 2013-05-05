@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails Guides | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/rails-guides/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-06T00:23:30+09:00</updated>
+  <updated>2013-05-06T05:02:33+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,293 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[RoRGuides] #05 すべての Posts を一覧にする]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/06/rorguide05-listing-all-posts/"/>
+    <updated>2013-05-06T02:58:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/06/rorguide05-listing-all-posts</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/05/05/rorguide04-model/">前回</a> に引き続き Post Model を見ていきましょう。</p>
+
+<!-- more -->
+
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#6.7+すべての+Posts+を一覧にする">6.7 すべての Posts を一覧にする</a>   </li>
+   <li><a href="#6.8+レイアウトをカスタマイズする">6.8 レイアウトをカスタマイズする</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="6.7+すべての+Posts+を一覧にする">6.7 すべての Posts を一覧にする</h3>
+
+<p>アプリケーションで我々の Post のリストが表示されているかを確認するために、少し深く Rails のコードの中に潜ってみましょう。app/controllers/posts_controller.rb を開いて index アクションを見てみましょう。</p>
+
+<p>```ruby app/controllers/posts_controller.rb
+class PostsController &lt; ApplicationController
+  # GET /posts
+  # GET /posts.json
+  def index</p>
+
+<pre><code>@posts = Post.all
+
+respond_to do |format|
+  format.html # index.html.erb
+  format.json { render json: @posts }
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # GET /posts/1
+  # GET /posts/1.json
+  def show</p>
+
+<pre><code>@post = Post.find(params[:id])
+
+respond_to do |format|
+  format.html # show.html.erb
+  format.json { render json: @post }
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # GET /posts
+  # GET /posts.json
+  def index</p>
+
+<pre><code>@posts = Post.all
+
+respond_to do |format|
+  format.html # index.html.erb
+  format.json { render json: @posts }
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # GET /posts/1
+  # GET /posts/1.json
+  def show</p>
+
+<pre><code>@post = Post.find(params[:id])
+
+respond_to do |format|
+  format.html # show.html.erb
+  format.json { render json: @post }
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # POST /posts
+  # POST /posts.json
+  def create</p>
+
+<pre><code>@post = Post.new(params[:post])
+
+respond_to do |format|
+  if @post.save
+    format.html { redirect_to @post, notice: 'Post was successfully created.' }
+    format.json { render json: @post, status: :created, location: @post }
+  else
+    format.html { render action: "new" }
+    format.json { render json: @post.errors, status: :unprocessable_entity }
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # PUT /posts/1
+  # PUT /posts/1.json
+  def update</p>
+
+<pre><code>@post = Post.find(params[:id])
+
+respond_to do |format|
+  if @post.update_attributes(params[:post])
+    format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+    format.json { head :no_content }
+  else
+    format.html { render action: "edit" }
+    format.json { render json: @post.errors, status: :unprocessable_entity }
+  end
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # DELETE /posts/1
+  # DELETE /posts/1.json
+  def destroy</p>
+
+<pre><code>@post = Post.find(params[:id])
+@post.destroy
+
+respond_to do |format|
+  format.html { redirect_to posts_url }
+  format.json { head :no_content }
+end
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>  # GET /posts
+  # GET /posts.json
+  def index</p>
+
+<pre><code>@posts = Post.all
+
+respond_to do |format|
+  format.html # index.html.erb
+  format.json { render json: @posts }
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  # GET /posts/1
+  # GET /posts/1.json
+  def show</p>
+
+<pre><code>@post = Post.find(params[:id])
+
+respond_to do |format|
+  format.html # show.html.erb
+  format.json { render json: @post }
+end
+</code></pre>
+
+<p>  end
+```</p>
+
+<p>長いコードになりましたが、ここでの重要部分は以下のコードです。
+```ruby app/controllers/posts_controller.rb
+  # GET /posts
+  # GET /posts.json
+  def index</p>
+
+<pre><code>@posts = Post.all
+
+respond_to do |format|
+  format.html # index.html.erb
+  format.json { render json: @posts }
+end
+</code></pre>
+
+<p>  end
+```</p>
+
+<p><code>Post.all</code> は現在のデータベース内にあるすべての Posts を、 @posts で呼ばれたインスタンス変数を格納している Post レコードの配列として返します。</p>
+
+<p>ActiveRecord を使ってレコードを検索するより詳しい情報については、<a href="http://guides.rubyonrails.org/active_record_querying.html">Active Record Query Interface</a> を参照してください。</p>
+
+<p><code>respond_to</code> ブロックは、HTML と JSON が呼び出すアクションの両方を処理します。仮に、http://localhost:3000/posts.json をブラウザで参照した場合は、JSON 形式のすべての Posts が表示されることでしょう。HTML 形式はアクション名に対応する名前を持つ app/views/posts/ 内の View を見つけます。Rails は View が利用可能なように、アクションからすべてのインスタンス変数を作成します。ここで、app/view/posts/index.html.erb を見てみましょう。</p>
+
+<p>```erb app/view/posts/index.html.erb</p>
+
+<h1>Listing posts</h1>
+
+
+
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @posts.each do |post| %>
+  <tr>
+    <td><%= post.name %></td>
+    <td><%= post.title %></td>
+    <td><%= post.content %></td>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+
+
+
+<br />
+
+
+<p>&lt;%= link_to 'New Post', new_post_path %>
+```</p>
+
+<p>上記の View は <code>@posts</code> 配列の内容やリンクを表示するためのコンテンツを <code>each</code> メソッドにより反復処理します。View で覚えておくべきいくつかのことは、以下の通りです。</p>
+
+<ul>
+<li><code>link_to</code> は特定の宛先へのハイパーリンクを生成する</li>
+<li><code>edit_post_path</code> と <code>new_post_path</code> は、Rails が RESTful なルーティングの一部を提供するためのヘルパーです。Controller が含んでいる異なるアクションのための、様々なヘルパーを発見する事ができるでしょう。</li>
+</ul>
+
+
+<p>以前のバージョンの Rails では、ページが挿入されようとする前に、どのような HTML もエスケープされるように <code>&lt;%=h post.name %&gt;</code> を使用する必要がありました。Rails 3 より後のバージョンでは、これはデフォルトの動作になりました。エスケープしていない HTML を得るためには <code>&lt;%= raw post.name %&gt;</code>を使用します。</p>
+
+<p>レンダリングプロセスのより詳細については <a href="http://guides.rubyonrails.org/layouts_and_rendering.html">Layouts and Rendering in Rails</a> を参照してください。</p>
+
+<h3 id="6.8+レイアウトをカスタマイズする">6.8 レイアウトをカスタマイズする</h3>
+
+<p>View はHTMLがどのようにブラウザ上に表示されるのかという話の一部分でしかありません。Rails はまた Layouts という概念を持っており、Layouts は View のコンテナです。Rails がブラウザへ View をレンダリングする時に、Layout の HTML の内側に View の HTML をおきます。以前のバージョンの Rails では、<code>rails generate scaffold</code> コマンドが自動的にコントローラー固有のレイアウトを作成していました。例えば、Posts Contolloer のための app/views/layouts/posts.html.erb のように。しかしながら、この仕様は Rails 3 では変更されました。アプリケーション固有のレイアウトはすべての Contoller で使用され、app/views/layouts/application.html.erb 内で見つける事ができます。エディタでこのレイアウトを開いて、以下のように <code>body</code> タグを変更してみましょう。</p>
+
+<p>```erb app/views/layouts/application.html.erb
+&lt;!DOCTYPE html>
+<html>
+<head>
+  <title>Blog</title>
+  &lt;%= stylesheet_link_tag    "application" %>
+  &lt;%= javascript_include_tag "application" %>
+  &lt;%= csrf_meta_tags %>
+</head>
+<body style="background: #CCCCCC;"></p>
+
+<p>&lt;%= yield %></p>
+
+<p></body>
+</html>
+```</p>
+
+<p>さて、<code>/post</code> ページを更新する時に、背景がグレーのページになっていることに気づくでしょう。この同じグレーの背景は、Posts に関連するすべての View で使用されることになります。原文ではグレーの色合いが白に近く、変化がわかりづらいので、このサンプルではもう少し暗めのグレーにしてあります。</p>
+
+<p><img src="/images/rails_guides/listing-posts-gray.jpg" title="'Listing Posts'" ></p>
+
+<p><img src="/images/rails_guides/new-post-gray.jpg" title="'New Posts'" ></p>
+
+<p>背景がグレーになっている事がお分かりいただけるでしょうか？</p>
+
+<p>今回の内容をまとめると、以下のようになります。</p>
+
+<ul>
+<li>index アクションで HTML と JSON 形式のレンダリングに対応していることを確認した</li>
+<li>index.erb で each メソッドで Post 全件をイテレートして表示していた</li>
+<li><code>link_to</code> は特定の宛先へのハイパーリンクを表す</li>
+<li><code>app/views/layouts/application.html.erb</code> の背景を変更することによって、すべての Controller に変更が波及している</li>
+</ul>
+
+
+<p>次回へ続きます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[RailsGuides] #04 Model、バリデーションとコンソール]]></title>
@@ -477,7 +764,7 @@ $ ohai platform platform_version
 
 <p>$ rvm --version</p>
 
-<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x77;&#97;&#x79;&#110;&#101;&#101;&#115;&#x65;&#103;&#x75;&#105;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#x77;&#x61;&#x79;&#x6e;&#101;&#x65;&#115;&#101;&#x67;&#117;&#105;&#x6e;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>, Michal Papis <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#x6d;&#112;&#x61;&#112;&#x69;&#x73;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;">&#x6d;&#x70;&#97;&#x70;&#x69;&#115;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#109;</a> [https://rvm.io/]</p>
+<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#119;&#97;&#x79;&#x6e;&#101;&#x65;&#x73;&#x65;&#x67;&#x75;&#x69;&#110;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#119;&#x61;&#x79;&#x6e;&#x65;&#101;&#115;&#101;&#x67;&#117;&#105;&#110;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;</a>, Michal Papis <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#x70;&#x61;&#x70;&#105;&#115;&#64;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#109;&#112;&#97;&#112;&#105;&#x73;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a> [https://rvm.io/]</p>
 
 <p>$ ruby --version
 ruby 1.9.3p392 (2013-02-22 revision 39386) [i686-linux]</p>
