@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-05T23:27:41+09:00</updated>
+  <updated>2013-05-05T23:29:39+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Linux 上の HTTPS ポートで SSH を使う]]></title>
+    <title type="html"><![CDATA[Linux などの HTTPS ポートで SSH を使う]]></title>
     <link href="http://toshibohjp.github.io/blog/2013/05/02/using-ssh-over-https-port-on-your-linux/"/>
     <updated>2013-05-02T05:28:00+09:00</updated>
     <id>http://toshibohjp.github.io/blog/2013/05/02/using-ssh-over-https-port-on-your-linux</id>
