@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="ja"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[RoRGuides] #06 Post を新規作成する - Tortoise-like pace</title>
+  <meta name="author" content="toshibohjp">
+
+  
+  <meta name="description" content="前回 は、Post オブジェクトはひとつも作ってませんが、一覧表示できるようにしました。今回は Post オブジェクトを新規作成するための仕組みを見てみましょう。 6.9 Post を新規作成する 6.9 Post を新規作成する 新しい Post を新規作成することは二つのアクションを含みます。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Tortoise-like pace" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="/stylesheets/tables.css" rel="stylesheet" type="text/css" />
+<script langage="javaScript">
+  $(document).ready( function () {
+    $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank');
+  })
+</script>
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-40465573-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Tortoise-like pace</a></h1>
+  
+    <h2>toshibohjp</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="toshiboh.jp@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:toshibohjp.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[RoRGuides] #06 Post を新規作成する</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-06T11:14:00+09:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="/blog/2013/05/06/rorguide05-listing-all-posts/">前回</a> は、Post オブジェクトはひとつも作ってませんが、一覧表示できるようにしました。今回は Post オブジェクトを新規作成するための仕組みを見てみましょう。</p>
+
+<!-- more -->
+
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#6.9+Post+を新規作成する">6.9 Post を新規作成する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="6.9+Post+を新規作成する">6.9 Post を新規作成する</h3>
+
+<p>新しい Post を新規作成することは二つのアクションを含みます。ひとつめは <code>new</code> アクションです。このアクションは空の Post オブジェクトを作成します。以下は、app/controllers/posts_controller.rb の一部です。</p>
+
+<figure class='code'><figcaption><span>app/controllers/posts_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="c1"># GET /posts/new</span>
+</span><span class='line'>  <span class="c1"># GET /posts/new.json</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
+</span><span class='line'>    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="c1"># new.html.erb</span>
+</span><span class='line'>      <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="vi">@post</span> <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>コード内に記述されている new.html.erb View は空の Post をユーザーに表示します。</p>
+
+<figure class='code'><figcaption><span>app/views/posts/new.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">&lt;h1&gt;New post&lt;/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">&#39;form&#39;</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Back&#39;</span><span class="p">,</span> <span class="n">posts_path</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/rails_guides/create-new-post.jpg" title="'Creating a new Post.'" ></p>
+
+<p><code>&lt;%= render 'form' %&gt;</code> の行は Rails の <em>Partial</em> についての最初の紹介です。Partial とは HTML と Ruby のコードのスニペットで、複数の場所で再利用ができます。この場合においては、 新しい Post を作成する form は基本的に Post を編集するものと同じものが使用されており、両方とも name と title を持つテキストフィールド、content のためのテキストエリア、そして Post を新規作成および既存の Post を更新するためのボタンを持っています。</p>
+
+<p>app/views/posts/_form.html.erb ファイルを見ると、以下のようになっているでしょう。</p>
+
+<figure class='code'><figcaption><span>app/views/posts/_form.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="cp">&lt;%=</span> <span class="n">form_for</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">if</span> <span class="vi">@post</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">any?</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">    &lt;div id=&quot;error_explanation&quot;&gt;</span>
+</span><span class='line'><span class="x">      &lt;h2&gt;</span><span class="cp">&lt;%=</span> <span class="n">pluralize</span><span class="p">(</span><span class="vi">@post</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="x"> prohibited this post from being saved:&lt;/h2&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">      &lt;ul&gt;</span>
+</span><span class='line'><span class="x">      </span><span class="cp">&lt;%</span> <span class="vi">@post</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">full_messages</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">        &lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">msg</span> <span class="cp">%&gt;</span><span class="x">&lt;/li&gt;</span>
+</span><span class='line'><span class="x">      </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">      &lt;/ul&gt;</span>
+</span><span class='line'><span class="x">    &lt;/div&gt;</span>
+</span><span class='line'><span class="x">  </span><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'>
+</span><span class='line'><span class="x">  &lt;div class=&quot;field&quot;&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:name</span> <span class="cp">%&gt;</span><span class="x">&lt;br /&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:name</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">  &lt;/div&gt;</span>
+</span><span class='line'><span class="x">  &lt;div class=&quot;field&quot;&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:title</span> <span class="cp">%&gt;</span><span class="x">&lt;br /&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:title</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">  &lt;/div&gt;</span>
+</span><span class='line'><span class="x">  &lt;div class=&quot;field&quot;&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:content</span> <span class="cp">%&gt;</span><span class="x">&lt;br /&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_area</span> <span class="ss">:content</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">  &lt;/div&gt;</span>
+</span><span class='line'><span class="x">  &lt;div class=&quot;actions&quot;&gt;</span>
+</span><span class='line'><span class="x">    </span><span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span><span class='line'><span class="x">  &lt;/div&gt;</span>
+</span><span class='line'><span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Partial は呼び出し側の View ファイルで定義されたインスタンスのすべてを受け取ります。この場合では、Controller が新しい Post オブジェクトを <code>@post</code> に割り当て、このように <code>@post</code> として View と Partial の両方で利用可能になります。</p>
+
+<p>Partial についてのより詳しい情報については、<a href="http://guides.rubyonrails.org/layouts_and_rendering.html">Layouts and Rendering in Rails</a> ガイドを参照してください。</p>
+
+<p><code>form_for</code> ブロックは HTML フォームを生成するために使用されます。このブロック内では、フォーム上の様々なコントロールを作成するためのメソッドにアクセスしています。例えば <code>f.text_field :name</code> は Rails にフォーム上にテキストボックスを作成し、表示されているインスタンスの <code>name</code> 属性につなげるように指示します。フォームの元になっている Model の属性(この場合においては <code>name</code>、<code>title</code>、そして <code>content</code>) とメソッドのみを使用できます。Rails はコードをより簡潔にするため、かつ明示的に特定の Model インスタンスへフォームを結びつけるために、あなたが記述した生の HTML より <code>form_for</code> を優先して使用します。</p>
+
+<p><code>form_for</code> ブロックはまた、新しい Post や Post の編集をする場合では、充分にうまくこなすくらい賢く、HTML 出力内で <code>action</code> タグと「送信」 ボタンの名前を適切に設定します。</p>
+
+<p>Model に結び付けられていない任意のフィールドを表示するように HTML フォームを作成する必要がある場合は、Model インスタンスに必ずしも関連付けらているわけではないフォームを作成するためのショートカットを提供する <code>form_for</code> メソッドを使用するべきです。</p>
+
+<p>ユーザーがフォーム上で「Post の新規作成」ボタンをクリックしたときに、ブラウザは Controler の <code>create</code> アクションに情報を送り返すでしょう。(Rails はフォームが HTTP POST リクエストで送信されているので、 <code>create</code> アクションを呼ぶことを知っています。これが、前に言及した <strong>規約</strong> の一つです。)</p>
+
+<p>対応する Controller のコードを以下に示します。</p>
+
+<figure class='code'><figcaption><span>app/controllers/posts_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="c1"># POST /posts</span>
+</span><span class='line'>  <span class="c1"># POST /posts.json</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:post</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">if</span> <span class="vi">@post</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'>        <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="p">{</span> <span class="n">redirect_to</span> <span class="vi">@post</span><span class="p">,</span> <span class="ss">notice</span><span class="p">:</span> <span class="s1">&#39;Post was successfully created.&#39;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="vi">@post</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:created</span><span class="p">,</span> <span class="ss">location</span><span class="p">:</span> <span class="vi">@post</span> <span class="p">}</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">action</span><span class="p">:</span> <span class="s2">&quot;new&quot;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="vi">@post</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:unprocessable_entity</span> <span class="p">}</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>create</code> アクションは Rails が <code>params</code> ハッシュ内で利用できるようにしたフォーム上で、ユーザーによって入力されたデータから新規の Post オブジェクトをインスタンス化しします。新しい Post の保存が正常に行われた後、<code>create</code> はユーザーが求めた適切なフォーマット(今回の場合は HTML)を返します。そのときに、結果としてもたらされる Post の <code>show</code> アクションへユーザーをリダイレクトし、そしてユーザーに Post が&#8221;Post was successfully created.&#8221;(Post が正常に作成された)と通知します。</p>
+
+<p><img src="/images/rails_guides/new-post-created.jpg" title="'Post was successfully created.'" ></p>
+
+<p>バリデーションエラーによって、Post の保存が失敗した場合には、Controller は、ユーザーにエラーを修正し再試行できるように、エラーメッセージと共に <code>new</code> アクションを返します。</p>
+
+<p><img src="/images/rails_guides/new-post-with-error-messages.jpg" title="'Listing Posts'" ></p>
+
+<p>メッセージが他のアクションに持ち越せるように、また、リクエストの状態の上で有用な情報をユーザーに提供できるように、&#8221;Post was successfully created.&#8221; メッセージは Rails の <code>flash</code> ハッシュ内に格納されます(通常、単に <em>flash</em> と呼ばれます)。<code>create</code> の場合においては、Post の生成プロセスの間に、ユーザーが実際にどのようなページがレンダリングされているかを見ることはないでしょう。これは、Rails がレコードを保存してすぐに、新しい Post にすぐさまリダイレクトされるからです。Flash はメッセージを次のアクションに持ち越します。ユーザーが <code>show</code> アクションにリダイレクトされたときに、&#8221;Post was successfully create.&#8221; というメッセージが表示されるためです。</p>
+
+<p>次回 に続きます。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">toshibohjp</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-06T11:14:00+09:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails-guides/'>Rails Guides</a>, <a class='category' href='/blog/categories/ruby-on-rails/'>Ruby on Rails</a>, <a class='category' href='/blog/categories/tutorials/'>tutorials</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="ja"></a>
+  <script type="text/javascript" async="async">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+  
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/" data-via="toshibohjp" data-counturl="http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+  <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+  <a href="http://b.hatena.ne.jp/entry/http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/06/rorguide05-listing-all-posts/" title="Previous Post: [RoRGuides] #05 すべての Posts を一覧にする">&laquo; [RoRGuides] #05 すべての Posts を一覧にする</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    
+<section>
+  <h1>About Me</h1>
+  <div id="twitter-profile" style="margin-top:0.5em;">
+    <p>
+      <strong>toshibohjp</strong> 
+      (<a href="http://twitter.com/toshibohjp">@toshibohjp</a>)
+    </p>
+    <p>ぼちぼちと日々の何かを書き連ねていきます。- I will continue writing daily entries littile by little.</p>
+  </div>
+  <script type="text/javascript">
+    $.domReady(function(){
+        var container = $('#twitter-profile'),
+            user = "toshibohjp";
+        
+        function parseTwLinks(s) {
+          var twUrl = "http://www.twitter.com/"
+          s = s.replace(/ (@([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+p2+"'>"+p1+"</a>"
+          }).replace(/ (#([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+"#!/search?q=%23"+p2+"'>"+p1+"</a>"
+          })
+          return s
+        }
+
+        $.ajax({
+            url: "http://api.twitter.com/1/users/show.json?include_entities=false&screen_name="+user+"&callback=?"
+          , type: 'jsonp'
+          , error: function (err) { $('#twitter-profile').addClass('error');  }
+          , success: function(data) {
+              container.html('<img class="left" src="http://api.twitter.com/1/users/profile_image/'+user+'.json?size=bigger" alt="@'+user+'"><p><strong>'+data.name+'</strong> (<a href="http://twitter.com/'+user+'">@'+user+'</a>)<br/>'+data.location+'</p><p>'+parseTwLinks(data.description)+'</p>');
+            }
+        })
+      });
+  </script>
+</section>
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/rorguide06-creating-new-posts/">[RoRGuides] #06 Post を新規作成する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/06/rorguide05-listing-all-posts/">[RoRGuides] #05 すべての Posts を一覧にする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/05/rorguide04-model/">[RailsGuides] #04 Model、バリデーションとコンソール</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/">[RailsGuides] #03 Scaffold で素早く立ち上げる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/02/rorguide02-say-hello/">[RailsGuides] #02 Rails で Hello を実行する</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/toshibohjp">@toshibohjp</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'toshibohjp',
+            count: 0,
+            skip_forks: false,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/toshiboh.jp@gmail.com?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - toshibohjp -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tortoiselikepace';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/';
+        var disqus_url = 'http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

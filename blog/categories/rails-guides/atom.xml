@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails Guides | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/rails-guides/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-06T05:02:33+09:00</updated>
+  <updated>2013-05-06T23:01:51+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,165 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[RoRGuides] #06 Post を新規作成する]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/"/>
+    <updated>2013-05-06T11:14:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/05/06/rorguide05-listing-all-posts/">前回</a> は、Post オブジェクトはひとつも作ってませんが、一覧表示できるようにしました。今回は Post オブジェクトを新規作成するための仕組みを見てみましょう。</p>
+
+<!-- more -->
+
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#6.9+Post+を新規作成する">6.9 Post を新規作成する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="6.9+Post+を新規作成する">6.9 Post を新規作成する</h3>
+
+<p>新しい Post を新規作成することは二つのアクションを含みます。ひとつめは <code>new</code> アクションです。このアクションは空の Post オブジェクトを作成します。以下は、app/controllers/posts_controller.rb の一部です。</p>
+
+<p>```ruby app/controllers/posts_controller.rb
+  # GET /posts/new
+  # GET /posts/new.json
+  def new</p>
+
+<pre><code>@post = Post.new
+
+respond_to do |format|
+  format.html # new.html.erb
+  format.json { render json: @post }
+end
+</code></pre>
+
+<p>  end
+```</p>
+
+<p>コード内に記述されている new.html.erb View は空の Post をユーザーに表示します。</p>
+
+<p>```erb app/views/posts/new.html.erb</p>
+
+<h1>New post</h1>
+
+
+<p>&lt;%= render 'form' %></p>
+
+<p>&lt;%= link_to 'Back', posts_path %>
+```</p>
+
+<p><img src="/images/rails_guides/create-new-post.jpg" title="'Creating a new Post.'" ></p>
+
+<p><code>&lt;%= render 'form' %&gt;</code> の行は Rails の <em>Partial</em> についての最初の紹介です。Partial とは HTML と Ruby のコードのスニペットで、複数の場所で再利用ができます。この場合においては、 新しい Post を作成する form は基本的に Post を編集するものと同じものが使用されており、両方とも name と title を持つテキストフィールド、content のためのテキストエリア、そして Post を新規作成および既存の Post を更新するためのボタンを持っています。</p>
+
+<p>app/views/posts/_form.html.erb ファイルを見ると、以下のようになっているでしょう。</p>
+
+<p>```erb app/views/posts/_form.html.erb
+&lt;%= form_for(@post) do |f| %>
+  &lt;% if @post.errors.any? %></p>
+
+<pre><code>&lt;div id="error_explanation"&gt;
+  &lt;h2&gt;&lt;%= pluralize(@post.errors.count, "error") %&gt; prohibited this post from being saved:&lt;/h2&gt;
+
+  &lt;ul&gt;
+  &lt;% @post.errors.full_messages.each do |msg| %&gt;
+    &lt;li&gt;&lt;%= msg %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>  &lt;% end %></p>
+
+<p>  <div class="field"></p>
+
+<pre><code>&lt;%= f.label :name %&gt;&lt;br /&gt;
+&lt;%= f.text_field :name %&gt;
+</code></pre>
+
+<p>  </div>
+  <div class="field"></p>
+
+<pre><code>&lt;%= f.label :title %&gt;&lt;br /&gt;
+&lt;%= f.text_field :title %&gt;
+</code></pre>
+
+<p>  </div>
+  <div class="field"></p>
+
+<pre><code>&lt;%= f.label :content %&gt;&lt;br /&gt;
+&lt;%= f.text_area :content %&gt;
+</code></pre>
+
+<p>  </div>
+  <div class="actions"></p>
+
+<pre><code>&lt;%= f.submit %&gt;
+</code></pre>
+
+<p>  </div>
+&lt;% end %>
+```</p>
+
+<p>Partial は呼び出し側の View ファイルで定義されたインスタンスのすべてを受け取ります。この場合では、Controller が新しい Post オブジェクトを <code>@post</code> に割り当て、このように <code>@post</code> として View と Partial の両方で利用可能になります。</p>
+
+<p>Partial についてのより詳しい情報については、<a href="http://guides.rubyonrails.org/layouts_and_rendering.html">Layouts and Rendering in Rails</a> ガイドを参照してください。</p>
+
+<p><code>form_for</code> ブロックは HTML フォームを生成するために使用されます。このブロック内では、フォーム上の様々なコントロールを作成するためのメソッドにアクセスしています。例えば <code>f.text_field :name</code> は Rails にフォーム上にテキストボックスを作成し、表示されているインスタンスの <code>name</code> 属性につなげるように指示します。フォームの元になっている Model の属性(この場合においては <code>name</code>、<code>title</code>、そして <code>content</code>) とメソッドのみを使用できます。Rails はコードをより簡潔にするため、かつ明示的に特定の Model インスタンスへフォームを結びつけるために、あなたが記述した生の HTML より <code>form_for</code> を優先して使用します。</p>
+
+<p><code>form_for</code> ブロックはまた、新しい Post や Post の編集をする場合では、充分にうまくこなすくらい賢く、HTML 出力内で <code>action</code> タグと「送信」 ボタンの名前を適切に設定します。</p>
+
+<p>Model に結び付けられていない任意のフィールドを表示するように HTML フォームを作成する必要がある場合は、Model インスタンスに必ずしも関連付けらているわけではないフォームを作成するためのショートカットを提供する <code>form_for</code> メソッドを使用するべきです。</p>
+
+<p>ユーザーがフォーム上で「Post の新規作成」ボタンをクリックしたときに、ブラウザは Controler の <code>create</code> アクションに情報を送り返すでしょう。(Rails はフォームが HTTP POST リクエストで送信されているので、 <code>create</code> アクションを呼ぶことを知っています。これが、前に言及した <strong>規約</strong> の一つです。)</p>
+
+<p>対応する Controller のコードを以下に示します。</p>
+
+<p>```ruby app/controllers/posts_controller.rb
+  # POST /posts
+  # POST /posts.json
+  def create</p>
+
+<pre><code>@post = Post.new(params[:post])
+
+respond_to do |format|
+  if @post.save
+    format.html { redirect_to @post, notice: 'Post was successfully created.' }
+    format.json { render json: @post, status: :created, location: @post }
+  else
+    format.html { render action: "new" }
+    format.json { render json: @post.errors, status: :unprocessable_entity }
+  end
+end
+</code></pre>
+
+<p>  end
+```</p>
+
+<p><code>create</code> アクションは Rails が <code>params</code> ハッシュ内で利用できるようにしたフォーム上で、ユーザーによって入力されたデータから新規の Post オブジェクトをインスタンス化しします。新しい Post の保存が正常に行われた後、<code>create</code> はユーザーが求めた適切なフォーマット(今回の場合は HTML)を返します。そのときに、結果としてもたらされる Post の <code>show</code> アクションへユーザーをリダイレクトし、そしてユーザーに Post が"Post was successfully created."(Post が正常に作成された)と通知します。</p>
+
+<p><img src="/images/rails_guides/new-post-created.jpg" title="'Post was successfully created.'" ></p>
+
+<p>バリデーションエラーによって、Post の保存が失敗した場合には、Controller は、ユーザーにエラーを修正し再試行できるように、エラーメッセージと共に <code>new</code> アクションを返します。</p>
+
+<p><img src="/images/rails_guides/new-post-with-error-messages.jpg" title="'Listing Posts'" ></p>
+
+<p>メッセージが他のアクションに持ち越せるように、また、リクエストの状態の上で有用な情報をユーザーに提供できるように、"Post was successfully created." メッセージは Rails の <code>flash</code> ハッシュ内に格納されます(通常、単に <em>flash</em> と呼ばれます)。<code>create</code> の場合においては、Post の生成プロセスの間に、ユーザーが実際にどのようなページがレンダリングされているかを見ることはないでしょう。これは、Rails がレコードを保存してすぐに、新しい Post にすぐさまリダイレクトされるからです。Flash はメッセージを次のアクションに持ち越します。ユーザーが <code>show</code> アクションにリダイレクトされたときに、"Post was successfully create." というメッセージが表示されるためです。</p>
+
+<p>次回 に続きます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[RoRGuides] #05 すべての Posts を一覧にする]]></title>
@@ -296,7 +455,7 @@ end
 </ul>
 
 
-<p>次回へ続きます。</p>
+<p><a href="/blog/2013/05/06/rorguide06-creating-new-posts/">次回</a> へ続きます。</p>
 ]]></content>
   </entry>
   
@@ -404,7 +563,7 @@ Any modifications you make will be rolled back on exit</p>
 </ul>
 
 
-<p>切りがいいので、次回に続きます。</p>
+<p>切りがいいので、<a href="/blog/2013/05/06/rorguide05-listing-all-posts/">次回</a> に続きます。</p>
 ]]></content>
   </entry>
   
@@ -689,352 +848,6 @@ git rm public/index.html
 <p>ルーティングについてのより詳しい情報については <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside in</a> を参照してください。</p>
 
 <p><a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding">次回</a> に続きます。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[RailsGuides] #01 RailsGuides で Rails をはじめてみる]]></title>
-    <link href="http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/"/>
-    <updated>2013-05-02T08:56:00+09:00</updated>
-    <id>http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project</id>
-    <content type="html"><![CDATA[<p>ちゃんと <a href="http://rubyonrails.org/">Ruby on Rails</a> (以下、Railsと略します) を覚えていないので、 <a href="http://guides.rubyonrails.org/">RailsGuides</a> をはじめてみました。この記事自体は、誰にメリットがあるかわからない内容ですが、ここでは RailsGuide の日本語での抜粋と実際に手順にに沿ってやってみたことなどなどを、その都度だらだらと書いていきます。ちゃんとした和訳をお探しの方は、以下のサイトを参照すると良いと思います。</p>
-
-<ul>
-<li><a href="http://wiki.usagee.co.jp/ruby/rails/RailsGuides%E3%82%92%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E5%92%8C%E8%A8%B3%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%82%88/Getting%20Started%20with%20Rails">ruby/rails/RailsGuidesをゆっくり和訳してみたよ/Getting Started with Rails</a></li>
-</ul>
-
-
-<!-- more -->
-
-
-<p>
-  <ul>
-
-  <ul>
-  <li><a href="#Rails+の環境">Rails の環境</a>  </li>
-  <li><a href="#1+このガイドの前提">1 このガイドの前提</a>  </li>
-  <li><a href="#2+Rails+とは何か？">2 Rails とは何か？</a>  </li>
-  <li><a href="#3+Rails+プロジェクトを新規作成する">3 Rails プロジェクトを新規作成する</a>
-   <ul>
-   <li><a href="#3.1+Rails+のインストール">3.1 Rails のインストール</a>   </li>
-   <li><a href="#3.2+blog+アプリケーションを作成する">3.2 blog アプリケーションを作成する</a>   </li>
-  </ul>
-  </li>
- </ul>
- <li><a href="#（中略）">（中略）</a> </li>
- <li><a href="#（中略）">（中略）</a>
-   <ul>
-
-   <ul>
-   <li><a href="#3.3+データベースを設定する">3.3 データベースを設定する</a>   </li>
-   <li><a href="#3.4+データベースを作成する">3.4 データベースを作成する</a>   </li>
-  </ul>
-  </li>
- </ul>
- <li><a href="#以下スタックトレース">以下スタックトレース</a>
-  <ul>
-  <li><a href="#4+Hello,+Rails!">4 Hello, Rails!</a>
-   <ul>
-   <li><a href="#4.1+Web+サーバーを起動する">4.1 Web サーバーを起動する</a>   </li>
-   </ul>
-  </li>
-  </ul>
- </li>
- </ul>
-
-</p>
-
-<p>幸いにも RailsGuides は mobi 形式でも配布されているので、Kindle for iPad を横に置きながらぼちぼちとやっていきます。</p>
-
-<p>ちなみに <a href="http://guides.rubyonrails.org/">原文</a> は <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0</a> の元で公開されています。</p>
-
-<h2 id="Rails+の環境">Rails の環境</h2>
-
-<p>いろいろなサイトがあるので、"rails 入門" や "rails インストール" などのキーワードで検索すれば、きっとインストールの仕方など、ご自分の環境にあった情報が得られるでしょう。</p>
-
-<p>私の環境は、以下の通りとなっております。
-```bash Rails実行環境
-$ ohai platform platform_version
-[
-  "centos"
-]
-[
-  "6.3"
-]</p>
-
-<p>$ rvm --version</p>
-
-<p>rvm 1.18.21 (master) by Wayne E. Seguin <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#119;&#97;&#x79;&#x6e;&#101;&#x65;&#x73;&#x65;&#x67;&#x75;&#x69;&#110;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#119;&#x61;&#x79;&#x6e;&#x65;&#101;&#115;&#101;&#x67;&#117;&#105;&#110;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;</a>, Michal Papis <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#x70;&#x61;&#x70;&#105;&#115;&#64;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#109;&#112;&#97;&#112;&#105;&#x73;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a> [https://rvm.io/]</p>
-
-<p>$ ruby --version
-ruby 1.9.3p392 (2013-02-22 revision 39386) [i686-linux]</p>
-
-<p>$ rails --version
-Rails 3.2.12
-```</p>
-
-<p>以下、見出しは基本的に RailsGuides の見出しに準じます。</p>
-
-<h2 id="1+このガイドの前提">1 このガイドの前提</h2>
-
-<p>対応する Ruby のバージョンと前提としている Rails のバージョンについて記述しています。Ruby 1.9.2 系 と Rails 3.2 系をインストールしていれば、ほぼ問題なく動作すると思います。それに加えて、まず Ruby を覚えてから Rails をやった方がいいよなどと書かれていますが、<a href="http://www.google.co.jp/#hl=en&amp;gs_rn=11&amp;gs_ri=psy-ab&amp;gs_is=1&amp;cp=6&amp;gs_id=18&amp;xhr=t&amp;q=%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AERuby&amp;es_nrs=true&amp;pf=p&amp;safe=off&amp;output=search&amp;sclient=psy-ab&amp;oq=%E5%88%9D%E3%82%81%E3%81%A6%E3%81%AERu&amp;gs_l=&amp;pbx=1&amp;bav=on.2,or.r_qf.&amp;bvm=bv.45921128,d.dGI&amp;fp=345ec6be39cf6daf&amp;biw=1167&amp;bih=552">初めてのRuby</a>を読んでいれば理解できると思います。わからなければ、その都度検索エンジンのお世話になれば良いではないですか。</p>
-
-<h2 id="2+Rails+とは何か？">2 Rails とは何か？</h2>
-
-<p>Rails の特徴などが書かれています。省略します。</p>
-
-<p>Rails は「生産性が高い」、「すぐにアプリケーションを作成できる」などといわれていますが、Web アプリケーションフレームワークなので、個人的には比較的学習コストが高いと思います。よく Rails の特徴として <strong>「設定より規約を」</strong> と言われています。誤解を恐れずに言うならば、つまりは<strong>規約を覚えなければ話にならない</strong>わけです。</p>
-
-<p>以下については、このガイドに説明があるので、単語だけ覚えるだけにとどめて、ガイドを読み進めるうちに覚えるか、検索エンジンのお世話になるかすれば良いと思います。最初からわかっていれば入門ガイドのお世話になる必要もありませんしね。</p>
-
-<ul>
-<li>Action Pack
-
-<ul>
-<li>Action Controller</li>
-<li>Action Dispatch</li>
-<li>Action View</li>
-</ul>
-</li>
-<li>Action Mailer</li>
-<li>Action Model</li>
-<li>Action Record</li>
-<li>Action Resource</li>
-<li>Action Support</li>
-<li>Railties</li>
-</ul>
-
-
-<h2 id="3+Rails+プロジェクトを新規作成する">3 Rails プロジェクトを新規作成する</h2>
-
-<h3 id="3.1+Rails+のインストール">3.1 Rails のインストール</h3>
-
-<p>RubyGems からインストールするのが簡単です。
-<code>bash
-gem install rails
-</code></p>
-
-<p>Windows を使用している人は Ruby と Rails を <a href="http://railsinstaller.org/">Rails Installer</a> で簡単にインストールできます。</p>
-
-<h3 id="3.2+blog+アプリケーションを作成する">3.2 blog アプリケーションを作成する</h3>
-
-<p>私は GitHub 用にソースファイルをアップする予定なので、github というそのままの名前のディレクトリに <code>rails new</code> で作成する予定の blog というディレクトリを作成しました。Git の話を絡めるとややこしくなるので、リポジトリの作成と最初の push のコマンドまではここに記述しますが、これ以降は Git のコマンド等の話は省略します。蛇足になりますが、私は GitHub でリポジトリをあらかじめ作成しました。</p>
-
-<p><code>bash あらかじめblogディレクトリを作成して下準備をする
-$ cd ~/github
-$ mkdir blog
-$ git init blog
-$ cd blog
-$ touch README.md
-$ git add .
-$ git commit -m 'Initial commit.'
-$ git remote add origin git@github.com:toshibohjp/blog.git
-$ git push -u origin master
-</code></p>
-
-<p>以下のように blog アプリケーションを作成します。</p>
-
-<p>```bash blogアプリケーションを作成する
-$ cd ~/github
-$ rails new blog</p>
-
-<pre><code>   exist
-  create  README.rdoc
-  create  Rakefile
-  create  config.ru
-  create  .gitignore
-  create  Gemfile
-  create  app
-</code></pre>
-
-<h1 id="（中略）">（中略）</h1>
-
-<pre><code>     run  bundle install
-</code></pre>
-
-<p>Fetching gem metadata from https://rubygems.org/...........
-Fetching gem metadata from https://rubygems.org/..
-Resolving dependencies...
-Using rake (10.0.4)</p>
-
-<h1 id="（中略）">（中略）</h1>
-
-<p>Installing sass-rails (3.2.6)
-Installing sqlite3 (1.3.7)
-Installing uglifier (2.0.1)
-Your bundle is complete!
-Use <code>bundle show [gemname]</code> to see where a bundled gem is installed.
-<code>
-上記のような出力で Rails アプリケーションが作成されたので、ディレクトリの中身を覗いてみましょう。README.md 以外は `rails new blog` で作成されたファイルですが、たくさんありますね。何がなにやらよくわかりません。
-</code>bash railsのフォルダ構成
-$ cd blog
-$ tree -L 2 -F
-.
-├── Gemfile
-├── Gemfile.lock
-├── README.md
-├── README.rdoc
-├── Rakefile
-├── app/
-│   ├── assets/
-│   ├── controllers/
-│   ├── helpers/
-│   ├── mailers/
-│   ├── models/
-│   └── views/
-├── config/
-│   ├── application.rb
-│   ├── boot.rb
-│   ├── database.yml
-│   ├── environment.rb
-│   ├── environments/
-│   ├── initializers/
-│   ├── locales/
-│   └── routes.rb
-├── config.ru
-├── db/
-│   └── seeds.rb
-├── doc/
-│   └── README_FOR_APP
-├── lib/
-│   ├── assets/
-│   └── tasks/
-├── log/
-├── public/
-│   ├── 404.html
-│   ├── 422.html
-│   ├── 500.html
-│   ├── favicon.ico
-│   ├── index.html
-│   └── robots.txt
-├── script/
-│   └── rails*
-├── test/
-│   ├── fixtures/
-│   ├── functional/
-│   ├── integration/
-│   ├── performance/
-│   ├── test_helper.rb
-│   └── unit/
-├── tmp/
-│   └── cache/
-└── vendor/</p>
-
-<pre><code>├── assets/
-└── plugins/
-</code></pre>
-
-<p>30 directories, 21 files
-```
-RailsGuides の説明によると、ファイルとフォルダ構成は以下のようになってます。</p>
-
-<table>
-  <tr><th>ファイル／フォルダ名</th><th>目的</th></tr>
-  <tr><td>app/</td><td>アプリケーションで使用する Controller, Model, View, Asset を含みます。このガイドの残りでは、このフォルダに焦点を当てます。
-  </td></tr>
-  <tr><td>config/</td><td>アプリケーションの実行時のルール、ルーティング、データベースなどを設定します。config/ に関しては Configureing Rails Applications で詳細を扱います。
-  </td></tr>
-  <tr><td>config.ru</td><td>Rack の設定です。Rack ベースのサーバーがアプリケーションを開始するのに使用します。
-  </td></tr>
-  <tr><td>db/</td><td>現在のデータベーススキーマとしてデータベースマイグレーションを含んでいます。
-  </td></tr>
-  <tr><td>doc/</td><td>アプリケーションの詳細なドキュメント</td></tr>
-  <tr><td>Gemfile<br />Gemfile.lock</td><td>アプリケーションに必要な gem の依存関係を指定する事ができます。
-  </td></tr>
-  <tr><td>lib/</td><td>アプリケーションの拡張モジュール
-  </td></tr>
-  <tr><td>log/</td><td>アプリケーションログ</td></tr>
-  <tr><td>public/</td><td>そのまま公開される唯一のフォルダです。静的なファイルと生成された Assets を含みます。</td>
-  </tr>
-  <tr><td>Rakefile</td><td>このファイルはコマンドラインから実行されるタスクを見つけて読み込みます。タスクの定義は Rails のコンポーネントを通して定義されます。Rakefile を変更するよりも、アプリケーションの lib/tasks ディレクトリにファイルを追加することで、タスクを追加するようにしてください。
-  </td></tr>
-  <tr><td>README.rdoc</td><td>アプリケーションの簡単な手順書です。アプリケーションが何をするかや、どのようにセットアップするかを、他の人に解るようにこのファイルを編集してください。
-  </td></tr>
-  <tr><td>script/</td><td>アプリケーションを起動する Rails のスクリプトを含みます。また、アプリケーションをデプロイ／実行するスクリプトを含めることもできます。
-  </td></tr>
-  <tr><td>test/</td><td>単体テスト、Fixture および 他のテストの仕組みです。これらについては Testing Rails Applications で扱います。
-  </td></tr>
-  <tr><td>tmp/</td><td>一時ファイル</td></tr>
-  <tr><td>vendor/</td><td>サードパーティのコードを置くためのディレクトリです。典型的な Rails アプリケーションでは、Ruby Gems、 Rails のソースコード(プロジェクトに任意でインストールした場合)や追加パッケージ機能を含むプラグインをインクルードしています。
-  </td></tr>
-</table>
-
-
-<h3 id="3.3+データベースを設定する">3.3 データベースを設定する</h3>
-
-<p>データベースの設定は <code>config/database.yml</code> にあります。なにも設定してなければデフォルトでは SQLite3 用にデータベースが設定されています。デフォルトで以下の3つの環境で Rails を実行する事ができます。</p>
-
-<ul>
-<li><code>development</code> : 手動でインタラクティブに実行するためのローカル開発用の環境</li>
-<li><code>test</code> : 自動テストを実行するための環境</li>
-<li><code>production</code> : アプリケーションをデプロイして公開するための環境</li>
-</ul>
-
-
-<p><code>rails new blog --database=mysql</code> でデータベースを指定することも可能ですし、手動で設定すべきではありません。</p>
-
-<p>SQLiter3、MySQL、PostgreSQL、SQLiter3 + JRuby、MySQL + JRuby、PostgreSQL + JRuby の設定が記述されていましたが、今はデフォルトの SQLite3 で充分なため割愛します。</p>
-
-<h3 id="3.4+データベースを作成する">3.4 データベースを作成する</h3>
-
-<p>以下のコマンドで空のデータベースを作成します。
-<code>``bash
-$ rake db:create
-Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes.
-/usr/local/rvm/gems/ruby-1.9.3-p392/gems/execjs-1.4.0/lib/execjs/runtimes.rb:51:in</code>autodetect'</p>
-
-<h1 id="以下スタックトレース">以下スタックトレース</h1>
-
-<p>```</p>
-
-<p>失敗しました。</p>
-
-<p>JavaScript の実行環境がないと言っています。私もインストールした覚えはありません。上記のサイトを見てみるといろいろ実行エンジンがありますが、ここでは一番上にある therubyracer を使うことにします。</p>
-
-<p>次のように Gemfile の末尾に以下を追加して、<code>bundle</code> を実行して therubyracer をダウンロードして、もう一度 <code>rake db::create</code> を実行します。</p>
-
-<p><code>bash
-$ echo "gem 'therubyracer'" &gt;&gt; Gemfile
-$ bundle
-$ rake db:create
-</code></p>
-
-<p>何も出力がありませんが、これでデータベースは作成されました。以下のファイルが追加されたはずです。</p>
-
-<ul>
-<li>db/development.sqlite3</li>
-<li>db/test.sqlite3</li>
-</ul>
-
-
-<h2 id="4+Hello,+Rails!">4 Hello, Rails!</h2>
-
-<h3 id="4.1+Web+サーバーを起動する">4.1 Web サーバーを起動する</h3>
-
-<p>これで Rails を実行できる環境が整ったので、Rails を実行してみます。以下のような出力結果が得られます。</p>
-
-<p><code>bash
-$ rails server
-=&gt; Booting WEBrick
-=&gt; Rails 3.2.12 application starting in development on http://0.0.0.0:3000
-=&gt; Call with -d to detach
-=&gt; Ctrl-C to shutdown server
-[2013-05-02 15:26:50] INFO  WEBrick 1.3.1
-[2013-05-02 15:26:50] INFO  ruby 1.9.3 (2013-02-22) [i686-linux]
-[2013-05-02 15:26:50] INFO  WEBrick::HTTPServer#start: pid=8821 port=3000
-</code></p>
-
-<p>WEBrick という Web サーバーが3000番ポートで起動してしたので、ブラウザでアクセスしてみます。</p>
-
-<p><img src="/images/rails_guides/hello-rails.jpg" title="Rails default page" alt="Rails default page"></p>
-
-<p>上手く表示されました。</p>
-
-<p>Web サーバーを停止するには、起動したコンソールで &lt;Control + C&gt; を押します。また、development モードでは、サーバーがファイルの変更を自動的に検知するので、ファイルの変更の度に Rails を停止する必要はありません。</p>
-
-<p>ちなみにこのページはスモークテストです。スモークテストとは一通り開発を終えた段階で簡易に起動確認を行う予備的なテストのことです。</p>
-
-<p>切りがいいので、今回はこのあたりで<a href="../rorguide02-say-hello/">次回</a>へ続きます。</p>
 ]]></content>
   </entry>
   
