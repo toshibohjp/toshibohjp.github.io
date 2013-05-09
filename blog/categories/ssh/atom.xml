@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-06T23:01:51+09:00</updated>
+  <updated>2013-05-09T20:37:48+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -31,8 +31,7 @@
   <ul>
   <li><a href="#環境変数を設定する">環境変数を設定する</a>  </li>
  </ul>
- <li><a href="#!/bin/bash">!/bin/bash</a> </li>
- <li><a href="#yum">yum</a>
+ <li><a href="#!/bin/bash">!/bin/bash</a>
   <ul>
   <li><a href="#connect+のインストール">connect のインストール</a>  </li>
  </ul>
@@ -90,7 +89,7 @@
 </table>
 
 
-<p>以下のスクリプトを .bashrc に記述します。また私は CentOS を使用しているので、yum のための環境変数もここで設定しています。さらに私は個人用途のサーバで別のユーザを作成したりする開発環境なので、 /etc/profile.d/proxy.sh というファイルを作って、そこに突っ込んでいますが、オススメはしません。
+<p>以下のスクリプトを .bashrc に記述します。また私は個人用途のサーバで別のユーザを作成したりする開発環境なので、 /etc/profile.d/proxy.sh というファイルを作って、そこに突っ込んでいますが、オススメはしません。
 ```bash</p>
 
 <h1 id="!/bin/bash">!/bin/bash</h1>
@@ -101,13 +100,7 @@ export http_proxy_user=user
 export http_proxy_pass=pass
 export https_proxy_user=$http_proxy_user
 export https_proxy_pass=$http_proxy_pass
-export no_proxy="localhost,127.0.0.1,192.168.0.0/24"</p>
-
-<h1 id="yum">yum</h1>
-
-<p>export proxy=http://your.proxy-server.com:8080
-export proxy_username=$http_proxy_user
-export proxy_password=$http_proxy_pass
+export no_proxy="localhost,127.0.0.1,192.168.0.0/24"
 ```</p>
 
 <h2 id="connect+のインストール">connect のインストール</h2>

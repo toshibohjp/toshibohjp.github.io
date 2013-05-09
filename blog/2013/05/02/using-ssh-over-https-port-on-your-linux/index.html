@@ -174,7 +174,7 @@
 </table>
 
 
-<p>以下のスクリプトを .bashrc に記述します。また私は CentOS を使用しているので、yum のための環境変数もここで設定しています。さらに私は個人用途のサーバで別のユーザを作成したりする開発環境なので、 /etc/profile.d/proxy.sh というファイルを作って、そこに突っ込んでいますが、オススメはしません。</p>
+<p>以下のスクリプトを .bashrc に記述します。また私は個人用途のサーバで別のユーザを作成したりする開発環境なので、 /etc/profile.d/proxy.sh というファイルを作って、そこに突っ込んでいますが、オススメはしません。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -185,10 +185,6 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
 </span><span class='line'>
 </span><span class='line'><span class="nb">export </span><span class="nv">http_proxy</span><span class="o">=</span>http://user:passwd@your.proxy-server.com:8080
@@ -198,10 +194,6 @@
 </span><span class='line'><span class="nb">export </span><span class="nv">https_proxy_user</span><span class="o">=</span><span class="nv">$http_proxy_user</span>
 </span><span class='line'><span class="nb">export </span><span class="nv">https_proxy_pass</span><span class="o">=</span><span class="nv">$http_proxy_pass</span>
 </span><span class='line'><span class="nb">export </span><span class="nv">no_proxy</span><span class="o">=</span><span class="s2">&quot;localhost,127.0.0.1,192.168.0.0/24&quot;</span>
-</span><span class='line'><span class="c"># yum</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">proxy</span><span class="o">=</span>http://your.proxy-server.com:8080
-</span><span class='line'><span class="nb">export </span><span class="nv">proxy_username</span><span class="o">=</span><span class="nv">$http_proxy_user</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">proxy_password</span><span class="o">=</span><span class="nv">$http_proxy_pass</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
