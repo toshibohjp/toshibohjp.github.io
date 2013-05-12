@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tutorials | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/tutorials/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-09T20:37:48+09:00</updated>
+  <updated>2013-05-12T16:10:43+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -12,6 +12,136 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[RoRGuides] #07 個々の Post を表示する]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/12/rorguide07-showing-an-individual-post/"/>
+    <updated>2013-05-12T12:00:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/12/rorguide07-showing-an-individual-post</id>
+    <content type="html"><![CDATA[<p><a href="/blog/2013/05/06/rorguide05-listing-all-posts/">前回</a> は、Post を新規作成する仕組みについて見て来ました。今回は、他の Post の操作について見て行きたいと思います。</p>
+
+<!-- more -->
+
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#6.3+個々の+Post+を表示する">6.3 個々の Post を表示する</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="6.3+個々の+Post+を表示する">6.3 個々の Post を表示する</h3>
+
+<p>index ページにある任意の Post の <code>show</code> リンクをクリックした場合は、<code>http://localhost:3000/posts/1</code> のような URL に遷移します。Rails はそのリソースのための <code>show</code> アクションへの呼び出しとして解釈し、 <code>:id</code> パラメータとして 1 を渡します。<code>show</code> アクションについては、以下のとおりです。</p>
+
+<p>```ruby app/controllers/posts_controller.rb
+  # GET /posts/1
+  # GET /posts/1.json
+  def show</p>
+
+<pre><code>@post = Post.find(params[:id])
+
+respond_to do |format|
+  format.html # show.html.erb
+  format.json { render json: @post }
+end
+</code></pre>
+
+<p>  end
+```</p>
+
+<p><code>show</code> アクションは、id の値でデータベース内にある単一のレコードを検索するために <code>Post.fild</code> を使用します。レコードを検索した後、Rails は <code>app/views/posts/show.html.erb</code> を使用して、検索結果を表示します。</p>
+
+<p>```erb app/views/posts/show.html.erb</p>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @post.name %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @post.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @post.content %>
+</p>
+
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+```
+
+### 6.2 Posts を編集する
+
+Post を新規作成したように、Post を編集するのも二段階のプロセスを踏みます。最初のステップは特定の Post に伴う `edit_post_path(@post)` へのリクエストです。これは、Controller ないの `edit` アクションを呼び出します。
+
+```ruby app/controllers/posts_controller.rb
+  # GET /posts/1/edit
+  def edit
+    @post = Post.find(params[:id])
+  end
+```
+
+繰り返しになりますが、`new` アクションと同様に `edit` アクションは `form` Partial を使用しています。しかしながら、今回はフォームは `PostController` への PUT アクションを行い、送信ボタンは "Update Post" と表示するでしょう。
+
+この View によって作成されたフォームを送信すると、Controller内の `update` アクションを呼び出すでしょう。
+
+```ruby app/controllers/posts_controller.rb
+  # PUT /posts/1
+  # PUT /posts/1.json
+  def update
+    @post = Post.find(params[:id])
+
+    respond_to do |format|
+      if @post.update_attributes(params[:post])
+        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+```
+
+`update` アクションの中では、Rails はまず、編集中のデータベースのレコードを見つけるために、`:id` パラメータを edit View から受け取ります。`update_attributes` の呼び出しでは、リクエストから Post のパラメータ(ハッシュ)を取得し、このレコードに適用します。すべてがうまくいった場合は、ユーザーは Post の `show` アクションへリダイレクトされます。なにか問題が会った場合には、問題を修正するために `edit` アクションに戻るようにリダイレクトされます。
+
+### 6.3 Post を削除する
+最後に、任意の Post の `destroy` リンクをクリックすると、`id` に関連する `destroy` アクションが呼び出されます。
+
+```ruby app/controllers/posts_controller.rb
+  # DELETE /posts/1
+  # DELETE /posts/1.json
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+
+    respond_to do |format|
+      format.html { redirect_to posts_url }
+      format.json { head :no_content }
+    end
+  end
+```
+
+Active Record の Model インスタンスにある `destroy` メソッドはデータベースから対応するレコードを削除します。削除を行った後、表示するレコードが無いので、Rails はユーザーのブラウザーを Controller の index アクションにリダイレクトします。
+
+次回へ続きます。
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[RoRGuides] #06 Post を新規作成する]]></title>
@@ -168,7 +298,7 @@ end
 
 <p>メッセージが他のアクションに持ち越せるように、また、リクエストの状態の上で有用な情報をユーザーに提供できるように、"Post was successfully created." メッセージは Rails の <code>flash</code> ハッシュ内に格納されます(通常、単に <em>flash</em> と呼ばれます)。<code>create</code> の場合においては、Post の生成プロセスの間に、ユーザーが実際にどのようなページがレンダリングされているかを見ることはないでしょう。これは、Rails がレコードを保存してすぐに、新しい Post にすぐさまリダイレクトされるからです。Flash はメッセージを次のアクションに持ち越します。ユーザーが <code>show</code> アクションにリダイレクトされたときに、"Post was successfully create." というメッセージが表示されるためです。</p>
 
-<p>次回 に続きます。</p>
+<p><a href="/blog/05/12/rorguide07-showing-an-individual-post/">次回</a> に続きます。</p>
 ]]></content>
   </entry>
   
@@ -751,103 +881,6 @@ $ rake db:migrate
 <p>ということになります。</p>
 
 <p>切りがいいので <a href="/blog/2013/05/05/rorguide04-model/">次回</a> に続きます。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[RailsGuides] #02 Rails で Hello を実行する]]></title>
-    <link href="http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/"/>
-    <updated>2013-05-02T18:11:00+09:00</updated>
-    <id>http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello</id>
-    <content type="html"><![CDATA[<p><a href="/blog/2013/05/02/rorguide01-creating-a-new-rails-project/">前回</a> に引き続いて <a href="http://guides.rubyonrails.org/getting_started.html">RailsGuides</a> の日本語の抜粋などを記述していきます。前回と同様に見出しは RailsGuides に準じます。</p>
-
-<!-- more -->
-
-
-<p>
-   <ul>
-
-   <ul>
-
-   <ul>
-   <li><a href="#4.2+Rails+で++Hello++と言う">4.2 Rails で &ldquo;Hello&rdquo; と言う</a>   </li>
-   <li><a href="#4.3+アプリケーションのホームページを設定する">4.3 アプリケーションのホームページを設定する</a>   </li>
-   </ul>
-  </li>
-  </ul>
- </li>
- </ul>
-
-</p>
-
-<h3 id="4.2+Rails+で++Hello++と言う">4.2 Rails で "Hello" と言う</h3>
-
-<p>Rails で "Hello" というために、最低限の Controller と View を作成します。以下のコマンドを実行します。</p>
-
-<p>```bash
-$ rails generate controller home index</p>
-
-<pre><code>  create  app/controllers/home_controller.rb
-   route  get "home/index"
-  invoke  erb
-  create    app/views/home
-  create    app/views/home/index.html.erb
-  invoke  test_unit
-  create    test/functional/home_controller_test.rb
-  invoke  helper
-  create    app/helpers/home_helper.rb
-  invoke    test_unit
-  create      test/unit/helpers/home_helper_test.rb
-  invoke  assets
-  invoke    coffee
-  create      app/assets/javascripts/home.js.coffee
-  invoke    scss
-  create      app/assets/stylesheets/home.css.scss
-</code></pre>
-
-<p>```
-出力を見ると Controller と View に加えて、単体テスト、ヘルパーモジュール、CoffeScript、CSS のテンプレートが作成されていることに気づくでしょう。</p>
-
-<p>次に、好きなエディタで <code>app/views/home/index.html.erb</code> を編集します。私の場合は <code>vim app/views/home/index.html.erb</code>です。</p>
-
-<p>```erb app/views/home/index.html.erb</p>
-
-<h1>Hello, Rails</h1>
-
-
-<p>```</p>
-
-<h3 id="4.3+アプリケーションのホームページを設定する">4.3 アプリケーションのホームページを設定する</h3>
-
-<p>Controller と View を作成しましたが、"Hello Rails!" を表示させたい時に Rails に指示する必要があります。この場合では、"Welcom Aboard" スモークテスト の変わりに URL のルート(例えば、http://localhost:3000 のように)に表示させたいと思います。</p>
-
-<p>まず最初に、デフォルトページを削除します。私の場合は <code>git rm public/index.html</code> で Git から削除しましたが、Git を使わない場合は <code>rm public/index.html</code> です。
-<code>bash
-git rm public/index.html
-</code></p>
-
-<p>次に Rails に実際のホームページがどこかを指示する必要があります。 <code>config/routes.rb</code> をエディタで開いて編集します。以下に編集箇所を diff で示します。
-```diff config/routes.rb
-@@ -48,7 +50,7 @@ Blog::Application.routes.draw do</p>
-
-<p>   # You can have the root of your site routed with "root"
-   # just remember to delete public/index.html.
--  # root :to => 'welcome#index'
-+  root :to => 'home#index'</p>
-
-<p>   # See how all your routes lay out with "rake routes"</p>
-
-<p>```</p>
-
-<p>Rails を起動してない場合は <code>rails server</code> で WEBrick を起動して、ブラウザでルート (http://localhost:3000/ など) で接続確認します。</p>
-
-<p><img src="/images/rails_guides/say-hello.jpg" title="Hello, Rails" alt="Hello, Rails"></p>
-
-<p><code>config/routes.rb</code> は特殊な DSL として、入ってきたリクエストを Controller や Action にどのように接続するかを指示するエントリをアプリケーションのルーティングファイルとして定義します。先ほど編集した `root :to => "home#index" は、ルートアクションを home コントローラーの index アクションへマップするように指示しています。</p>
-
-<p>ルーティングについてのより詳しい情報については <a href="http://guides.rubyonrails.org/routing.html">Rails Routing from the Outside in</a> を参照してください。</p>
-
-<p><a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding">次回</a> に続きます。</p>
 ]]></content>
   </entry>
   

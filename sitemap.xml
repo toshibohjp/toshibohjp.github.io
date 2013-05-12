@@ -2,64 +2,70 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://toshibohjp.github.io/blog/2013/04/27/ive-started-a-blog-on-github/</loc>
-        <lastmod>2013-04-29T01:37:20+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://toshibohjp.github.io/blog/2013/04/28/customize-octopress-to-support-japanese/
         </loc>
-        <lastmod>2013-05-02T21:03:08+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://toshibohjp.github.io/blog/2013/04/28/add-pocket-button-in-the-social-box/
         </loc>
-        <lastmod>2013-04-29T11:22:38+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://toshibohjp.github.io/blog/2013/05/02/using-ssh-over-https-port-on-your-linux/
         </loc>
-        <lastmod>2013-05-09T20:37:41+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://toshibohjp.github.io/blog/2013/05/02/rorguide01-creating-a-new-rails-project/
         </loc>
-        <lastmod>2013-05-06T00:20:52+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/blog/2013/05/02/rorguide02-say-hello/</loc>
-        <lastmod>2013-05-06T00:20:28+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://toshibohjp.github.io/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/
         </loc>
-        <lastmod>2013-05-06T00:21:07+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/blog/2013/05/05/rorguide04-model/</loc>
-        <lastmod>2013-05-06T19:13:34+09:00</lastmod>
+        <lastmod>2013-05-12T14:32:02+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/blog/2013/05/06/rorguide05-listing-all-posts/</loc>
-        <lastmod>2013-05-06T11:32:59+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/blog/2013/05/06/rorguide06-creating-new-posts/</loc>
-        <lastmod>2013-05-06T19:17:09+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://toshibohjp.github.io/blog/2013/05/12/rorguide07-showing-an-individual-post/
+        </loc>
+        <lastmod>2013-05-12T16:10:43+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/blog/archives/</loc>
-        <lastmod>2013-05-09T20:37:41+09:00</lastmod>
+        <lastmod>2013-05-12T16:10:43+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/</loc>
-        <lastmod>2013-05-09T20:37:41+09:00</lastmod>
+        <lastmod>2013-05-12T16:10:43+09:00</lastmod>
     </url>
     <url>
         <loc>http://toshibohjp.github.io/robots.txt</loc>
-        <lastmod>2013-04-29T01:37:20+09:00</lastmod>
+        <lastmod>2013-05-12T13:58:30+09:00</lastmod>
     </url>
 </urlset>
