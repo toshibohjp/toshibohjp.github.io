@@ -139,15 +139,14 @@
 
 <p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。いちいち <code>sudo</code> するのが面倒だったので <code>su</code> で root にユーザを変更しています。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su
-</span><span class='line'><span class="c"># wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz</span>
-</span><span class='line'><span class="c"># tar xfz scala-2.10.1.tgz</span>
-</span><span class='line'><span class="c"># mv scala-2.10.1 /usr/local/</span>
-</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ su
+</span><span class='line'># wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz
+</span><span class='line'># tar xfz scala-2.10.1.tgz
+</span><span class='line'># mv scala-2.10.1 /usr/local/</span></code></pre></td></tr></table></div></figure>
 
 
 <h3 id="環境変数を設定する">環境変数を設定する</h3>
@@ -167,7 +166,7 @@
 
 <p>パスがちゃんと通っているかを確認します。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>/etc/profile.d/scala.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># source /etc/profile.d/scala.sh</span>

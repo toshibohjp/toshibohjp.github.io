@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-29T21:51:59+09:00</updated>
+  <updated>2013-05-29T23:35:48+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -54,7 +54,7 @@
 
 <p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。いちいち <code>sudo</code> するのが面倒だったので <code>su</code> で root にユーザを変更しています。</p>
 
-<p>```bash
+<p>```
 $ su</p>
 
 <h1 id="wget+http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz">wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz</h1>
@@ -79,7 +79,7 @@ export PATH=$PATH:$SCALA_HOME/bin
 
 <p>パスがちゃんと通っているかを確認します。</p>
 
-<p>```bash</p>
+<p>```</p>
 
 <h1 id="source+/etc/profile.d/scala.sh">source /etc/profile.d/scala.sh</h1>
 
