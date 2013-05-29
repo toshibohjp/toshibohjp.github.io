@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Scala | Tortoise-like pace]]></title>
+  <link href="http://toshibohjp.github.io/blog/categories/scala/atom.xml" rel="self"/>
+  <link href="http://toshibohjp.github.io/"/>
+  <updated>2013-05-29T21:42:03+09:00</updated>
+  <id>http://toshibohjp.github.io/</id>
+  <author>
+    <name><![CDATA[toshibohjp]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linux で Scala をインストールする]]></title>
+    <link href="http://toshibohjp.github.io/blog/2013/05/29/installing-scala-on-linux/"/>
+    <updated>2013-05-29T21:36:00+09:00</updated>
+    <id>http://toshibohjp.github.io/blog/2013/05/29/installing-scala-on-linux</id>
+    <content type="html"><![CDATA[<p>CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。</p>
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#Scala+のバイナリの取得">Scala のバイナリの取得</a>   </li>
+  </ul>
+  </li>
+ </ul>
+ <li><a href="#wget+http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz">wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz</a> </li>
+ <li><a href="#tar+xfz+scala-2.10.1.tgz">tar xfz scala-2.10.1.tgz</a> </li>
+ <li><a href="#mv+scala-2.10.1+/usr/local/">mv scala-2.10.1 /usr/local/</a> </li>
+ <li><a href="#!/bin/bash">!/bin/bash</a> </li>
+ <li><a href="#source+/etc/profile.d/scala.sh">source /etc/profile.d/scala.sh</a> </li>
+ <li><a href="#scala+-version">scala -version</a> </li>
+ </ul>
+
+</p>
+
+<h3 id="Scala+のバイナリの取得">Scala のバイナリの取得</h3>
+
+<p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。</p>
+
+<p>```bash
+$ su</p>
+
+<h1 id="wget+http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz">wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz</h1>
+
+<h1 id="tar+xfz+scala-2.10.1.tgz">tar xfz scala-2.10.1.tgz</h1>
+
+<h1 id="mv+scala-2.10.1+/usr/local/">mv scala-2.10.1 /usr/local/</h1>
+
+<p>```</p>
+
+<p>すべてのユーザで bin ディレクトリにパスを通したいので <code>/etc/profile.d/scala.sh</code> というファイルを作成します。</p>
+
+<p>```bash /etc/profile.d/scala.sh</p>
+
+<h1 id="!/bin/bash">!/bin/bash</h1>
+
+<p>export SCALA_HOME=/usr/local/scala-2.10.1
+export PATH=$PATH:$SCALA_HOME/bin
+```</p>
+
+<p>パスがちゃんと通っているかを確認します。</p>
+
+<p>```bash</p>
+
+<h1 id="source+/etc/profile.d/scala.sh">source /etc/profile.d/scala.sh</h1>
+
+<h1 id="scala+-version">scala -version</h1>
+
+<p>Scala code runner version 2.10.1 -- Copyright 2002-2013, LAMP/EPFL
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,7 +9,12 @@
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="前回 は、Post を新規作成する仕組みについて見て来ました。今回は、他の Post の操作について見て行きたいと思います。 ">
+  <meta name="description" content="CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。 Scala のバイナリの取得 Scala のバイナリの取得 root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。 1
+2
+3
+4
+$ su
+# wget &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,6 +91,100 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/29/installing-scala-on-linux/">Linux で Scala をインストールする</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-29T21:36:00+09:00" pubdate data-updated="true">May 29<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/29/installing-scala-on-linux/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。</p>
+
+<p>
+   <ul>
+
+   <ul>
+
+   <ul>
+   <li><a href="#Scala+のバイナリの取得">Scala のバイナリの取得</a>   </li>
+   </ul>
+  </li>
+  </ul>
+ </li>
+ </ul>
+
+</p>
+
+<h3 id="Scala+のバイナリの取得">Scala のバイナリの取得</h3>
+
+<p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su
+</span><span class='line'><span class="c"># wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz</span>
+</span><span class='line'><span class="c"># tar xfz scala-2.10.1.tgz</span>
+</span><span class='line'><span class="c"># mv scala-2.10.1 /usr/local/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>すべてのユーザで bin ディレクトリにパスを通したいので <code>/etc/profile.d/scala.sh</code> というファイルを作成します。</p>
+
+<figure class='code'><figcaption><span>/etc/profile.d/scala.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/usr/local/scala-2.10.1
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SCALA_HOME</span>/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>パスがちゃんと通っているかを確認します。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># source /etc/profile.d/scala.sh</span>
+</span><span class='line'><span class="c"># scala -version</span>
+</span><span class='line'>Scala code runner version 2.10.1 -- Copyright 2002-2013, LAMP/EPFL
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -483,51 +582,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/28/customize-octopress-to-support-japanese/">Octopress のヘッダを日本語に対応させる</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-28T09:56:00+09:00" pubdate data-updated="true">Apr 28<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/04/28/customize-octopress-to-support-japanese/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>私の環境のWindows Vista + Chrome では、デフォルトのフォントだと見出しに上手く日本語が表示されません。</p>
-
-<p>これを非常に簡単な設定で上書きします。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/04/28/customize-octopress-to-support-japanese/">続きを読む &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -580,6 +634,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/29/installing-scala-on-linux/">Linux で Scala をインストールする</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/12/rorguide07-showing-an-individual-post/">[RoRGuides] #07 個々の Post を表示する</a>
       </li>
     
@@ -593,10 +651,6 @@
     
       <li class="post">
         <a href="/blog/2013/05/05/rorguide04-model/">[RailsGuides] #04 Model、バリデーションとコンソール</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/02/rorguide03-getting-up-and-running-quickly-with-scaffolding/">[RailsGuides] #03 Scaffold で素早く立ち上げる</a>
       </li>
     
   </ul>
