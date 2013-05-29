@@ -9,12 +9,9 @@
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。 Scala のバイナリの取得 Scala のバイナリの取得 root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。 1
+  <meta name="description" content="CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。 Scala のバイナリを取得する 環境変数を設定する Scala のバイナリを取得する root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。 1
 2
-3
-4
-$ su
-# wget &hellip;">
+3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -121,13 +118,17 @@ $ su
 
 <div class="entry-content"><p>CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。</p>
 
+<!-- more -->
+
+
 <p>
    <ul>
 
    <ul>
 
    <ul>
-   <li><a href="#Scala+のバイナリの取得">Scala のバイナリの取得</a>   </li>
+   <li><a href="#Scala+のバイナリを取得する">Scala のバイナリを取得する</a>   </li>
+   <li><a href="#環境変数を設定する">環境変数を設定する</a>   </li>
    </ul>
   </li>
   </ul>
@@ -136,7 +137,7 @@ $ su
 
 </p>
 
-<h3 id="Scala+のバイナリの取得">Scala のバイナリの取得</h3>
+<h3 id="Scala+のバイナリを取得する">Scala のバイナリを取得する</h3>
 
 <p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。</p>
 
@@ -150,6 +151,8 @@ $ su
 </span><span class='line'><span class="c"># mv scala-2.10.1 /usr/local/</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<h3 id="環境変数を設定する">環境変数を設定する</h3>
 
 <p>すべてのユーザで bin ディレクトリにパスを通したいので <code>/etc/profile.d/scala.sh</code> というファイルを作成します。</p>
 

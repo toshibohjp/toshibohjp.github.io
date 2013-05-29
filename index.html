@@ -9,12 +9,7 @@
   <meta name="author" content="toshibohjp">
 
   
-  <meta name="description" content="CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。 Scala のバイナリの取得 Scala のバイナリの取得 root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。 1
-2
-3
-4
-$ su
-# wget &hellip;">
+  <meta name="description" content="CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -124,63 +119,12 @@ $ su
 
   <div class="entry-content"><p>CentOS 6.3 に Scala をインストールしたのでその手順をメモにしました。</p>
 
-<p>
-   <ul>
-
-   <ul>
-
-   <ul>
-   <li><a href="#Scala+のバイナリの取得">Scala のバイナリの取得</a>   </li>
-   </ul>
-  </li>
-  </ul>
- </li>
- </ul>
-
-</p>
-
-<h3 id="Scala+のバイナリの取得">Scala のバイナリの取得</h3>
-
-<p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su
-</span><span class='line'><span class="c"># wget http://www.scala-lang.org/downloads/distrib/files/scala-2.10.1.tgz</span>
-</span><span class='line'><span class="c"># tar xfz scala-2.10.1.tgz</span>
-</span><span class='line'><span class="c"># mv scala-2.10.1 /usr/local/</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>すべてのユーザで bin ディレクトリにパスを通したいので <code>/etc/profile.d/scala.sh</code> というファイルを作成します。</p>
-
-<figure class='code'><figcaption><span>/etc/profile.d/scala.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/usr/local/scala-2.10.1
-</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SCALA_HOME</span>/bin
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>パスがちゃんと通っているかを確認します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># source /etc/profile.d/scala.sh</span>
-</span><span class='line'><span class="c"># scala -version</span>
-</span><span class='line'>Scala code runner version 2.10.1 -- Copyright 2002-2013, LAMP/EPFL
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/29/installing-scala-on-linux/">続きを読む &rarr;</a>
+    </footer>
   
 
 
