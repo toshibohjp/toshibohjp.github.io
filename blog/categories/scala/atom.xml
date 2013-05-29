@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-29T21:48:44+09:00</updated>
+  <updated>2013-05-29T21:51:59+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -52,7 +52,7 @@
 
 <h3 id="Scala+のバイナリを取得する">Scala のバイナリを取得する</h3>
 
-<p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。</p>
+<p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。いちいち <code>sudo</code> するのが面倒だったので <code>su</code> で root にユーザを変更しています。</p>
 
 <p>```bash
 $ su</p>
