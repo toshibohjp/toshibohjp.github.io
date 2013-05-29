@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Tortoise-like pace]]></title>
   <link href="http://toshibohjp.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://toshibohjp.github.io/"/>
-  <updated>2013-05-29T23:35:48+09:00</updated>
+  <updated>2013-05-29T23:44:07+09:00</updated>
   <id>http://toshibohjp.github.io/</id>
   <author>
     <name><![CDATA[toshibohjp]]></name>
@@ -52,7 +52,7 @@
 
 <h3 id="Scala+のバイナリを取得する">Scala のバイナリを取得する</h3>
 
-<p>root 権限で以下を実行します。Scala のバージョンは現在の最新版である 2.10.1 を使>用します。いちいち <code>sudo</code> するのが面倒だったので <code>su</code> で root にユーザを変更しています。</p>
+<p>root 権限で以下のコマンドを実行します。Scala のバージョンは現在の最新版である 2.10.1 を使用します。いちいち <code>sudo</code> するのが面倒だったので <code>su</code> で root にユーザを変更しています。</p>
 
 <p>```
 $ su</p>
@@ -67,7 +67,7 @@ $ su</p>
 
 <h3 id="環境変数を設定する">環境変数を設定する</h3>
 
-<p>すべてのユーザで bin ディレクトリにパスを通したいので <code>/etc/profile.d/scala.sh</code> というファイルを作成します。</p>
+<p>すべてのユーザで bin ディレクトリにパスを通したいので <code>/etc/profile.d/scala.sh</code> というファイルを作成して以下のように記述します。</p>
 
 <p>```bash /etc/profile.d/scala.sh</p>
 
@@ -77,7 +77,7 @@ $ su</p>
 export PATH=$PATH:$SCALA_HOME/bin
 ```</p>
 
-<p>パスがちゃんと通っているかを確認します。</p>
+<p>パスがちゃんと通っているかを以下のコマンドで確認します。</p>
 
 <p>```</p>
 
